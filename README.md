@@ -26,7 +26,7 @@ A web system built with Flask and Bootstrap for managing applicant records. This
 
 2. Create a virtual environment:
     ```bash
-    python -m myenv
+    python -m venv myenv
     source venv/bin/activate # On Windows use `venv\Scripts\activate`
     ```
 
