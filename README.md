@@ -25,19 +25,25 @@ A web system built with Flask and Bootstrap for managing applicant records. This
     ```
 
 2. Create a virtual environment:
+
+    For Linux or macOS
     ```bash
+    python3 -m venv myvenv 
+    ```
+    For Windows
+   ```bash
     python -m venv myenv
-    source venv/bin/activate # On Windows use `venv\Scripts\activate`
+    source myvenv/bin/activate # On Windows use `myvenv\Scripts\activate`
     ```
 
-3. Install the required packages:
+4. Install the required packages:
     ```bash
     pip install flask
     pip install flask-login
     pip install flask-sqlalchemy
     ```
 
-4. Run the application:
+5. Run the application:
     ```bash
     flask run
     ```
