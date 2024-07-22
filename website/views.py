@@ -4,13 +4,12 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def showDashboard():
-    return render_template("dashboard.html", text="testing", user="Mark")
+    return render_template("dashboard.html")
 
-@views.route('/showTable')
+@views.route('/table')
 def showTable():
     return render_template("table.html")
 
-@views.route('/showHistory')
+@views.route('/history')
 def showHistory():
     return render_template("history.html")
-

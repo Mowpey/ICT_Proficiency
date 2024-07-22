@@ -1,4 +1,64 @@
-{% extends "base.html" %} {% block title %} Home {% endblock %} {%block
-content%}
-<h1>This is the Table</h1>
+{% extends "base.html" %} {% block title %} Table {% endblock %} {%block
+content%} {%block stylesheet%}<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/table-style.css') }}"
+/>
+{%endblock%}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Applicant ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Sex</th>
+                <th scope="col">Province</th>
+                <th scope="col">Date of Examination</th>
+                <th scope="col">Exam Venue</th>
+                <th scope="col">Date of Notification</th>
+                <th scope="col">Proctor</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</th>
+                <td>Mark Angelo Manuel</td>
+                <td>Male</td>
+                <td>Isabela</td>
+                <td>July 1, 2024</td>
+                <td>CSU Gymnasium</td>
+                <td>July 25, 2024</td>
+                <td>Mr. Minatozaki</td>
+                <td>Passed</td>
+            </tr>
+            <tr>
+                <td>2</th>
+                <td>Ken Robbie Galapate</td>
+                <td>Male</td>
+                <td>Isabela</td>
+                <td>July 5, 2024</td>
+                <td>CSU Gymnasium</td>
+                <td>July 18, 2024</td>
+                <td>Mr. Ian</td>
+                <td>Failed</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="dropup-center dropup d-none">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Filter
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+          </svg>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Action two</a></li>
+        <li><a class="dropdown-item" href="#">Action three</a></li>
+      </ul>
+    </div>
+</div>
+
 {%endblock%}
