@@ -32,7 +32,7 @@ A web system built with Flask and Bootstrap for managing applicant records. This
     ```
     For Windows
    ```bash
-    python -m venv myenv
+    python -m venv myvenv
     source myvenv/bin/activate # On Windows use `myvenv\Scripts\activate`
     ```
 
