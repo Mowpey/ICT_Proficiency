@@ -47,6 +47,11 @@ A web system built with Flask and Bootstrap for managing applicant records. This
     ```bash
     flask run
     ```
+    If the above command doesn't work try the command below
+   
+    ```bash
+    flask --app main.py --debug run
+    ```
 
 ## Usage
 1. Open your browser and navigate to `http://localhost:5000`.
