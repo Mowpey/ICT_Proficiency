@@ -1,7 +1,7 @@
 # ICT Proficiency System
 
 ## Description
-A web system built with Flask and Bootstrap for managing applicant records. This application allows users to create, read, update, and delete applicant records.
+A web system built with Flask and Bootstrap for managing applicant records. This application have admin that could create, read, update, and delete applicant records.
 
 ## Table of Contents
 1. [Installation](#installation)
