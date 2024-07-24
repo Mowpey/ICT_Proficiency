@@ -36,14 +36,16 @@
         <div class="collapse navbar-collapse" id="navbar">
           <div class="navbar-nav">
             <a class="nav-link" aria-current="page" href="/">Dashboard</a>
-            <a class="nav-link" href="/table">Table</a>
+            <a class="nav-link" href="/diagnostic_table">Table</a>
             <a class="nav-link" href="/history">History</a>
           </div>
         </div>
       </div>
     </nav>
 
-    <div class="container my-5">{% block content %} {% endblock %}</div>
+    <div class="container-fluid my-5 px-3">
+      {% block content %} {% endblock %}
+    </div>
 
     <script
       src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
