@@ -4,3 +4,13 @@
 #navbar a {
     font-size: 1.3em;
 }
+
+.navbar {
+    padding-left: 3.5rem;
+}
+
+@media (max-width: 992px) {
+    .navbar {
+        padding: 0;
+    }
+}
