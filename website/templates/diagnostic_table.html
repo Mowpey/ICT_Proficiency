@@ -1,406 +1,445 @@
 {% extends "base.html" %} {% block title %} Diagnostic Result Table {% endblock
 %} {%block content%} {%block stylesheet%}<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/table-style.css') }}"
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/table-style.css') }}"
 />
 {%endblock%}
+<div class="row row-col-2 align-items-center pb-4">
+    <div class="col-6">
+        <form
+            class="form-inline my-2 my-lg-0 d-flex gap-2 header-buttons align-items-center justify-content-start"
+        >
+            <input
+                class="form-control mr-sm-2 search"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+            />
+            <button class="btn btn-outline-success my-sm-0" type="submit">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-search"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                    />
+                </svg>
+            </button>
+        </form>
+    </div>
 
-<div class="row">
-  <div class="col-7">
-    <form class="form-inline my-2 my-lg-0 d-flex gap-3">
-      <input
-        class="form-control mr-sm-2 search"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
-      </button>
-    </form>
-  </div>
-  <div class="col-5 py-3">
-    <button type="button" class="btn btn-success float-end">Clear All</button>
-  </div>
+    <div class="col-6 d-flex justify-content-end gap-2 header-buttons">
+        {% block addModal %} {% include "modals/add_modal.html" %} {%endblock%}
+        <button type="button" class="btn btn-success float-end">
+            Clear All
+        </button>
+    </div>
 </div>
 <!--Tab Headers-->
 <ul class="nav nav-tabs">
-  <li class="nav-item">
-    {%block diagnosticTab %}<a
-      class="nav-link active"
-      aria-current="page"
-      href="#"
-      >Diagnostic Results</a
-    >
-    {%endblock%}
-  </li>
-  <li class="nav-item">
-    {%block handsonTab%}<a class="nav-link" href="handson_table">
-      Hands-On Results</a
-    >
-    {%endblock%}
-  </li>
+    <li class="nav-item">
+        {%block diagnosticTab %}<a
+            class="nav-link active"
+            aria-current="page"
+            href="#"
+            >Diagnostic Results</a
+        >
+        {%endblock%}
+    </li>
+    <li class="nav-item">
+        {%block handsonTab%}<a class="nav-link" href="handson_table">
+            Hands-On Results</a
+        >
+        {%endblock%}
+    </li>
 </ul>
 <!--Mobile Filters-->
 <div class="row row-cols-3 px-2 mobile">
-  <!--Sort ID -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
-      <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Sort ID
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" id="oldest_id"> Oldest ID</a></li>
-      </ul>
+    <!--Sort ID -->
+    <div class="col px-1 py-2">
+        <div class="btn-group">
+            <button
+                class="btn btn-outline btn-sm dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                Sort ID
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="oldest_id"> Oldest ID</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
-  <!--Sort Name -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
-      <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Sort Name
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" id="filter_up">Sort name A to Z</a></li>
-        <li><a class="dropdown-item" id="filter_down">Sort name Z to A</a></li>
-      </ul>
+    <!--Sort Name -->
+    <div class="col px-1 py-2">
+        <div class="btn-group">
+            <button
+                class="btn btn-outline btn-sm dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                Sort Name
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" id="filter_up">Sort name A to Z</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" id="filter_down"
+                        >Sort name Z to A</a
+                    >
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
-  <!--Sort Exam Venue -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
-      <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Sort Venue
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <p class="dropdown-item">CSU Gymnasium</p>
-        </li>
+    <!--Sort Exam Venue -->
+    <div class="col px-1 py-2">
+        <div class="btn-group">
+            <button
+                class="btn btn-outline btn-sm dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                Sort Venue
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <p class="dropdown-item">CSU Gymnasium</p>
+                </li>
 
-        <li>
-          <p class="dropdown-item">Quirino Theater</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Isabela Hall A</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Nueva Vizcaya Hall B</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Batanes Hall C</p>
-        </li>
-      </ul>
+                <li>
+                    <p class="dropdown-item">Quirino Theater</p>
+                </li>
+                <li>
+                    <p class="dropdown-item">Isabela Hall A</p>
+                </li>
+                <li>
+                    <p class="dropdown-item">Nueva Vizcaya Hall B</p>
+                </li>
+                <li>
+                    <p class="dropdown-item">Batanes Hall C</p>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="row row-cols-2 px-2 mobile">
-  <!--Filter Date of Examination-->
-  <div class="col py-2">
-    <input
-      type="text"
-      class="rounded border border-1 p-1"
-      placeholder="Date of Exam"
-      autocomplete="off"
-      name="filter_date_exam_mobile"
-      id="filter_date_exam_mobile"
-    />
-  </div>
-  <!--Filter Date of Notification-->
-  <div class="col py-2">
-    <input
-      type="text"
-      class="rounded border border-1 p-1"
-      placeholder="Date of Notification"
-      autocomplete="off"
-      name="filter_date_notif_mobile"
-      id="filter_date_notif_mobile"
-    />
-  </div>
+    <!--Filter Date of Examination-->
+    <div class="col py-2">
+        <input
+            type="text"
+            class="rounded border border-1 p-1"
+            placeholder="Date of Exam"
+            autocomplete="off"
+            name="filter_date_exam_mobile"
+            id="filter_date_exam_mobile"
+        />
+    </div>
+    <!--Filter Date of Notification-->
+    <div class="col py-2">
+        <input
+            type="text"
+            class="rounded border border-1 p-1"
+            placeholder="Date of Notification"
+            autocomplete="off"
+            name="filter_date_notif_mobile"
+            id="filter_date_notif_mobile"
+        />
+    </div>
 </div>
 
 <!--Main Table-->
 <div class="table-responsive my-2">
-  <table class="table table-striped">
-    <thead>
-      <tr class="table-primary">
-        <th scope="col"></th>
-        <th scope="col">
-          <!--Oldest ID Filter-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="oldest_id"
-              id="oldest_id"
-            >
-              Sort Applicant ID
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Oldest ID</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Name Filter-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_name"
-              id="filter_name"
-            >
-              Sort Name
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Sort Name A to Z</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Sort Name Z to A</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Sex-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_sex"
-              id="filter_sex"
-            >
-              Sort Sex
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Male</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Female</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Province-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_province"
-              id="filter_province"
-            >
-              Sort Province
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Isabela</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Cagayan</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Batanes</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Nueva Vizcaya</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Quirino</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Exam Date-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold"
-              placeholder="Exam date"
-              id="filter_date_exam"
-              name="filter_date_exam"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Exam Venue-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_venue"
-              id="filter_venue"
-            >
-              Sort Exam Venue
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">CSU Gymnasium</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Quirino Theater</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Isabela Hall A</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Nueva Vizcaya Hall B</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Batanes Hall C</p>
-              </li>
-            </ul>
-          </div>
-        </th>
+    <table class="table table-striped">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col"></th>
+                <th scope="col">
+                    <!--Oldest ID Filter-->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-outline dropdown-toggle fw-semibold"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            name="oldest_id"
+                            id="oldest_id"
+                        >
+                            Applicant ID
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    Oldest ID
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th scope="col">
+                    <!--Sort Name Filter-->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-outline dropdown-toggle fw-semibold"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            name="filter_name"
+                            id="filter_name"
+                        >
+                            Name
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    Sort Name A to Z
+                                </p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    Sort Name Z to A
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th scope="col">
+                    <!--Sort Sex-->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-outline dropdown-toggle fw-semibold"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            name="filter_sex"
+                            id="filter_sex"
+                        >
+                            Sex
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item fw-semibold">Male</p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">Female</p>
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th scope="col">
+                    <!--Sort Province-->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-outline dropdown-toggle fw-semibold"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            name="filter_province"
+                            id="filter_province"
+                        >
+                            Province
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item fw-semibold">Isabela</p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">Cagayan</p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">Batanes</p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    Nueva Vizcaya
+                                </p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">Quirino</p>
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th scope="col">
+                    <!--Filter Exam Date-->
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            class="form-control fw-semibold"
+                            placeholder="Exam date"
+                            id="filter_date_exam"
+                            name="filter_date_exam"
+                        />
+                    </div>
+                </th>
+                <th scope="col">
+                    <!--Filter Exam Venue-->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-outline dropdown-toggle fw-semibold"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            name="filter_venue"
+                            id="filter_venue"
+                        >
+                            Exam Venue
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    CSU Gymnasium
+                                </p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    Quirino Theater
+                                </p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    Isabela Hall A
+                                </p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    Nueva Vizcaya Hall B
+                                </p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">
+                                    Batanes Hall C
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </th>
 
-        <th scope="col">
-          <!--Filter Notified Date-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold"
-              placeholder="Notified date"
-              id="filter_date_notif"
-              name="filter_date_notif"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Proctor-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold"
-              placeholder="Enter proctor"
-              id="filter_proctor"
-              name="filter_proctor"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Status-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_status"
-              id="filter_status"
-            >
-              Sort Status
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Passed</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Failed</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-      </tr>
+                <th scope="col">
+                    <!--Filter Notified Date-->
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            class="form-control fw-semibold"
+                            placeholder="Notified date"
+                            id="filter_date_notif"
+                            name="filter_date_notif"
+                        />
+                    </div>
+                </th>
+                <th scope="col">
+                    <!--Filter Proctor-->
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            class="form-control fw-semibold"
+                            placeholder="Enter proctor"
+                            id="filter_proctor"
+                            name="filter_proctor"
+                        />
+                    </div>
+                </th>
+                <th scope="col">
+                    <!--Filter Status-->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-outline dropdown-toggle fw-semibold"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            name="filter_status"
+                            id="filter_status"
+                        >
+                            Status
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item fw-semibold">Passed</p>
+                            </li>
+                            <li>
+                                <p class="dropdown-item fw-semibold">Failed</p>
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+            </tr>
 
-      <tr class="table-primary">
-        <th scope="col"></th>
-        <th scope="col">Applicant ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Sex</th>
-        <th scope="col">Province</th>
-        <th scope="col">Date of Examination</th>
-        <th scope="col">Exam Venue</th>
-        <th scope="col">Date of Notification</th>
-        <th scope="col">Proctor</th>
-        <th scope="col">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <div class="button-modals">
-            {% block addModal %} {% include "modals/add_modal.html" %}
-            {%endblock%} {% block editModal%} {% include
-            "modals/edit_modal.html" %} {%endblock%} {%block deleteModal%}
-            {%include "modals/delete_modal.html" %} {%endblock%}
-          </div>
-        </td>
-        <td>1</td>
-        <td>Mark Angelo Manuel</td>
-        <td>Male</td>
-        <td>Isabela</td>
-        <td>July 1, 2024</td>
-        <td>CSU Gymnasium</td>
-        <td>July 25, 2024</td>
-        <td>Mr. Minatozaki</td>
-        <td>Passed</td>
-      </tr>
-    </tbody>
-  </table>
+            <tr class="table-primary">
+                <th scope="col"></th>
+                <th scope="col">Applicant ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Sex</th>
+                <th scope="col">Province</th>
+                <th scope="col">Date of Examination</th>
+                <th scope="col">Exam Venue</th>
+                <th scope="col">Date of Notification</th>
+                <th scope="col">Proctor</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="button-modals">
+                        {% block editModal%} {% include "modals/edit_modal.html"
+                        %} {%endblock%} {%block deleteModal%} {%include
+                        "modals/delete_modal.html" %} {%endblock%}
+                    </div>
+                </td>
+                <td>1</td>
+                <td>Mark Angelo Manuel</td>
+                <td>Male</td>
+                <td>Isabela</td>
+                <td>July 1, 2024</td>
+                <td>CSU Gymnasium</td>
+                <td>July 25, 2024</td>
+                <td>Mr. Minatozaki</td>
+                <td>Passed</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <!--Pagination Desktop-->
 <nav aria-label="Page navigation" class="pagination justify-content-center">
-  <ul class="pagination my-3">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
+    <ul class="pagination my-3">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
 </nav>
 
 {%block customScripts%}
 <script
-  src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
-  integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
-  crossorigin="anonymous"
+    src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+    integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+    crossorigin="anonymous"
 ></script>
 <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
 <script
-  type="text/javascript"
-  src="{{ url_for('static', filename='js/exam-datepicker.js')}}"
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/exam-datepicker.js')}}"
 ></script>
 <script
-  type="text/javascript"
-  src="{{ url_for('static', filename='js/notif-datepicker.js')}}"
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/notif-datepicker.js')}}"
 ></script>
 <script
-  type="text/javascript"
-  src="{{ url_for('static', filename='js/mobile-exam-datepicker.js')}}"
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/mobile-exam-datepicker.js')}}"
 ></script>
 <script
-  type="text/javascript"
-  src="{{ url_for('static', filename='js/mobile-notif-datepicker.js')}}"
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/mobile-notif-datepicker.js')}}"
 ></script>
 
 {%endblock%} {%endblock%}
