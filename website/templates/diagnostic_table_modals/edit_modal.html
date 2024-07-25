@@ -1,5 +1,11 @@
 {%block diagnosticEditModal%}
-<button type="button" class="btn btn-secondary">
+<!-- Diagnostic Edit Modal -->
+<button
+  type="button"
+  class="btn btn-secondary"
+  data-bs-target="#diagnostic_edit"
+  data-bs-toggle="modal"
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -17,4 +23,36 @@
     />
   </svg>
 </button>
+
+<!-- Edit Modal -->
+<div
+  class="modal fade"
+  id="diagnostic_edit"
+  tabindex="-1"
+  aria-hidden="true"
+  aria-labelledby="diagnosticEditModalLabel"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="diagnosticEditModalLabel">
+          Diagnostic Edit Modal
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Testing the Diagnostic Edit Modal</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 {%endblock%}

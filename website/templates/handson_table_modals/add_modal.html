@@ -1,5 +1,11 @@
 {%block handsonAddModal%}
-<button type="button" class="btn btn-primary">
+<!--Handson Add Modal-->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-target="#handson_add"
+  data-bs-toggle="modal"
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -14,4 +20,36 @@
     />
   </svg>
 </button>
+
+<!-- Add Modal -->
+<div
+  class="modal fade"
+  id="handson_add"
+  tabindex="-1"
+  aria-hidden="true"
+  aria-labelledby="handsonAddModalLabel"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="handsonAddModalLabel">
+          Handson Add Modal
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Testing the Handson Add Modal</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 {%endblock%}

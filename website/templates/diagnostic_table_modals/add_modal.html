@@ -1,5 +1,11 @@
 {%block diagnosticAddModal%}
-<button type="button" class="btn btn-primary">
+<!--Diagnostic Add Modal-->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-target="#diagnostic_add"
+  data-bs-toggle="modal"
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -14,4 +20,36 @@
     />
   </svg>
 </button>
+
+<!-- Add Modal -->
+<div
+  class="modal fade"
+  id="diagnostic_add"
+  tabindex="-1"
+  aria-hidden="true"
+  aria-labelledby="diagnosticAddModalLabel"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="diagnosticAddModalLabel">
+          Diagnostic Add Modal
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Testing the Diagnostic Add Modal</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 {%endblock%}

@@ -40,8 +40,8 @@
 
   <div class="col-6 d-flex justify-content-end gap-2 header-buttons">
     {% block handsonAddModal %} {% include "handson_table_modals/add_modal.html"
-    %} {%endblock%}
-    <button type="button" class="btn btn-success float-end">Clear All</button>
+    %} {%endblock%} {%block handsonClearFilter%} {%include
+    "handson_table_modals/clear_modal.html" %} {%endblock%}
   </div>
 </div>
 <!--Tab Headers-->
