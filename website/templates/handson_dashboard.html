@@ -10,17 +10,15 @@ content%} {%block stylesheet%}
   <div class="col">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#"
-          >Diagnostic Summary</a
-        >
+        <a class="nav-link" aria-current="page" href="/">Diagnostic Summary</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="handson_dashboard">Handson Summary</a>
+        <a class="nav-link active" href="#">Handson Summary</a>
       </li>
     </ul>
   </div>
 </div>
-<!-- Diagnostic Filters-->
+<!-- Handson Filters-->
 <div class="row justify-content-start">
   <div class="col-4 date-filter">
     <label class="py-2 fw-semibold"> Filter for Exam Date</label>
@@ -49,8 +47,7 @@ content%} {%block stylesheet%}
     </div>
   </div>
 </div>
-
-<!-- Diagnostic Card Summary-->
+<!-- Handson Card Summary-->
 <div class="row card-summary">
   <div class="col-4 my-4 total-applicants">
     <div class="card">
@@ -79,17 +76,17 @@ content%} {%block stylesheet%}
 </div>
 
 <!--Charts & Graphs-->
-<div class="row charts">
-  <!-- Diagnostic Pie Chart-->
-  <div class="col-6 diagnosticPieChart">
+<div class="row row-col-auto charts">
+  <!-- Handson Pie Chart-->
+  <div class="col-6 handsonPieChart">
     <div>
-      <canvas id="diagnosticPieChart"></canvas>
+      <canvas id="handsonPieChart"></canvas>
     </div>
   </div>
-  <!-- Diagnostic Bar Chart-->
-  <div class="col-6 diagnosticBarChart">
+  <!-- Handson Bar Chart-->
+  <div class="col-6 handsonBarChart">
     <div>
-      <canvas id="diagnosticBarChart"></canvas>
+      <canvas id="handsonBarChart"></canvas>
     </div>
   </div>
 </div>
@@ -97,6 +94,7 @@ content%} {%block stylesheet%}
 {% block customScripts%}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-<script src="{{url_for('static',filename='js/diagnostic-pieChart.js')}}"></script>
-<script src="{{url_for('static',filename='js/diagnostic-barChart.js')}}"></script>
+<script src="{{url_for('static',filename='js/handson-pieChart.js')}}"></script>
+<script src="{{url_for('static',filename='js/handson-barChart.js')}}"></script>
+
 {%endblock%} {%endblock%}
