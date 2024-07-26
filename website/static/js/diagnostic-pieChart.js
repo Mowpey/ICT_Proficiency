@@ -4,13 +4,13 @@
   Chart.register(ChartDataLabels);
 
   const data = {
-    labels: ["Total Applicants", "Passed Applicants", "Failed Applicants"],
+    labels: ["Passed Applicants", "Failed Applicants"],
     datasets: [
       {
         label: "My First Dataset",
-        data: [30, 20, 10],
-        backgroundColor: ["#424ef5", "#18a843", "#990e23"],
-        hoverOffset: 3,
+        data: [20, 10],
+        backgroundColor: ["#18a843", "#990e23"],
+        hoverOffset: 2,
       },
     ],
   };

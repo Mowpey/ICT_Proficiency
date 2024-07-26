@@ -32,7 +32,7 @@
   aria-hidden="true"
   aria-labelledby="diagnosticEditModalLabel"
 >
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="diagnosticEditModalLabel">
@@ -45,7 +45,244 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">Testing the Diagnostic Edit Modal</div>
+      <div class="modal-body">
+        <form action="" method="POST">
+          <div class="row">
+            <div class="col-6 left-side">
+              <h5 class="py-3">Personal Information</h5>
+              <div class="row first_name">
+                <div class="mb-3">
+                  <label for="first_name" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="first_name"
+                    aria-describedby="firstNameHelp"
+                  />
+                </div>
+              </div>
+              <div class="row middle_name">
+                <div class="mb-3">
+                  <label for="middle_name" class="form-label"
+                    >Middle Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="middle_name"
+                    aria-describedby="middleNameHelp"
+                  />
+                </div>
+              </div>
+              <div class="row last_name">
+                <div class="mb-3">
+                  <label for="last_name" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="last_name"
+                    aria-describedby="lastNameHelp"
+                  />
+                </div>
+              </div>
+              <div class="row sex py-2">
+                <div class="">
+                  <div class="input-group mb-3 sex">
+                    <label class="input-group-text" for="sex">Sex</label>
+                    <select class="form-select" id="sex">
+                      <option selected></option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row province py-2">
+                <div class="">
+                  <div class="input-group mb-3 province">
+                    <label class="input-group-text" for="province"
+                      >Province</label
+                    >
+                    <select class="form-select" id="province">
+                      <option selected></option>
+                      <option value="isabela">Isabela</option>
+                      <option value="cagayan">Cagayan</option>
+                      <option value="batanes">Batanes</option>
+                      <option value="nueva_vizcaya">Nueva Vizcaya</option>
+                      <option value="quirino">Quirino</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row contact_number">
+                <div class="mb-3">
+                  <label for="contact_number" class="form-label"
+                    >Contact Number</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="contact_number"
+                    aria-describedby="contactNumberHelp"
+                  />
+                </div>
+              </div>
+              <div class="row email_address">
+                <div class="mb-3">
+                  <label for="email_address" class="form-label"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email_address"
+                    aria-describedby="emailAddressHelp"
+                  />
+                </div>
+              </div>
+              <div class="row py-2 applicant_attachment">
+                <div class="col">
+                  <h5 class="py-3">Applicant Attachment</h5>
+                  <div class="input-group mb-3">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="applicant_attachment"
+                    />
+                    <label class="input-group-text" for="applicant_attachment"
+                      >Click to Upload</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 right-side">
+              <h5 class="py-3">Examination Details</h5>
+              <div class="row date_exam">
+                <div class="mb-3">
+                  <label for="date_exam" class="form-label"
+                    >Date of Examination</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="date_exam"
+                    aria-describedby="dateExamHelp"
+                  />
+                </div>
+              </div>
+              <div class="row date_notified">
+                <div class="mb-3">
+                  <label for="date_notified" class="form-label"
+                    >Date of Notification</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="date_notified"
+                    aria-describedby="dateNotifiedHelp"
+                  />
+                </div>
+              </div>
+              <div class="row exam_venue py-2">
+                <div class="">
+                  <div class="input-group mb-3 exam_venue">
+                    <label class="input-group-text" for="exam_venue"
+                      >Exam Venue</label
+                    >
+                    <select class="form-select" id="exam_venue">
+                      <option selected></option>
+                      <option value="isabela">CSU Gymnasium</option>
+                      <option value="cagayan">Quirino Theater</option>
+                      <option value="batanes">Isabela Hall A</option>
+                      <option value="nueva_vizcaya">
+                        Nueva Vizcaya Hall B
+                      </option>
+                      <option value="quirino">Batanes Hall C</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row proctor">
+                <div class="mb-3">
+                  <label for="proctor" class="form-label">Proctor</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="proctor"
+                    aria-describedby="proctorHelp"
+                  />
+                </div>
+              </div>
+              <div class="row status py-2">
+                <div class="">
+                  <div class="input-group mb-3 status">
+                    <label class="input-group-text" for="status">Status</label>
+                    <select class="form-select" id="status">
+                      <option selected></option>
+                      <option value="Passed">Passed</option>
+                      <option value="Failed">Failed</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <h5 class="py-3">Score Details</h5>
+              <div class="row part_one_score">
+                <div class="mb-3">
+                  <label for="part_one_score" class="form-label"
+                    >Part I Score</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="part_one_score"
+                    aria-describedby="partOneScoreHelp"
+                  />
+                </div>
+              </div>
+              <div class="row part_two_score">
+                <div class="mb-3">
+                  <label for="part_two_score" class="form-label"
+                    >Part II Score</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="part_two_score"
+                    aria-describedby="partTwoScoreHelp"
+                  />
+                </div>
+              </div>
+              <div class="row part_three_score">
+                <div class="mb-3">
+                  <label for="part_three_score" class="form-label"
+                    >Part III Score</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="part_three_score"
+                    aria-describedby="partThreeScoreHelp"
+                  />
+                </div>
+              </div>
+              <div class="row total_score">
+                <div class="mb-3">
+                  <label for="total_score" class="form-label"
+                    >Total Score</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="total_score"
+                    aria-describedby="totalScoreHelp"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">Submit</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
