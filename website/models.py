@@ -31,6 +31,8 @@ class DiagnosticResults(db.Model):
     part_three_score = db.Column(db.Integer)
     total_score = db.Column(db.Integer)
 
+   
+
 
 class HandsonResults(db.Model):
     id = db.Column(db.Integer, primary_key=True)
