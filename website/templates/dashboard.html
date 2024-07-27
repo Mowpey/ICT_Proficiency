@@ -1,97 +1,130 @@
 {% extends "base.html" %} {% block title %} Dashboard{% endblock %} {%block
 content%} {%block stylesheet%}
 <link
-  rel="stylesheet"
-  href="{{url_for('static',filename='css/dashboard-style.css')}}"
+    rel="stylesheet"
+    href="{{url_for('static',filename='css/dashboard-style.css')}}"
 />
 {%endblock%}
+
 <!-- Tab Headers-->
 <div class="row my-3">
-  <div class="col">
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#"
-          >Diagnostic Summary</a
-        >
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="handson_dashboard">Handson Summary</a>
-      </li>
-    </ul>
-  </div>
+    <div class="col">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#"
+                    >Diagnostic Summary</a
+                >
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="handson_dashboard">Handson Summary</a>
+            </li>
+        </ul>
+    </div>
 </div>
 <!-- Diagnostic Filters-->
-<div class="row justify-content-start">
-  <div class="col-4 date-filter">
-    <label class="py-2 fw-semibold"> Filter for Exam Date</label>
-    <!--Filter Exam Date-->
-    <div class="input-group">
-      <input
-        type="text"
-        class="form-control fw-semibold rounded"
-        placeholder="Exam date"
-        id="filter_date_exam"
-        name="filter_date_exam"
-      />
+<div class="row align-items-center">
+    <div class="col-auto date-filter">
+        <label class="py-2 fw-semibold"> Start Exam Date</label>
+        <!--Filter Exam Date-->
+        <div class="input-group">
+            <input
+                type="text"
+                class="form-control fw-semibold rounded"
+                placeholder="Exam date"
+                id="filter_date_exam_start"
+                name="filter_date_exam_start"
+            />
+        </div>
     </div>
-  </div>
-  <div class="col-4 date-filter">
-    <label class="py-2 fw-semibold"> Filter for Notified Date</label>
-    <!--Filter Exam Date-->
-    <div class="input-group">
-      <input
-        type="text"
-        class="form-control fw-semibold rounded"
-        placeholder="Notification date"
-        id="filter_date_notif"
-        name="filter_date_notif"
-      />
+    <div class="col-auto date-filter">
+        <label class="py-2 fw-semibold"> End for Exam Date</label>
+        <div class="input-group">
+            <input
+                type="text"
+                class="form-control fw-semibold rounded"
+                placeholder="Exam date"
+                id="filter_date_exam_end"
+                name="filter_date_exam_end"
+            />
+        </div>
     </div>
-  </div>
+    <!-- <label class="py-2 fw-semibold"> Filter for Notified Date</label> -->
+    <div class="col-auto date-filter">
+        <label class="py-2 fw-semibold"> Start for Notified Date</label>
+        <!--Filter Exam Date-->
+        <div class="input-group">
+            <input
+                type="text"
+                class="form-control fw-semibold rounded"
+                placeholder="Notification date"
+                id="filter_date_notif_start"
+                name="filter_date_notif_start"
+            />
+        </div>
+    </div>
+    <div class="col-auto date-filter">
+        <label class="py-2 fw-semibold"> End for Notified Date</label>
+        <!--Filter Exam Date-->
+        <div class="input-group">
+            <input
+                type="text"
+                class="form-control fw-semibold rounded"
+                placeholder="Notification date"
+                id="filter_date_notif_end"
+                name="filter_date_notif_end"
+            />
+        </div>
+    </div>
 </div>
 
 <!-- Diagnostic Card Summary-->
 <div class="row card-summary">
-  <div class="col-4 my-4 total-applicants">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Total Applicants</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Some Number</h6>
-      </div>
+    <div class="col-4 my-4 total-applicants">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Applicants</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">
+                    Some Number
+                </h6>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-4 my-4 passed-summary">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Passed Summary</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Some Number</h6>
-      </div>
+    <div class="col-4 my-4 passed-summary">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Passed Summary</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">
+                    Some Number
+                </h6>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-4 my-4 failed-summary">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Failed Summary</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Some Number</h6>
-      </div>
+    <div class="col-4 my-4 failed-summary">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Failed Summary</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">
+                    Some Number
+                </h6>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!--Charts & Graphs-->
 <div class="row charts">
-  <!-- Diagnostic Pie Chart-->
-  <div class="col-6 diagnosticPieChart">
-    <div>
-      <canvas id="diagnosticPieChart"></canvas>
+    <!-- Diagnostic Pie Chart-->
+    <div class="col-6 diagnosticPieChart">
+        <div>
+            <canvas id="diagnosticPieChart"></canvas>
+        </div>
     </div>
-  </div>
-  <!-- Diagnostic Bar Chart-->
-  <div class="col-6 diagnosticBarChart">
-    <div>
-      <canvas id="diagnosticBarChart"></canvas>
+    <!-- Diagnostic Bar Chart-->
+    <div class="col-6 diagnosticBarChart">
+        <div>
+            <canvas id="diagnosticBarChart"></canvas>
+        </div>
     </div>
-  </div>
 </div>
 
 {% block customScripts%}

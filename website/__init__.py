@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from os import path
 from flask_wtf.csrf import CSRFProtect
 
-# csrf = CSRFProtect()
+csrf = CSRFProtect()
 db=SQLAlchemy()
 DB_NAME= "applicantrecords.db"
 
@@ -15,7 +15,7 @@ Session = sessionmaker(bind=engine)
 
 def create_app():
     app = Flask(__name__)
-    # csrf.init_app(app)
+    csrf.init_app(app)
     app.config['SECRET_KEY'] = '1@7lj@!g_ytr#$_l)x8#-6akhf6wg74_0ho!e94a#2u$r^=jo'
     app.config['SQLALCHEMY_DATABASE_URI']= f'sqlite:///{DB_NAME}'
     db.init_app(app)

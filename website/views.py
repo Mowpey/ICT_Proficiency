@@ -1,4 +1,8 @@
 from flask import Blueprint,render_template
+from website.models import *
+from sqlalchemy import select,desc
+from sqlalchemy.orm import joinedload
+
 
 views = Blueprint('views', __name__)
 
@@ -8,11 +12,23 @@ def showDashboard():
 
 @views.route('/diagnostic_table')
 def showDiagnosticTable():
-    return render_template("diagnostic_table.html",active_page="table")
+    display_all = select(DiagnosticResults).order_by(desc(DiagnosticResults.applicant_id))
+    diagnostic_table_entries = db.session.execute(display_all).scalars().all()
+    return render_template("diagnostic_table.html",d_results= diagnostic_table_entries,active_page="table")
 
 @views.route('/handson_table')
 def showHandsonTable():
-    return render_template("handson_table.html",active_page="table")
+    display_all = (
+        select(HandsonResults,DiagnosticResults.first_name,
+            DiagnosticResults.middle_name,DiagnosticResults.last_name,
+            DiagnosticResults.sex).join(
+            DiagnosticResults,HandsonResults.applicant_id ==
+            DiagnosticResults.applicant_id).order_by(desc(HandsonResults.applicant_id))
+
+
+    )
+    handson_table_entries = db.session.execute(display_all).mappings().all()
+    return render_template("handson_table.html",h_results=handson_table_entries, active_page="table")
 
 @views.route('/history')
 def showHistory():

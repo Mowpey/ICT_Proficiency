@@ -29,8 +29,8 @@ class DiagnosticResults(db.Model):
     part_two_score = db.Column(db.Integer)
     part_three_score = db.Column(db.Integer)
     total_score = db.Column(db.Integer)
+    handson_results = db.relationship('HandsonResults',uselist=False,back_populates='diagnostic_results')
 
-   
 
 
 class HandsonResults(db.Model):
@@ -43,6 +43,7 @@ class HandsonResults(db.Model):
     proctor = db.Column(db.String(64))
     handson_score = db.Column(db.Integer)
     status = db.Column(db.String(32))
+    diagnostic_results = db.relationship('DiagnosticResults',back_populates="handson_results",uselist=False)
 
 class HistoryTable(db.Model):
     id = db.Column(db.Integer,primary_key=True)
