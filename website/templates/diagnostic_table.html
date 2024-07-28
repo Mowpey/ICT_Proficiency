@@ -404,11 +404,11 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
             <tr>
                 <td>
                     <div class="button-modals">
-                        {% block diagnosticEditModal%} {% include
-                        "diagnostic_table_modals/edit_modal.html" %}
-                        {%endblock%} {%block diagnosticDeleteModal%} {%include
-                        "diagnostic_table_modals/delete_modal.html" %}
-                        {%endblock%}
+                        {% include
+                        "diagnostic_table_modals/edit_modal.html" with context %}
+
+                        {%include
+                        "diagnostic_table_modals/delete_modal.html" with context %}
                     </div>
                 </td>
                 <td>{{display.applicant_id}}</td>

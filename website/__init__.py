@@ -22,11 +22,13 @@ def create_app():
 
     from .views import views
     from .auth import auth
-    from .queries.insert import insert
+    from .queries.insert import insert_bp
+    from .queries.update import update_bp
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
-    app.register_blueprint(insert, url_prefix='/')
+    app.register_blueprint(insert_bp, url_prefix='/')
+    app.register_blueprint(update_bp,url_prefix='/')
 
     from .models import Admin, DiagnosticResults, HandsonResults, HistoryTable
     create_database(app)

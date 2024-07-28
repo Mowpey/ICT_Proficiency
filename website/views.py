@@ -24,8 +24,6 @@ def showHandsonTable():
             DiagnosticResults.sex).join(
             DiagnosticResults,HandsonResults.applicant_id ==
             DiagnosticResults.applicant_id).order_by(desc(HandsonResults.applicant_id))
-
-
     )
     handson_table_entries = db.session.execute(display_all).mappings().all()
     return render_template("handson_table.html",h_results=handson_table_entries, active_page="table")

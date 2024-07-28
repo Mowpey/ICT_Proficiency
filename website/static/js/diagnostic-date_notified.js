@@ -6,6 +6,7 @@ if (typeof exam_picker === "undefined") {
     grid: 1,
     calendars: 1,
     readonly: false,
+    format: "MMMM DD, YYYY",
     AmpPlugin: {
       resetButton: true,
     },
