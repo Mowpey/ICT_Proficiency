@@ -45,7 +45,7 @@
                     aria-label="Close"
                 ></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body"  x-data="{ part_one: '{{display.part_one_score}}', part_two: '{{display.part_two_score}}', part_three:'{{display.part_three_score}}' }">
                 <form action="{{url_for('update.updateValues',applicant_id = display.applicant_id)}}" method="POST" enctype="multipart/form-data">
                     <input
                         type="hidden"
@@ -316,6 +316,7 @@
                                         class="form-control"
                                         id="part_one_score"
                                         name="part_one_score"
+                                        
                                         aria-describedby="partOneScoreHelp"
                                         value="{{display.part_one_score}}"
                                     />
@@ -333,6 +334,7 @@
                                         class="form-control"
                                         id="part_two_score"
                                         name="part_two_score"
+                                       
                                         aria-describedby="partTwoScoreHelp"
                                         value="{{display.part_two_score}}"
                                     />
@@ -365,8 +367,9 @@
                                         class="form-control"
                                         id="total_score"
                                         name="total_score"
+                                        x-bind:value="Number(part_one) + Number(part_two) + Number(part_three)"
                                         aria-describedby="totalScoreHelp"
-                                        value="{{display.total_score}}"
+                                        readonly
                                     />
                                 </div>
                             </div>

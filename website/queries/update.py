@@ -18,7 +18,7 @@ def is_pdf(applicant_attachment):
     return mime.from_buffer(applicant_attachment_isValid) == 'application/pdf'
 
 
-@update_bp.route('/<int:applicant_id>',methods = ['GET','POST'])
+@update_bp.route('/<int:applicant_id>',methods = ['POST'])
 def updateValues(applicant_id):
 
     diagnostic_form_data = update(DiagnosticResults).where(DiagnosticResults.applicant_id
@@ -60,7 +60,11 @@ def updateValues(applicant_id):
 
 
 
-
+@update_bp.route('/update_handson/<int: applicant_id>',methods = ['POST'])
+def updateValues_handson(applicant_id):
+    handson_form_data = update(HandsonResults).where(HandsonResults.applicant_id == applicant_id).values(
+        
+    )
 
 
 
