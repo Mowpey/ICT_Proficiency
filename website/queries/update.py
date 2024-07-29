@@ -18,27 +18,27 @@ def is_pdf(applicant_attachment):
     return mime.from_buffer(applicant_attachment_isValid) == 'application/pdf'
 
 
-@update_bp.route('/<int:applicant_id>',methods = ['POST'])
+@update_bp.route('/update_diagnostic/<int:applicant_id>',methods = ['POST'])
 def updateValues(applicant_id):
 
     diagnostic_form_data = update(DiagnosticResults).where(DiagnosticResults.applicant_id
         == applicant_id).values(
-            first_name=request.form['first_name'].strip(),
-            middle_name=request.form['middle_name'].strip(),
-            last_name=request.form['last_name'].strip(),
-            sex=request.form['sex'].strip(),
-            province=request.form['province'].strip(),
-            exam_venue=request.form['exam_venue'].strip(),
-            date_of_examination=datetime.strptime(request.form['date_exam'], '%B %d, %Y').date(),
-            date_of_notification=datetime.strptime(request.form['date_notified'], '%B %d, %Y').date(),
-            proctor=request.form['proctor'].strip(),
-            status=request.form['status'].strip(),
-            contact_number=request.form['contact_number'].strip(),
-            email_address=request.form['email_address'].strip(),
-            part_one_score=request.form['part_one_score'].strip(),
-            part_two_score=request.form['part_two_score'].strip(),
-            part_three_score=request.form['part_three_score'].strip(),
-            total_score=request.form['total_score'],
+            first_name = request.form.get('first_name').strip() if request.form.get('first_name') else None,
+            middle_name = request.form.get('middle_name').strip() if request.form.get('middle_name') else None,
+            last_name = request.form.get('last_name').strip() if request.form.get('last_name') else None,
+            sex = request.form.get('sex').strip() if request.form.get('sex') else None,
+            province = request.form.get('province').strip() if request.form.get('province') else None,
+            exam_venue = request.form.get('exam_venue').strip() if request.form.get('exam_venue') else None,
+            date_of_examination = datetime.strptime(request.form.get('date_exam' ), '%B %d, %Y').date() if request.form.get('date_exam') else None,
+            date_of_notification = datetime.strptime(request.form.get('date_notified'), '%B %d, %Y').date() if request.form.get('date_notified') else None,
+            proctor = request.form.get('proctor').strip() if request.form.get('proctor') else None,
+            status = request.form.get('status').strip() if request.form.get('status') else None,
+            contact_number = request.form.get('contact_number').strip() if request.form.get('contact_number') else None,
+            email_address = request.form.get('email_address').strip() if request.form.get('email_address') else None,
+            part_one_score = request.form.get('part_one_score').strip() if request.form.get('part_one_score') else None,
+            part_two_score = request.form.get('part_two_score').strip() if request.form.get('part_two_score') else None,
+            part_three_score = request.form.get('part_three_score').strip() if request.form.get('part_three_score') else None,
+            total_score = request.form.get('total_score').strip() if request.form.get('total_score') else None
         )
 
     new_applicant_form = request.files.get('edit_applicant_attachment') #checks if a new file is uploaded
@@ -53,7 +53,7 @@ def updateValues(applicant_id):
         db.session.commit()
         print("new pdf has been committed")
 
-
+    flash("Applicant Record has been updated successfully",'diagnostic_success')
     db.session.execute(diagnostic_form_data)
     db.session.commit()
     return redirect(url_for('views.showDiagnosticTable'))
