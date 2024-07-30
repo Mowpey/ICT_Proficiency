@@ -23,22 +23,22 @@ def updateValues(applicant_id):
 
     diagnostic_form_data = update(DiagnosticResults).where(DiagnosticResults.applicant_id
         == applicant_id).values(
-            first_name = request.form.get('first_name').strip() if request.form.get('first_name') else None,
-            middle_name = request.form.get('middle_name').strip() if request.form.get('middle_name') else None,
-            last_name = request.form.get('last_name').strip() if request.form.get('last_name') else None,
-            sex = request.form.get('sex').strip() if request.form.get('sex') else None,
-            province = request.form.get('province').strip() if request.form.get('province') else None,
-            exam_venue = request.form.get('exam_venue').strip() if request.form.get('exam_venue') else None,
-            date_of_examination = datetime.strptime(request.form.get('date_exam' ), '%B %d, %Y').date() if request.form.get('date_exam') else None,
-            date_of_notification = datetime.strptime(request.form.get('date_notified'), '%B %d, %Y').date() if request.form.get('date_notified') else None,
-            proctor = request.form.get('proctor').strip() if request.form.get('proctor') else None,
-            status = request.form.get('status').strip() if request.form.get('status') else None,
-            contact_number = request.form.get('contact_number').strip() if request.form.get('contact_number') else None,
-            email_address = request.form.get('email_address').strip() if request.form.get('email_address') else None,
-            part_one_score = request.form.get('part_one_score').strip() if request.form.get('part_one_score') else None,
-            part_two_score = request.form.get('part_two_score').strip() if request.form.get('part_two_score') else None,
-            part_three_score = request.form.get('part_three_score').strip() if request.form.get('part_three_score') else None,
-            total_score = request.form.get('total_score').strip() if request.form.get('total_score') else None
+            first_name = request.form.get('first_name', '').strip() or None,
+            middle_name = request.form.get('middle_name', '').strip() or None,
+            last_name = request.form.get('last_name', '').strip() or None,
+            sex = request.form.get('sex', '').strip() or None,
+            province = request.form.get('province', '').strip() or None,
+            exam_venue = request.form.get('exam_venue', '').strip() or None,
+            date_of_examination = datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date() if request.form.get('date_exam') else None,
+            date_of_notification = datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date() if request.form.get('date_notified') else None,
+            proctor = request.form.get('proctor', '').strip() or None,
+            status = request.form.get('status', '').strip() or None,
+            contact_number = request.form.get('contact_number', '').strip() or None,
+            email_address = request.form.get('email_address', '').strip() or None,
+            part_one_score = request.form.get('part_one_score', '').strip() or None,
+            part_two_score = request.form.get('part_two_score', '').strip() or None,
+            part_three_score = request.form.get('part_three_score', '').strip() or None,
+            total_score = request.form.get('total_score', '').strip() or None,
         )
 
     new_applicant_form = request.files.get('edit_applicant_attachment') #checks if a new file is uploaded
@@ -51,7 +51,7 @@ def updateValues(applicant_id):
         )
         db.session.execute(new_pdf)
         db.session.commit()
-        
+
     db.session.execute(diagnostic_form_data)
     db.session.commit()
     flash("Diagnostic Record has been updated successfully",'diagnostic_success')
@@ -62,7 +62,6 @@ def updateValues(applicant_id):
 @update_bp.route('/update_handson/<int:applicant_id>',methods = ['POST'])
 def updateValues_handson(applicant_id):
     handson_form_data = update(HandsonResults).where(HandsonResults.applicant_id == applicant_id).values(
-        province=request.form.get('province'),
         exam_venue=request.form.get('exam_venue'),
         date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
         date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
@@ -70,7 +69,7 @@ def updateValues_handson(applicant_id):
         handson_score=request.form.get('handson_score'),
         status=request.form.get('status')
     )
-    
+
     db.session.execute(handson_form_data)
     db.session.commit()
     flash("Handson Record has been updated successfully",'handson_success')

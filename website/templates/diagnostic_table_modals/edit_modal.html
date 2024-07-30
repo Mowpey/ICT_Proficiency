@@ -1,3 +1,16 @@
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+
+
+
 <!-- Diagnostic Edit Modal -->
 <button
     type="button"
@@ -127,7 +140,7 @@
                                             class="form-select"
                                             id="province"
                                             name="province"
-                                        
+
                                         >
                                             <option selected></option>
                                             <option value="Isabela"  {% if display.province == 'Isabela' %} selected {% endif %}>
@@ -313,11 +326,11 @@
                                         >Part I Score</label
                                     >
                                     <input
-                                        type="text"
+                                        type="number"
                                         class="form-control"
                                         id="part_one_score"
                                         name="part_one_score"
-                                        
+                                        x-model.number="part_one"
                                         aria-describedby="partOneScoreHelp"
                                         value="{{display.part_one_score}}"
                                     />
@@ -331,11 +344,11 @@
                                         >Part II Score</label
                                     >
                                     <input
-                                        type="text"
+                                        type="number"
                                         class="form-control"
                                         id="part_two_score"
                                         name="part_two_score"
-                                       
+                                        x-model.number="part_two"
                                         aria-describedby="partTwoScoreHelp"
                                         value="{{display.part_two_score}}"
                                     />
@@ -349,10 +362,11 @@
                                         >Part III Score</label
                                     >
                                     <input
-                                        type="text"
+                                        type="number"
                                         class="form-control"
                                         id="part_three_score"
                                         name="part_three_score"
+                                        x-model.number="part_three"
                                         aria-describedby="partThreeScoreHelp"
                                         value="{{display.part_three_score}}"
                                     />

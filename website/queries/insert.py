@@ -25,22 +25,22 @@ def insertDiagnosticData():
             return redirect(url_for('views.showDiagnosticTable'))
 
         diagnostic_form_data = insert(DiagnosticResults).values(
-            first_name = request.form.get('first_name').strip(),
-            middle_name = request.form.get('middle_name').strip(),
-            last_name = request.form.get('last_name').strip(),
-            sex = request.form.get('sex').strip(),
-            province = request.form.get('province').strip(),
-            exam_venue = request.form.get('exam_venue').strip(),
-            date_of_examination = datetime.strptime(request.form.get('date_exam'), '%B %d, %Y').date(),
-            date_of_notification = datetime.strptime(request.form.get('date_notified'), '%B %d, %Y').date(),
-            proctor = request.form.get('proctor').strip(),
-            status = request.form.get('status').strip(),
-            contact_number = request.form.get('contact_number').strip(),
-            email_address = request.form.get('email_address').strip(),
-            part_one_score = request.form.get('part_one_score').strip(),
-            part_two_score = request.form.get('part_two_score').strip(),
-            part_three_score = request.form.get('part_three_score').strip(),
-            total_score = request.form.get('total_score').strip(),
+            first_name = request.form.get('first_name', '').strip() or None,
+            middle_name = request.form.get('middle_name', '').strip() or None,
+            last_name = request.form.get('last_name', '').strip() or None,
+            sex = request.form.get('sex', '').strip() or None,
+            province = request.form.get('province', '').strip() or None,
+            exam_venue = request.form.get('exam_venue', '').strip() or None,
+            date_of_examination = datetime.strptime(request.form.get('date_exam', '').strip(), '%B %d, %Y').date() if request.form.get('date_exam') else None,
+            date_of_notification = datetime.strptime(request.form.get('date_notified', '').strip(), '%B %d, %Y').date() if request.form.get('date_notified') else None,
+            proctor = request.form.get('proctor', '').strip() or None,
+            status = request.form.get('status', '').strip() or None,
+            contact_number = request.form.get('contact_number', '').strip() or None,
+            email_address = request.form.get('email_address', '').strip() or None,
+            part_one_score = request.form.get('part_one_score', '').strip() or None,
+            part_two_score = request.form.get('part_two_score', '').strip() or None,
+            part_three_score = request.form.get('part_three_score', '').strip() or None,
+            total_score = request.form.get('total_score', '').strip() or None,
             applicant_form=applicant_attachment.read()
             )
 

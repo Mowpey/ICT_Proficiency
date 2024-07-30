@@ -47,10 +47,8 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
   </div>
 
   <div class="col-6 d-flex justify-content-end gap-2 header-buttons">
-    {% block diagnosticAddModal %} {% include
-    "diagnostic_table_modals/add_modal.html" %} {%endblock%} {%block
-    diagnosticClearFilter%} {%include "diagnostic_table_modals/clear_modal.html"
-    %} {%endblock%}
+    {% include "diagnostic_table_modals/add_modal.html" %}
+    {% include "diagnostic_table_modals/clear_modal.html" %}
   </div>
 </div>
 <!--Tab Headers-->
@@ -431,6 +429,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
         <td
           data-bs-target="#showDetails_{{display.applicant_id}}"
           data-bs-toggle="modal"
+          class="{% if display.status == 'Passed' %} table-success {% else %} table-danger {% endif %}"
         >
           {{display.status}}
         </td>
