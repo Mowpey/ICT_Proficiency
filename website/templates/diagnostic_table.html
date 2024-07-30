@@ -369,31 +369,71 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
     <tbody>
       {%for display in d_results %}
       <tr>
+        {% include "diagnostic_table_modals/display_modal.html" with context%}
         <td>
           <div class="button-modals">
             {% include "diagnostic_table_modals/edit_modal.html" with context %}
-            {%include "diagnostic_table_modals/delete_modal.html" with context
+            {% include "diagnostic_table_modals/delete_modal.html" with context
             %}
           </div>
         </td>
-        <td>{{display.applicant_id}}</td>
-        <td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.applicant_id}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
           {{display.first_name}} {% if display.middle_name %}
           {{display.middle_name[0] + "."}} {% endif %} {{display.last_name}}
         </td>
-        <td>{{display.sex}}</td>
-        <td>{{display.province}}</td>
-        <td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.sex}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.province}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
           {{ display.date_of_examination.strftime('%B %d, %Y') if
           display.date_of_examination else 'N/A' }}
         </td>
-        <td>{{display.exam_venue}}</td>
-        <td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.exam_venue}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
           {{display.date_of_notification.strftime('%B %d, %Y') if
           display.date_of_notification else 'N/A' }}
         </td>
-        <td>{{display.proctor}}</td>
-        <td>{{display.status}}</td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.proctor}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.status}}
+        </td>
       </tr>
       {%endfor%}
     </tbody>

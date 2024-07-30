@@ -51,11 +51,10 @@ def updateValues(applicant_id):
         )
         db.session.execute(new_pdf)
         db.session.commit()
-        print("new pdf has been committed")
-
-    flash("Applicant Record has been updated successfully",'diagnostic_success')
+        
     db.session.execute(diagnostic_form_data)
     db.session.commit()
+    flash("Diagnostic Record has been updated successfully",'diagnostic_success')
     return redirect(url_for('views.showDiagnosticTable'))
 
 
@@ -71,8 +70,10 @@ def updateValues_handson(applicant_id):
         handson_score=request.form.get('handson_score'),
         status=request.form.get('status')
     )
+    
     db.session.execute(handson_form_data)
     db.session.commit()
+    flash("Handson Record has been updated successfully",'handson_success')
     return redirect(url_for('views.showHandsonTable'))
 
 

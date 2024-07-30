@@ -16,6 +16,17 @@ def deleteDiagnosticRecord(applicant_id):
         db.session.execute(handson_record)
         db.session.execute(diagnostic_form_data)
         db.session.commit()
-        flash('Record deleted successfully', 'diagnostic_success')
+        flash('Diagnostic record deleted successfully', 'diagnostic_success')
 
         return redirect(url_for('views.showDiagnosticTable'))
+
+@delete_bp.route('/delete_handson/<int:applicant_id>', methods=['POST'])
+def deleteHandsonRecord(applicant_id):
+
+        handson_record = delete(HandsonResults).where(HandsonResults.applicant_id == applicant_id)
+
+        db.session.execute(handson_record)
+        db.session.commit()
+        flash('Handson record deleted successfully', 'handson_success')
+
+        return redirect(url_for('views.showHandsonTable'))

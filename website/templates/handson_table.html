@@ -366,27 +366,70 @@ for category, message in messages %} {% if category == 'handson_error' %}
     <tbody>
       {%for display in h_results%}
       <tr>
+        {% include "handson_table_modals/display_modal.html" with context%}
         <td>
           <div class="button-modals">
-            {% include "handson_table_modals/edit_modal.html" %} {%include
-            "handson_table_modals/delete_modal.html" %}
+            {% include "handson_table_modals/edit_modal.html" with context %}
+            {%include "handson_table_modals/delete_modal.html" with context %}
           </div>
         </td>
-        <td>{{display.HandsonResults.applicant_id}}</td>
-        <td>{{display.first_name}}</td>
-        <td>{{display.sex}}</td>
-        <td>{{display.HandsonResults.province}}</td>
-        <td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.applicant_id}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.first_name}} {% if display.middle_name %}
+          {{display.middle_name[0] + "."}} {% endif %} {{display.last_name}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.sex}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.province}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
           {{display.HandsonResults.date_of_examination.strftime('%B %d, %Y') if
           display.HandsonResults.date_of_examination else ''}}
         </td>
-        <td>{{display.HandsonResults.exam_venue}}</td>
-        <td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.exam_venue}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
           {{display.HandsonResults.date_of_notification.strftime('%B %d, %Y') if
           display.HandsonResults.date_of_notification else ''}}
         </td>
-        <td>{{display.HandsonResults.proctor}}</td>
-        <td>{{display.HandsonResults.status}}</td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.proctor}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.status}}
+        </td>
       </tr>
       {%endfor%}
     </tbody>
