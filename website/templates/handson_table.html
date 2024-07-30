@@ -45,9 +45,8 @@ for category, message in messages %} {% if category == 'handson_error' %}
   </div>
 
   <div class="col-6 d-flex justify-content-end gap-2 header-buttons">
-    {% block handsonAddModal %} {% include "handson_table_modals/add_modal.html"
-    %} {%endblock%} {%block handsonClearFilter%} {%include
-    "handson_table_modals/clear_modal.html" %} {%endblock%}
+     {% include "handson_table_modals/add_modal.html"%}
+     {% include "handson_table_modals/clear_modal.html" %}
   </div>
 </div>
 <!--Tab Headers-->
