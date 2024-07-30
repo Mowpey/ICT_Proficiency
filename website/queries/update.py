@@ -62,7 +62,6 @@ def updateValues(applicant_id):
 @update_bp.route('/update_handson/<int:applicant_id>',methods = ['POST'])
 def updateValues_handson(applicant_id):
     handson_form_data = update(HandsonResults).where(HandsonResults.applicant_id == applicant_id).values(
-        province=request.form.get('province'),
         exam_venue=request.form.get('exam_venue'),
         date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
         date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),

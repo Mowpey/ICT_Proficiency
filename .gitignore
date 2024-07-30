@@ -308,3 +308,4 @@ dist
 /instance
 instance/applicantrecords.db
 *.db
+instance/applicantrecords.db
