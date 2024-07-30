@@ -33,7 +33,7 @@ A web system built with Flask and Bootstrap for managing applicant records. This
     For Windows
    ```bash
     python -m venv myvenv
-    source myvenv/bin/activate # On Windows use `myvenv\Scripts\activate`
+   `myvenv\Scripts\activate`
     ```
 
 4. Install the required packages:
