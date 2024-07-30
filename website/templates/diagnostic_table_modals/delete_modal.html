@@ -1,10 +1,9 @@
-{%block diagnosticDeleteModal%}
-<!-- Diagnostic Delete Modal -->
+<!-- Diagnostic Delete Modal Button -->
 <button
   type="button"
   class="btn btn-danger"
-  data-bs-target="#diagnostic_delete"
   data-bs-toggle="modal"
+  data-bs-target="#diagnostic_delete_{{display.applicant_id}}"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -23,15 +22,18 @@
 <!-- Delete Modal -->
 <div
   class="modal fade"
-  id="diagnostic_delete"
+  id="diagnostic_delete_{{display.applicant_id}}"
   tabindex="-1"
   aria-hidden="true"
-  aria-labelledby="diagnosticDeleteModalLabel"
+  aria-labelledby="diagnosticDeleteModalLabel_{{display.applicant_id}}"
 >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="diagnosticDeleteModalLabel">
+        <h1
+          class="modal-title fs-5"
+          id="diagnosticDeleteModalLabel_{{display.applicant_id}}"
+        >
           Diagnostic Delete Modal
         </h1>
         <button
@@ -41,14 +43,25 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">Testing the Diagnostic Delete Modal</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
+      <div class="modal-body">
+        <form
+          action="{{url_for('delete.deleteDiagnosticRecord', applicant_id=display.applicant_id)}}"
+          method="POST"
+        >
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <p class="fw-semibold fs-5">Do you want to delete this record?</p>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Yes</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              No
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
-{%endblock%}

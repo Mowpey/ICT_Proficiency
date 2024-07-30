@@ -5,6 +5,7 @@ content%} {%block stylesheet%}
   href="{{url_for('static',filename='css/dashboard-style.css')}}"
 />
 {%endblock%}
+
 <!-- Tab Headers-->
 <div class="row my-3">
   <div class="col">
@@ -21,31 +22,33 @@ content%} {%block stylesheet%}
   </div>
 </div>
 <!-- Diagnostic Filters-->
-<div class="row justify-content-start">
-  <div class="col-4 date-filter">
-    <label class="py-2 fw-semibold"> Filter for Exam Date</label>
+<div class="row align-items-center">
+  <div class="col-auto date-filter">
+    <label class="py-2 fw-semibold"> Start Exam Date</label>
     <!--Filter Exam Date-->
     <div class="input-group">
       <input
         type="text"
         class="form-control fw-semibold rounded"
         placeholder="Exam date"
-        id="filter_date_exam"
-        name="filter_date_exam"
+        id="filter_date_exam_start"
+        name="filter_date_exam_start"
       />
     </div>
   </div>
-  <div class="col-4 date-filter">
-    <label class="py-2 fw-semibold"> Filter for Notified Date</label>
-    <!--Filter Exam Date-->
+  <div class="col-auto date-filter">
+    <label class="py-2 fw-semibold"> End Exam Date</label>
     <div class="input-group">
       <input
         type="text"
-        class="form-control fw-semibold rounded"
-        placeholder="Notification date"
-        id="filter_date_notif"
-        name="filter_date_notif"
+        class="form-control fw-semibold rounded me-2"
+        placeholder="Exam date"
+        id="filter_date_exam_end"
+        name="filter_date_exam_end"
       />
+      <button type="button" class="btn btn-success rounded filter-submit">
+        Submit
+      </button>
     </div>
   </div>
 </div>

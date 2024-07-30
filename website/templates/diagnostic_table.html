@@ -4,6 +4,14 @@
   href="{{ url_for('static', filename='css/table-style.css') }}"
 />
 {%endblock%}
+<!--Flashing if the uploaded file is not a PDF -->
+{% with messages = get_flashed_messages(with_categories=true,
+category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
+{% for category, message in messages %} {% if category == 'diagnostic_error' %}
+<div class="alert alert-danger" role="alert">Error: {{ message }}</div>
+{% elif category == 'diagnostic_success' %}
+<div class="alert alert-success" role="alert">Success: {{ message }}</div>
+{% endif %} {% endfor %} {% endif %} {% endwith %}
 <!--Search Bar-->
 <div class="row row-col-2 align-items-center pb-4">
   <div class="col-6">
@@ -357,40 +365,77 @@
           </div>
         </th>
       </tr>
-
-      <tr class="table-primary">
-        <th scope="col"></th>
-        <th scope="col">Applicant ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Sex</th>
-        <th scope="col">Province</th>
-        <th scope="col">Date of Examination</th>
-        <th scope="col">Exam Venue</th>
-        <th scope="col">Date of Notification</th>
-        <th scope="col">Proctor</th>
-        <th scope="col">Status</th>
-      </tr>
     </thead>
     <tbody>
+      {%for display in d_results %}
       <tr>
+        {% include "diagnostic_table_modals/display_modal.html" with context%}
         <td>
           <div class="button-modals">
-            {% block diagnosticEditModal%} {% include
-            "diagnostic_table_modals/edit_modal.html" %} {%endblock%} {%block
-            diagnosticDeleteModal%} {%include
-            "diagnostic_table_modals/delete_modal.html" %} {%endblock%}
+            {% include "diagnostic_table_modals/edit_modal.html" with context %}
+            {% include "diagnostic_table_modals/delete_modal.html" with context
+            %}
           </div>
         </td>
-        <td>1</td>
-        <td>Mark Angelo Manuel</td>
-        <td>Male</td>
-        <td>Isabela</td>
-        <td>July 1, 2024</td>
-        <td>CSU Gymnasium</td>
-        <td>July 25, 2024</td>
-        <td>Mr. Minatozaki</td>
-        <td>Passed</td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.applicant_id}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.first_name}} {% if display.middle_name %}
+          {{display.middle_name[0] + "."}} {% endif %} {{display.last_name}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.sex}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.province}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{ display.date_of_examination.strftime('%B %d, %Y') if
+          display.date_of_examination else 'N/A' }}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.exam_venue}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.date_of_notification.strftime('%B %d, %Y') if
+          display.date_of_notification else 'N/A' }}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.proctor}}
+        </td>
+        <td
+          data-bs-target="#showDetails_{{display.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.status}}
+        </td>
       </tr>
+      {%endfor%}
     </tbody>
   </table>
 </div>

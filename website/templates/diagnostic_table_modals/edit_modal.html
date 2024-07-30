@@ -1,58 +1,404 @@
-{%block diagnosticEditModal%}
 <!-- Diagnostic Edit Modal -->
 <button
-  type="button"
-  class="btn btn-secondary"
-  data-bs-target="#diagnostic_edit"
-  data-bs-toggle="modal"
+    type="button"
+    class="btn btn-secondary"
+    data-bs-target="#diagnostic_edit_{{display.applicant_id}}"
+    data-bs-toggle="modal"
+    aria-labelledby="diagnosticEditModalLabel_{{display.applicant_id}}"
 >
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
-    fill="currentColor"
-    class="bi bi-pencil-square"
-    viewBox="0 0 16 16"
-  >
-    <path
-      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-    />
-    <path
-      fill-rule="evenodd"
-      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-    />
-  </svg>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-pencil-square"
+        viewBox="0 0 16 16"
+    >
+        <path
+            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+        />
+        <path
+            fill-rule="evenodd"
+            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+        />
+    </svg>
 </button>
 
 <!-- Edit Modal -->
 <div
-  class="modal fade"
-  id="diagnostic_edit"
-  tabindex="-1"
-  aria-hidden="true"
-  aria-labelledby="diagnosticEditModalLabel"
+    class="modal fade"
+    id="diagnostic_edit_{{display.applicant_id}}"
+    tabindex="-1"
+    aria-hidden="true"
+    aria-labelledby="diagnosticEditModalLabel"
 >
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="diagnosticEditModalLabel">
-          Diagnostic Edit Modal
-        </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">Testing the Diagnostic Edit Modal</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-      </div>
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="diagnosticEditModalLabel">
+                    Diagnostic Edit Modal
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body"  x-data="{ part_one: '{{display.part_one_score}}', part_two: '{{display.part_two_score}}', part_three:'{{display.part_three_score}}' }">
+                <form action="{{url_for('update.updateValues',applicant_id = display.applicant_id)}}" method="POST" enctype="multipart/form-data">
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    />
+                    <div class="row">
+                        <div class="col-6 left-side">
+                            <h5 class="py-3">Personal Information</h5>
+                            <div class="row first_name">
+                                <div class="mb-3">
+                                    <label for="first_name" class="form-label"
+                                        >First Name</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="first_name"
+                                        name="first_name"
+                                        aria-describedby="firstNameHelp"
+                                        value="{{display.first_name}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row middle_name">
+                                <div class="mb-3">
+                                    <label for="middle_name" class="form-label"
+                                        >Middle Name</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="middle_name"
+                                        id="middle_name"
+                                        aria-describedby="middleNameHelp"
+                                        value="{{display.middle_name}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row last_name">
+                                <div class="mb-3">
+                                    <label for="last_name" class="form-label"
+                                        >Last Name</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="last_name"
+                                        id="last_name"
+                                        aria-describedby="lastNameHelp"
+                                        value="{{display.last_name}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row sex py-2">
+                                <div class="">
+                                    <div class="input-group mb-3 sex">
+                                        <label
+                                            class="input-group-text"
+                                            for="sex"
+                                            >Sex</label
+                                        >
+                                        <select class="form-select" id="sex" name="sex">
+                                            <option value="male" {% if display.sex == 'male' %} selected {% endif %}>Male</option>
+                                            <option value="female" {% if display.sex == 'female' %} selected {% endif %}>Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row province py-2">
+                                <div class="">
+                                    <div class="input-group mb-3 province">
+                                        <label
+                                            class="input-group-text"
+                                            for="province"
+                                            >Province</label
+                                        >
+                                        <select
+                                            class="form-select"
+                                            id="province"
+                                            name="province"
+                                        
+                                        >
+                                            <option selected></option>
+                                            <option value="Isabela"  {% if display.province == 'Isabela' %} selected {% endif %}>
+                                                Isabela
+                                            </option>
+                                            <option value="Cagayan"  {% if display.province == 'Cagayan' %} selected {% endif %}>
+                                                Cagayan
+                                            </option>
+                                            <option value="Batanes"  {% if display.province== 'Batanes' %} selected {% endif %}>
+                                                Batanes
+                                            </option>
+                                            <option value="Nueva_Vizcaya"  {% if display.province == 'Nueva_Vizcaya' %} selected {% endif %}>
+                                                Nueva Vizcaya
+                                            </option>
+                                            <option value="Quirino"  {% if display.province == 'Quirino' %} selected {% endif %}>
+                                                Quirino
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row contact_number">
+                                <div class="mb-3">
+                                    <label
+                                        for="contact_number"
+                                        class="form-label"
+                                        >Contact Number</label
+                                    >
+                                    <input
+                                        type="tel"
+                                        class="form-control"
+                                        name="contact_number"
+                                        id="contact_number"
+                                        aria-describedby="contactNumberHelp"
+                                        value="{{display.contact_number}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row email_address">
+                                <div class="mb-3">
+                                    <label
+                                        for="email_address"
+                                        class="form-label"
+                                        >Email Address</label
+                                    >
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        name="email_address"
+                                        id="email_address"
+                                        aria-describedby="emailAddressHelp"
+                                        value="{{display.email_address}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row py-2 applicant_attachment">
+                                <div class="col">
+                                    <h5 class="py-3">Applicant Attachment</h5>
+                                    <div class="input-group mb-3">
+                                        <input
+                                            type="file"
+                                            class="form-control"
+                                            id="edit_applicant_attachment"
+                                            name="edit_applicant_attachment"
+                                            accept=".pdf"
+                                        />
+                                    </div>
+
+                                    {% if display.applicant_form %}
+                                     <a href="{{ url_for('update.view_attachment', applicant_id=display.applicant_id) }}" target="_blank" class="btn btn-outline-secondary">View Applicant Attachment</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 right-side">
+                            <h5 class="py-3">Examination Details</h5>
+                            <div class="row date_exam">
+                                <div class="mb-3">
+                                    <label for="date_exam" class="form-label"
+                                        >Date of Examination</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control edit-date-exam"
+                                        name="date_exam"
+                                        id="edit_date_exam_{{display.applicant_id}}"
+                                        aria-describedby="dateExamHelp"
+                                        value="{{display.date_of_examination}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row date_notified">
+                                <div class="mb-3">
+                                    <label
+                                        for="date_notified"
+                                        class="form-label"
+                                        >Date of Notification</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control edit-date-notified"
+                                        name="date_notified"
+                                        id="edit_date_notified_{{display.applicant_id}}"
+                                        aria-describedby="dateNotifiedHelp"
+                                        value="{{display.date_of_notification}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row exam_venue py-2">
+                                <div class="">
+                                    <div class="input-group mb-3 exam_venue">
+                                        <label
+                                            class="input-group-text"
+                                            for="exam_venue"
+                                            >Exam Venue</label
+                                        >
+                                        <select
+                                            class="form-select"
+                                            id="exam_venue"
+                                            name="exam_venue"
+                                        >
+                                            <option selected></option>
+                                            <option value="CSU Gymnasium" {%if display.exam_venue == 'CSU Gymnasium'%} selected {% endif %}>
+                                                CSU Gymnasium
+                                            </option>
+                                            <option value="Quirino Theater" {%if display.exam_venue == 'Quirino Theater'%} selected {% endif %}>
+                                                Quirino Theater
+                                            </option>
+                                            <option value="Isabela Hall A" {%if display.exam_venue == 'Isabela Hall A'%} selected {%endif%}>
+                                                Isabela Hall A
+                                            </option>
+                                            <option value="Nueva Vizcaya Hall B" {%if display.exam_venue == 'Nueva Vizcaya Hall B'%} selected {%endif%}>
+                                                Nueva Vizcaya Hall B
+                                            </option>
+                                            <option value="Batanes Hall C" {%if display.exam_venue == 'Batanes Hall C'%} selected {%endif%}>
+                                                Batanes Hall C
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row proctor">
+                                <div class="mb-3">
+                                    <label for="proctor" class="form-label"
+                                        >Proctor</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="proctor"
+                                        name="proctor"
+                                        aria-describedby="proctorHelp"
+                                        value="{{display.proctor}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row status py-2">
+                                <div class="">
+                                    <div class="input-group mb-3 status">
+                                        <label
+                                            class="input-group-text"
+                                            for="status"
+                                            >Status</label
+                                        >
+                                        <select class="form-select" id="status" name="status">
+                                            <option selected></option>
+                                            <option value="Passed" {%if display.status == 'Passed'%} selected {%endif%}>
+                                                Passed
+                                            </option>
+                                            <option value="Failed" {%if display.status == 'Failed'%} selected {%endif%}>
+                                                Failed
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="py-3">Score Details</h5>
+                            <div class="row part_one_score">
+                                <div class="mb-3">
+                                    <label
+                                        for="part_one_score"
+                                        class="form-label"
+                                        >Part I Score</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="part_one_score"
+                                        name="part_one_score"
+                                        
+                                        aria-describedby="partOneScoreHelp"
+                                        value="{{display.part_one_score}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row part_two_score">
+                                <div class="mb-3">
+                                    <label
+                                        for="part_two_score"
+                                        class="form-label"
+                                        >Part II Score</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="part_two_score"
+                                        name="part_two_score"
+                                       
+                                        aria-describedby="partTwoScoreHelp"
+                                        value="{{display.part_two_score}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row part_three_score">
+                                <div class="mb-3">
+                                    <label
+                                        for="part_three_score"
+                                        class="form-label"
+                                        >Part III Score</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="part_three_score"
+                                        name="part_three_score"
+                                        aria-describedby="partThreeScoreHelp"
+                                        value="{{display.part_three_score}}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row total_score">
+                                <div class="mb-3">
+                                    <label for="total_score" class="form-label"
+                                        >Total Score</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="total_score"
+                                        name="total_score"
+                                        x-bind:value="Number(part_one) + Number(part_two) + Number(part_three)"
+                                        aria-describedby="totalScoreHelp"
+                                        readonly
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-{%endblock%}
+<script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
+<script
+    type="text/javascript"
+    src="{{url_for('static',filename='js/diagnostic-edit_exam.js')}}"
+></script>
+<script
+    type="text/javascript"
+    src="{{url_for('static',filename='js/diagnostic-edit_notified.js')}}"
+></script>

@@ -1,5 +1,4 @@
 from datetime import timezone
-
 from sqlalchemy.orm import backref
 from . import db
 from flask_login import UserMixin
@@ -19,31 +18,31 @@ class DiagnosticResults(db.Model):
     sex = db.Column(db.String(64))
     province = db.Column(db.String(64))
     exam_venue = db.Column(db.String(64))
-    date_of_examination = db.Column(db.DateTime(timezone=True))
-    date_of_notification = db.Column(db.DateTime(timezone=True))
+    date_of_examination = db.Column(db.Date)
+    date_of_notification = db.Column(db.Date)
     proctor = db.Column(db.String(64))
     status = db.Column(db.String(32))
     applicant_form = db.Column(db.LargeBinary)
-    contact_number = db.Column(db.Integer)
+    contact_number = db.Column(db.String(32))
     email_address = db.Column(db.String(64))
     part_one_score = db.Column(db.Integer)
     part_two_score = db.Column(db.Integer)
     part_three_score = db.Column(db.Integer)
     total_score = db.Column(db.Integer)
+    handson_results = db.relationship('HandsonResults',uselist=False,back_populates='diagnostic_results')
 
-   
 
 
 class HandsonResults(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     applicant_id = db.Column(db.Integer, db.ForeignKey('diagnostic_results.applicant_id'))
-    province = db.Column(db.String(64))
     exam_venue = db.Column(db.String(64))
-    date_of_examination = db.Column(db.DateTime(timezone=True))
-    date_of_notification = db.Column(db.DateTime(timezone=True))
+    date_of_examination = db.Column(db.Date)
+    date_of_notification = db.Column(db.Date)
     proctor = db.Column(db.String(64))
     handson_score = db.Column(db.Integer)
     status = db.Column(db.String(32))
+    diagnostic_results = db.relationship('DiagnosticResults',back_populates="handson_results",uselist=False)
 
 class HistoryTable(db.Model):
     id = db.Column(db.Integer,primary_key=True)

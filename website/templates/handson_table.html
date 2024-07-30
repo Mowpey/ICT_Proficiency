@@ -3,7 +3,13 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/table-style.css') }}"
 />
-{%endblock%}
+{%endblock%} {% with messages = get_flashed_messages(with_categories=true,
+category_filter=["handson_error", "handson_success"]) %} {% if messages %} {%
+for category, message in messages %} {% if category == 'handson_error' %}
+<div class="alert alert-danger" role="alert">Error: {{ message }}</div>
+{% elif category == 'handson_success' %}
+<div class="alert alert-success" role="alert">Success: {{ message }}</div>
+{% endif %} {% endfor %} {% endif %} {% endwith %}
 <!--Search Bar-->
 <div class="row row-col-2 align-items-center pb-4">
   <div class="col-6">
@@ -356,40 +362,76 @@
           </div>
         </th>
       </tr>
-
-      <tr class="table-primary">
-        <th scope="col"></th>
-        <th scope="col">Applicant ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Sex</th>
-        <th scope="col">Province</th>
-        <th scope="col">Date of Examination</th>
-        <th scope="col">Exam Venue</th>
-        <th scope="col">Date of Notification</th>
-        <th scope="col">Proctor</th>
-        <th scope="col">Status</th>
-      </tr>
     </thead>
     <tbody>
+      {%for display in h_results%}
       <tr>
+        {% include "handson_table_modals/display_modal.html" with context%}
         <td>
           <div class="button-modals">
-            {% block handsonEditModal%} {% include
-            "handson_table_modals/edit_modal.html" %} {%endblock%} {%block
-            handsonDeleteModal%} {%include
-            "handson_table_modals/delete_modal.html" %} {%endblock%}
+            {% include "handson_table_modals/edit_modal.html" with context %}
+            {%include "handson_table_modals/delete_modal.html" with context %}
           </div>
         </td>
-        <td>1</td>
-        <td>Ian Pamittan</td>
-        <td>Male</td>
-        <td>Cagayan</td>
-        <td>July 5, 2024</td>
-        <td>CSU Hall</td>
-        <td>June 20, 2024</td>
-        <td>Mr. Ken</td>
-        <td>Passed</td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.applicant_id}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.first_name}} {% if display.middle_name %}
+          {{display.middle_name[0] + "."}} {% endif %} {{display.last_name}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.sex}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.province}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.date_of_examination.strftime('%B %d, %Y') if
+          display.HandsonResults.date_of_examination else ''}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.exam_venue}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.date_of_notification.strftime('%B %d, %Y') if
+          display.HandsonResults.date_of_notification else ''}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.proctor}}
+        </td>
+        <td
+          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-toggle="modal"
+        >
+          {{display.HandsonResults.status}}
+        </td>
       </tr>
+      {%endfor%}
     </tbody>
   </table>
 </div>

@@ -38,4 +38,8 @@
   #filter_date_notif {
     min-width: 100%;
   }
+  .filter-submit {
+    display: block;
+    min-width: 30%;
+  }
 }
