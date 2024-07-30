@@ -427,6 +427,7 @@ for category, message in messages %} {% if category == 'handson_error' %}
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
+          class="{% if display.HandsonResults.status == 'Passed' %} table-success {% else %} table-danger {% endif %}"
         >
           {{display.HandsonResults.status}}
         </td>
