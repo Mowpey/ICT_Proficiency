@@ -23,22 +23,22 @@ def updateValues(applicant_id):
 
     diagnostic_form_data = update(DiagnosticResults).where(DiagnosticResults.applicant_id
         == applicant_id).values(
-            first_name=request.form['first_name'].strip(),
-            middle_name=request.form['middle_name'].strip(),
-            last_name=request.form['last_name'].strip(),
-            sex=request.form['sex'].strip(),
-            province=request.form['province'].strip(),
-            exam_venue=request.form['exam_venue'].strip(),
-            date_of_examination=datetime.strptime(request.form['date_exam'], '%B %d, %Y').date(),
-            date_of_notification=datetime.strptime(request.form['date_notified'], '%B %d, %Y').date(),
-            proctor=request.form['proctor'].strip(),
-            status=request.form['status'].strip(),
-            contact_number=request.form['contact_number'].strip(),
-            email_address=request.form['email_address'].strip(),
-            part_one_score=request.form['part_one_score'].strip(),
-            part_two_score=request.form['part_two_score'].strip(),
-            part_three_score=request.form['part_three_score'].strip(),
-            total_score=request.form['total_score'],
+            first_name = request.form.get('first_name', '').strip() or None,
+            middle_name = request.form.get('middle_name', '').strip() or None,
+            last_name = request.form.get('last_name', '').strip() or None,
+            sex = request.form.get('sex', '').strip() or None,
+            province = request.form.get('province', '').strip() or None,
+            exam_venue = request.form.get('exam_venue', '').strip() or None,
+            date_of_examination = datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date() if request.form.get('date_exam') else None,
+            date_of_notification = datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date() if request.form.get('date_notified') else None,
+            proctor = request.form.get('proctor', '').strip() or None,
+            status = request.form.get('status', '').strip() or None,
+            contact_number = request.form.get('contact_number', '').strip() or None,
+            email_address = request.form.get('email_address', '').strip() or None,
+            part_one_score = request.form.get('part_one_score', '').strip() or None,
+            part_two_score = request.form.get('part_two_score', '').strip() or None,
+            part_three_score = request.form.get('part_three_score', '').strip() or None,
+            total_score = request.form.get('total_score', '').strip() or None,
         )
 
     new_applicant_form = request.files.get('edit_applicant_attachment') #checks if a new file is uploaded
@@ -51,12 +51,11 @@ def updateValues(applicant_id):
         )
         db.session.execute(new_pdf)
         db.session.commit()
-        print("new pdf has been committed")
-
 
     db.session.execute(diagnostic_form_data)
     insert_history.add_diagnostic_edit_history(request.form['first_name'], request.form['last_name'])
     db.session.commit()
+    flash("Diagnostic Record has been updated successfully",'diagnostic_success')
     return redirect(url_for('views.showDiagnosticTable'))
 
 

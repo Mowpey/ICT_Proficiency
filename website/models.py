@@ -23,7 +23,7 @@ class DiagnosticResults(db.Model):
     proctor = db.Column(db.String(64))
     status = db.Column(db.String(32))
     applicant_form = db.Column(db.LargeBinary)
-    contact_number = db.Column(db.Integer)
+    contact_number = db.Column(db.String(32))
     email_address = db.Column(db.String(64))
     part_one_score = db.Column(db.Integer)
     part_two_score = db.Column(db.Integer)
@@ -36,7 +36,6 @@ class DiagnosticResults(db.Model):
 class HandsonResults(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     applicant_id = db.Column(db.Integer, db.ForeignKey('diagnostic_results.applicant_id'))
-    province = db.Column(db.String(64))
     exam_venue = db.Column(db.String(64))
     date_of_examination = db.Column(db.Date)
     date_of_notification = db.Column(db.Date)

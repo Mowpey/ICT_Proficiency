@@ -64,7 +64,6 @@ def insertHandsonData():
 
         handson_form_data = insert(HandsonResults).values(
             applicant_id=foreign_id,
-            province=request.form.get('province'),
             exam_venue=request.form.get('exam_venue'),
             date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
             date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
@@ -76,8 +75,7 @@ def insertHandsonData():
         db.session.execute(handson_form_data)
         insert_history.add_handson_insert_history(foreign_id)
         db.session.commit()
-
-        flash("Applicant Record has been inserted successfully", 'handson_success')
+        flash("Handson Record has been inserted successfully", 'handson_success')
 
     return redirect(url_for('views.showHandsonTable'))
 

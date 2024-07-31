@@ -24,9 +24,7 @@ def showDiagnosticTable():
 @views.route('/handson_table')
 def showHandsonTable():
     display_all = (
-        select(HandsonResults,DiagnosticResults.first_name,
-            DiagnosticResults.middle_name,DiagnosticResults.last_name,
-            DiagnosticResults.sex).join(
+        select(HandsonResults,*DiagnosticResults.__table__.columns).join(
             DiagnosticResults,HandsonResults.applicant_id ==
             DiagnosticResults.applicant_id).order_by(desc(HandsonResults.applicant_id))
     )
