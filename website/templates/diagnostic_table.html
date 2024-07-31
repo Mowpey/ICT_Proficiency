@@ -106,9 +106,9 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
                 name="sort_id"
                 id="sort_id"
               >
-                <option value="">Applicant ID</option>
-                <option value="oldest_id">Oldest ID</option>
-                <option value="newest_id">Newest ID</option>
+                <option value="" {% if not request.form.get('sort_id') %}selected{% endif %}>Applicant ID</option>
+                <option value="oldest_id" {% if request.form.get('sort_id') == 'oldest_id' %}selected{% endif %}>Oldest ID</option>
+                <option value="newest_id" {% if request.form.get('sort_id') == 'newest_id' %}selected{% endif %}>Newest ID</option>
               </select>
             </div>
           </th>
@@ -119,6 +119,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
               aria-label="Default Name order"
               style="min-width: 120px"
               name="sort_name"
+              id="sort_name"
             >
               <option value="">Name</option>
               <option value="asc_name">Sort A to Z</option>
