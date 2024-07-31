@@ -50,3 +50,27 @@ def add_handson_edit_history(applicant_id):
         applicant_name = applicant_name
     )
     db.session.add(history_entry)
+
+def add_diagnostic_delete_history(applicant_id):
+    result = DiagnosticResults.query.get(applicant_id)
+    applicant_name=f"{result.first_name} {result.last_name}"
+    history_entry = HistoryTable(
+        # admin_id=current_user.admin_id,
+        admin_id = 1,
+        action_done="Deleted diagnostic data",
+        date_modified=datetime.now(),
+        applicant_name = applicant_name
+    )
+    db.session.add(history_entry)
+
+def add_handson_delete_history(applicant_id):
+    result = DiagnosticResults.query.get(applicant_id)
+    applicant_name=f"{result.first_name} {result.last_name}"
+    history_entry = HistoryTable(
+        # admin_id=current_user.admin_id,
+        admin_id = 1,
+        action_done="Deleted handson data",
+        date_modified=datetime.now(),
+        applicant_name = applicant_name
+    )
+    db.session.add(history_entry)
