@@ -45,7 +45,7 @@
       </div>
       <div class="modal-body">
         <form
-          action="{{url_for('delete.deleteDiagnosticRecord', applicant_id=display.applicant_id)}}"
+          action="{{url_for('delete.deleteDiagnosticRecord',applicant_id=display.applicant_id)}}"
           method="POST"
         >
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />

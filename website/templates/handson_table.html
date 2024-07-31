@@ -388,7 +388,7 @@ for category, message in messages %} {% if category == 'handson_error' %}
         <td>{{display.HandsonResults.applicant_id}}</td>
         <td>{{display.first_name}}</td>
         <td>{{display.sex}}</td>
-        <td>{{display.HandsonResults.province}}</td>
+        <td>{{display.province}}</td>
         <td>
           {{display.HandsonResults.date_of_examination.strftime('%B %d, %Y') if
           display.HandsonResults.date_of_examination else ''}}

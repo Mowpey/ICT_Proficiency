@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template
 from .. import db, engine
-from ..models import HandsonResults
-from sqlalchemy import select
+from ..models import HandsonResults,DiagnosticResults
+from sqlalchemy import select,join
 from datetime import datetime, date
 from sqlalchemy import select, func, case
 
@@ -25,15 +25,17 @@ def get_handson_data(start_date=None, end_date=None):
         counts = session.execute(count_query).first()
 
         province_query = select(
-            HandsonResults.province,
+            DiagnosticResults.province,
             func.count().label('passed_count')
+        ).select_from(
+            join(DiagnosticResults, HandsonResults, DiagnosticResults.applicant_id == HandsonResults.applicant_id)
         ).where(
             date_filter,
             HandsonResults.status == 'Passed'
-        ).group_by(HandsonResults.province)
-
+        ).group_by(DiagnosticResults.province)
+        
         passers_per_province = session.execute(province_query).all()
-
+        
         return {
             'total_applicants': counts.total_applicants,
             'passed_count': counts.passed_count,
