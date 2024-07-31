@@ -5,7 +5,7 @@ from sqlalchemy import select,update
 import io
 from datetime import datetime
 import magic
-
+from ..queries import insert_history
 update_bp = Blueprint('update',__name__)
 
 
@@ -18,7 +18,7 @@ def is_pdf(applicant_attachment):
     return mime.from_buffer(applicant_attachment_isValid) == 'application/pdf'
 
 
-@update_bp.route('/<int:applicant_id>',methods = ['GET','POST'])
+@update_bp.route('/<int:applicant_id>',methods = ['POST'])
 def updateValues(applicant_id):
 
     diagnostic_form_data = update(DiagnosticResults).where(DiagnosticResults.applicant_id
@@ -55,14 +55,27 @@ def updateValues(applicant_id):
 
 
     db.session.execute(diagnostic_form_data)
+    insert_history.add_diagnostic_edit_history(request.form['first_name'], request.form['last_name'])
     db.session.commit()
     return redirect(url_for('views.showDiagnosticTable'))
 
 
 
-
-
-
+@update_bp.route('/update_handson/<int:applicant_id>',methods = ['POST'])
+def updateValues_handson(applicant_id):
+    handson_form_data = update(HandsonResults).where(HandsonResults.applicant_id == applicant_id).values(
+        province=request.form.get('province'),
+        exam_venue=request.form.get('exam_venue'),
+        date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
+        date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
+        proctor=request.form.get('proctor'),
+        handson_score=request.form.get('handson_score'),
+        status=request.form.get('status')
+    )
+    db.session.execute(handson_form_data)
+    insert_history.add_handson_edit_history(applicant_id)
+    db.session.commit()
+    return redirect(url_for('views.showHandsonTable'))
 
 
 @update_bp.route('/view_attachment/<int:applicant_id>', methods = ['GET'])

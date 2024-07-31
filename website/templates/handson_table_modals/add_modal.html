@@ -1,264 +1,216 @@
 {%block handsonAddModal%}
 <!--Handson Add Modal-->
 <button
-    type="button"
-    class="btn btn-primary"
-    data-bs-target="#handson_add"
-    data-bs-toggle="modal"
+  type="button"
+  class="btn btn-primary"
+  data-bs-target="#handson_add"
+  data-bs-toggle="modal"
 >
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-plus-lg"
-        viewBox="0 0 16 16"
-    >
-        <path
-            fill-rule="evenodd"
-            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-        />
-    </svg>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    fill="currentColor"
+    class="bi bi-plus-lg"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+    />
+  </svg>
 </button>
 
 <!-- Add Modal -->
 <div
-    class="modal fade"
-    id="handson_add"
-    tabindex="-1"
-    aria-hidden="true"
-    aria-labelledby="handsonAddModalLabel"
+  class="modal fade"
+  id="handson_add"
+  tabindex="-1"
+  aria-hidden="true"
+  aria-labelledby="handsonAddModalLabel"
 >
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="handsonAddModalLabel">
-                    Handson Add Modal
-                </h1>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="handsonAddModalLabel">
+          Handson Add Modal
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{url_for('insert.insertHandsonData')}}" method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <div class="row row-col-auto">
+            <div class="col-12">
+              <h5 class="py-3">Matching Applicant ID</h5>
+              <div class="row applicant_id">
+                <div class="mb-3">
+                  <label for="applicant_id" class="form-label"
+                    >Applicant ID</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="applicant_id"
+                    name="applicant_id"
+                    aria-describedby="firstNameHelp"
+                    required
+                  />
+                </div>
+              </div>
+              <h5 class="py-3">Province</h5>
+              <div class="row province py-2">
+                <div class="">
+                  <div class="input-group mb-3 province">
+                    <label class="input-group-text" for="province"
+                      >Province</label
+                    >
+                    <select
+                      class="form-select"
+                      id="province"
+                      name="province"
+                      required
+                    >
+                      <option selected></option>
+                      <option value="isabela">Isabela</option>
+                      <option value="cagayan">Cagayan</option>
+                      <option value="batanes">Batanes</option>
+                      <option value="nueva_vizcaya">Nueva Vizcaya</option>
+                      <option value="quirino">Quirino</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <h5 class="py-3">Examination Details</h5>
+              <div class="row date_exam">
+                <div class="mb-3">
+                  <label for="date_exam" class="form-label"
+                    >Date of Examination</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="date_exam"
+                    name="date_exam"
+                    aria-describedby="dateExamHelp"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row date_notified">
+                <div class="mb-3">
+                  <label for="date_notified" class="form-label"
+                    >Date of Notification</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="date_notified"
+                    name="date_notified"
+                    aria-describedby="dateNotifiedHelp"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row exam_venue py-2">
+                <div class="">
+                  <div class="input-group mb-3 exam_venue">
+                    <label class="input-group-text" for="exam_venue"
+                      >Exam Venue</label
+                    >
+                    <select
+                      class="form-select"
+                      id="exam_venue"
+                      name="exam_venue"
+                      required
+                    >
+                      <option selected></option>
+                      <option value="CSU Gymnasium">CSU Gymnasium</option>
+                      <option value="Quirino Theater">Quirino Theater</option>
+                      <option value="Isabela Hall A">Isabela Hall A</option>
+                      <option value="Nueva Vizcaya Hall B">
+                        Nueva Vizcaya Hall B
+                      </option>
+                      <option value="Batanes Hall C">Batanes Hall C</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row proctor">
+                <div class="mb-3">
+                  <label for="proctor" class="form-label">Proctor</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="proctor"
+                    name="proctor"
+                    aria-describedby="proctorHelp"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row status py-2">
+                <div class="">
+                  <div class="input-group mb-3 status">
+                    <label class="input-group-text" for="status">Status</label>
+                    <select
+                      class="form-select"
+                      id="status"
+                      name="status"
+                      required
+                    >
+                      <option selected></option>
+                      <option value="Passed">Passed</option>
+                      <option value="Failed">Failed</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <h5 class="py-3">Score Details</h5>
+              <div class="row handson_score">
+                <div class="mb-3">
+                  <label for="handson_score" class="form-label"
+                    >Hands-on Score</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="handson_score"
+                    name="handson_score"
+                    aria-describedby="handsOnScoreHelp"
+                  />
+                </div>
+              </div>
             </div>
-            <div class="modal-body">
-                <form
-                    action="{{url_for('insert.insertHandsonData')}}"
-                    method="POST"
-                    enctype="multipart/form-data"
-                >
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="{{ csrf_token() }}"
-                    />
-                    <div class="row row-col-auto">
-                        <div class="col-12">
-                            <h5 class="py-3">Matching Applicant ID</h5>
-                            <div class="row applicant_id">
-                                <div class="mb-3">
-                                    <label for="applicant_id" class="form-label"
-                                        >Applicant ID</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="applicant_id"
-                                        name="applicant_id"
-                                        aria-describedby="firstNameHelp"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <h5 class="py-3">Province</h5>
-                            <div class="row province py-2">
-                                <div class="">
-                                    <div class="input-group mb-3 province">
-                                        <label
-                                            class="input-group-text"
-                                            for="province"
-                                            >Province</label
-                                        >
-                                        <select
-                                            class="form-select"
-                                            id="province"
-                                            name="province"
-                                            required
-                                        >
-                                            <option selected></option>
-                                            <option value="isabela">
-                                                Isabela
-                                            </option>
-                                            <option value="cagayan">
-                                                Cagayan
-                                            </option>
-                                            <option value="batanes">
-                                                Batanes
-                                            </option>
-                                            <option value="nueva_vizcaya">
-                                                Nueva Vizcaya
-                                            </option>
-                                            <option value="quirino">
-                                                Quirino
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <h5 class="py-3">Examination Details</h5>
-                            <div class="row date_exam">
-                                <div class="mb-3">
-                                    <label for="date_exam" class="form-label"
-                                        >Date of Examination</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="date_exam"
-                                        name="date_exam"
-                                        aria-describedby="dateExamHelp"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div class="row date_notified">
-                                <div class="mb-3">
-                                    <label
-                                        for="date_notified"
-                                        class="form-label"
-                                        >Date of Notification</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="date_notified"
-                                        name="date_notified"
-                                        aria-describedby="dateNotifiedHelp"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div class="row exam_venue py-2">
-                                <div class="">
-                                    <div class="input-group mb-3 exam_venue">
-                                        <label
-                                            class="input-group-text"
-                                            for="exam_venue"
-                                            >Exam Venue</label
-                                        >
-                                        <select
-                                            class="form-select"
-                                            id="exam_venue"
-                                            name="exam_venue"
-                                            required
-                                        >
-                                            <option selected></option>
-                                            <option value="CSU Gymnasium">
-                                                CSU Gymnasium
-                                            </option>
-                                            <option value="Quirino Theater">
-                                                Quirino Theater
-                                            </option>
-                                            <option value="Isabela Hall A">
-                                                Isabela Hall A
-                                            </option>
-                                            <option
-                                                value="Nueva Vizcaya Hall B"
-                                            >
-                                                Nueva Vizcaya Hall B
-                                            </option>
-                                            <option value="Batanes Hall C">
-                                                Batanes Hall C
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row proctor">
-                                <div class="mb-3">
-                                    <label for="proctor" class="form-label"
-                                        >Proctor</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="proctor"
-                                        name="proctor"
-                                        aria-describedby="proctorHelp"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div class="row status py-2">
-                                <div class="">
-                                    <div class="input-group mb-3 status">
-                                        <label
-                                            class="input-group-text"
-                                            for="status"
-                                            >Status</label
-                                        >
-                                        <select
-                                            class="form-select"
-                                            id="status"
-                                            name="status"
-                                            required
-                                        >
-                                            <option selected></option>
-                                            <option value="Passed">
-                                                Passed
-                                            </option>
-                                            <option value="Failed">
-                                                Failed
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <h5 class="py-3">Score Details</h5>
-                            <div class="row handson_score">
-                                <div class="mb-3">
-                                    <label
-                                        for="handson_score"
-                                        class="form-label"
-                                        >Hands-on Score</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="handson_score"
-                                        name="handson_score"
-                                        aria-describedby="handsOnScoreHelp"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">
-                            Submit
-                        </button>
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
 <script
-    type="text/javascript"
-    src="{{url_for('static',filename='js/handson-date_exam.js')}}"
+  type="text/javascript"
+  src="{{url_for('static',filename='js/handson-date_exam.js')}}"
 ></script>
 <script
-    type="text/javascript"
-    src="{{url_for('static',filename='js/handson-date_notified.js')}}"
+  type="text/javascript"
+  src="{{url_for('static',filename='js/handson-date_notified.js')}}"
 ></script>
 {%endblock%}
