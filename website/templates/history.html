@@ -54,8 +54,10 @@ block stylesheet%}
     </thead>
     <tbody>
       <!--UPDATED ROW -->
+      {% for entry in history_entries %}
       <tr>
-        <td>
+          {% if 'Insert' in entry.action_done %}
+          <td>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -73,21 +75,7 @@ block stylesheet%}
             />
           </svg>
         </td>
-        <td scope="row">1</td>
-        <td><b>Admin Mark</b></td>
-        <td>
-          <div>
-            <b>UPDATED</b> the applicant record for
-            <b>Mark Angelo Manuel</b>
-            in
-            <b>Diagnostic Results Table</b>
-          </div>
-        </td>
-        <td>July 24,2024</td>
-        <td>10:15 PM</td>
-      </tr>
-      <!--DELETED ROW -->
-      <tr>
+        {% elif 'Delete' in entry.action_done%}
         <td>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -105,21 +93,7 @@ block stylesheet%}
             />
           </svg>
         </td>
-        <td scope="row">2</td>
-        <td><b>Admin Mark</b></td>
-        <td>
-          <div>
-            <b>DELETED</b> the applicant record for
-            <b>Ken Robbie Galapate</b>
-            in
-            <b>Handson Results Table</b>
-          </div>
-        </td>
-        <td>July 26,2024</td>
-        <td>8:15 PM</td>
-      </tr>
-      <!--ADDED ROW -->
-      <tr>
+        {% else %}
         <td>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -137,19 +111,21 @@ block stylesheet%}
             />
           </svg>
         </td>
-        <td scope="row">3</td>
-        <td><b>Admin Mark</b></td>
+        {% endif %}
+        <td scope="row">{{ entry.id }}</td>
+        <td><b>Admin Mark {{ entry.admin_id }}</b></td>
         <td>
           <div>
-            <b>ADDED</b> the applicant record for
-            <b>Ian Pamittan</b>
-            in
-            <b>Diagnostic Results Table</b>
+            {{ entry.action_done }}
+            for
+            {{ entry.applicant_name }}
           </div>
         </td>
-        <td>July 12,2024</td>
-        <td>5:30 AM</td>
+        <td>{{ entry.date_modified.strftime('%Y-%m-%d') }}</td>
+        <td>{{ entry.date_modified.strftime('%I:%M %p') }}</td>
       </tr>
+      {% endfor %}
+      
     </tbody>
   </table>
 </div>

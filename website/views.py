@@ -2,13 +2,18 @@ from flask import Blueprint,render_template
 from website.models import *
 from sqlalchemy import select,desc
 from sqlalchemy.orm import joinedload
-
+from .queries.diagnostic_dashboard import get_dashboard_data
+from .queries.handson_dashboard import get_handson_data
+from .models import HistoryTable 
+from . import views
 
 views = Blueprint('views', __name__)
 
 @views.route('/')
+@views.route('/dashboard')
 def showDashboard():
-    return render_template("dashboard.html",active_page="dashboard" )
+    results = get_dashboard_data()
+    return render_template("dashboard.html",active_page="dashboard",results=results )
 
 @views.route('/diagnostic_table')
 def showDiagnosticTable():
@@ -26,10 +31,14 @@ def showHandsonTable():
     handson_table_entries = db.session.execute(display_all).mappings().all()
     return render_template("handson_table.html",h_results=handson_table_entries, active_page="table")
 
+
 @views.route('/history')
 def showHistory():
-    return render_template("history.html",active_page="history")
+    history_entries = HistoryTable.query.all()
+    return render_template("history.html",active_page="history",history_entries=history_entries)
 
+@views.route('/')
 @views.route('/handson_dashboard')
 def showHandsonDashboard():
-    return render_template("handson_dashboard.html",active_page="handson_dashboard")
+    results = get_handson_data()
+    return render_template("handson_dashboard.html",active_page="handson_dashboard",results=results)
