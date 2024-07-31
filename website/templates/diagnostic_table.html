@@ -106,7 +106,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
                 name="sort_id"
                 id="sort_id"
               >
-                <option value="" {% if not request.form.get('sort_id') %}selected{% endif %}>Applicant ID</option>
+                <option value="" >Applicant ID</option>
                 <option value="oldest_id" {% if request.form.get('sort_id') == 'oldest_id' %}selected{% endif %}>Oldest ID</option>
                 <option value="newest_id" {% if request.form.get('sort_id') == 'newest_id' %}selected{% endif %}>Newest ID</option>
               </select>
@@ -122,8 +122,8 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
               id="sort_name"
             >
               <option value="">Name</option>
-              <option value="asc_name">Sort A to Z</option>
-              <option value="desc_name">Sort Z to A</option>
+              <option value="asc_name" {% if request.form.get('sort_name') == 'asc_name' %}selected{% endif %}>Sort A to Z</option>
+              <option value="desc_name" {% if request.form.get('sort_name') == 'desc_name' %}selected{% endif %}>Sort Z to A</option>
             </select>
           </th>
           <th scope="col">

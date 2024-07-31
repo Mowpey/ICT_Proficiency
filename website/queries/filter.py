@@ -11,7 +11,7 @@ def applyFilterDiagnostic():
 
     filter_conditions = []
 
-    sort_id = request.form.get('sort_id') 
+    sort_id = request.form.get('sort_id')
     sort_name = request.form.get('sort_name')
     sort_sex = request.form.get('sort_sex')
     sort_province = request.form.get('sort_province')
@@ -21,11 +21,13 @@ def applyFilterDiagnostic():
     sort_proctor = request.form.get('sort_proctor')
     sort_status = request.form.get('sort_status')
 
-    # if sort_id == 'oldest_id':
-    #     filter_conditions.append(DiagnosticResults.applicant_id.asc())
-    # else:
-    #     filter_conditions.append(DiagnosticResults.applicant_id.desc())
-    
+    if sort_id == 'oldest_id':
+        filter_conditions.append(DiagnosticResults.applicant_id.asc())
+
+    elif sort_id == 'newest_id':
+        filter_conditions.append(DiagnosticResults.applicant_id.desc())
+
+
     if sort_name == 'asc_name':
         filter_conditions.append(DiagnosticResults.last_name.asc())
     elif sort_name == 'desc_name':
@@ -38,4 +40,3 @@ def applyFilterDiagnostic():
     execute_results = db.session.execute(filter_stmt).scalars().all()
 
     return render_template('diagnostic_table.html',d_results=execute_results)
-    
