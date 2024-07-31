@@ -1,0 +1,94 @@
+<div class="row row-cols-3 px-2 mobile">
+  <!--Sort ID -->
+  <div class="col px-1 py-2">
+    <div class="btn-group">
+      <button
+        class="btn btn-outline btn-sm dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Sort ID
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" id="oldest_id"> Oldest ID</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--Sort Name -->
+  <div class="col px-1 py-2">
+    <div class="btn-group">
+      <button
+        class="btn btn-outline btn-sm dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Sort Name
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" id="filter_up">Sort name A to Z</a>
+        </li>
+        <li>
+          <a class="dropdown-item" id="filter_down">Sort name Z to A</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!--Sort Exam Venue -->
+  <div class="col px-1 py-2">
+    <div class="btn-group">
+      <button
+        class="btn btn-outline btn-sm dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Sort Venue
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <p class="dropdown-item">CSU Gymnasium</p>
+        </li>
+
+        <li>
+          <p class="dropdown-item">Quirino Theater</p>
+        </li>
+        <li>
+          <p class="dropdown-item">Isabela Hall A</p>
+        </li>
+        <li>
+          <p class="dropdown-item">Nueva Vizcaya Hall B</p>
+        </li>
+        <li>
+          <p class="dropdown-item">Batanes Hall C</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row row-cols-2 px-2 mobile">
+  <!--Filter Date of Examination-->
+  <div class="col py-2">
+    <input
+      type="text"
+      class="rounded border border-1 p-1"
+      placeholder="Date of Exam"
+      autocomplete="off"
+      name="filter_date_exam_mobile"
+      id="filter_date_exam_mobile"
+    />
+  </div>
+  <!--Filter Date of Notification-->
+  <div class="col py-2">
+    <input
+      type="text"
+      class="rounded border border-1 p-1"
+      placeholder="Date of Notification"
+      autocomplete="off"
+      name="filter_date_notif_mobile"
+      id="filter_date_notif_mobile"
+    />
+  </div>
+</div>

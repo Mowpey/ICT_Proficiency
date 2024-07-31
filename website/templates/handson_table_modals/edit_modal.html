@@ -78,29 +78,6 @@ input[type=number] {
                   />
                 </div>
               </div>
-              <h5 class="py-3">Province</h5>
-              <div class="row province py-2">
-                <div class="">
-                  <div class="input-group mb-3 province">
-                    <label class="input-group-text" for="province"
-                      >Province</label
-                    >
-                    <select
-                      class="form-select"
-                      id="province"
-                      name="province"
-                      required
-                    >
-                      <option selected></option>
-                      <option value="isabela" {% if display.HandsonResults.province == 'isabela' %} selected {%endif%}>Isabela</option>
-                      <option value="cagayan" {% if display.HandsonResults.province == 'cagayan' %} selected {%endif%}>Cagayan</option>
-                      <option value="batanes" {% if display.HandsonResults.province == 'batanes' %} selected {%endif%}>Batanes</option>
-                      <option value="nueva_vizcaya" {% if display.HandsonResults.province == 'nueva_vizcaya' %} selected {%endif%}>Nueva Vizcaya</option>
-                      <option value="quirino" {% if display.HandsonResults.province == 'quirino' %} selected {%endif%}>Quirino</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
               <h5 class="py-3">Examination Details</h5>
               <div class="row date_exam">
                 <div class="mb-3">
@@ -196,7 +173,7 @@ input[type=number] {
                     >Hands-on Score</label
                   >
                   <input
-                    type="text"
+                    type="number"
                     class="form-control"
                     id="handson_score"
                     name="handson_score"

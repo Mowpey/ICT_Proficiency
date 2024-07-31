@@ -17,7 +17,9 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
   <div class="col-6">
     <form
       class="form-inline my-2 my-lg-0 d-flex gap-2 header-buttons align-items-center justify-content-start"
+      method="POST"
     >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <input
         class="form-control mr-sm-2 search"
         type="search"
@@ -47,397 +49,256 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
   </div>
 
   <div class="col-6 d-flex justify-content-end gap-2 header-buttons">
-    {% include "diagnostic_table_modals/add_modal.html" %}
-    {% include "diagnostic_table_modals/clear_modal.html" %}
+    {% include "diagnostic_table_modals/add_modal.html" %} {% include
+    "diagnostic_table_modals/clear_modal.html" %}
   </div>
 </div>
-<!--Tab Headers-->
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    {%block diagnosticTab %}<a
-      class="nav-link active"
-      aria-current="page"
-      href="#"
-      >Diagnostic Results</a
-    >
-    {%endblock%}
-  </li>
-  <li class="nav-item">
-    {%block handsonTab%}<a class="nav-link" href="handson_table">
-      Hands-On Results</a
-    >
-    {%endblock%}
-  </li>
-</ul>
-<!--Mobile Filters-->
-<div class="row row-cols-3 px-2 mobile">
-  <!--Sort ID -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
-      <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+
+<form
+  action="{{url_for('filter.applyFilterDiagnostic')}}"
+  method="POST"
+  id="filter-diagnostic-form"
+>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+  <!--Tab Headers-->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      {%block diagnosticTab %}<a
+        class="nav-link active"
+        aria-current="page"
+        href="#"
+        >Diagnostic Results</a
       >
-        Sort ID
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" id="oldest_id"> Oldest ID</a></li>
-      </ul>
-    </div>
-  </div>
-  <!--Sort Name -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
-      <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+      {%endblock%}
+    </li>
+    <li class="nav-item me-4">
+      {%block handsonTab%}<a class="nav-link" href="handson_table">
+        Hands-On Results</a
       >
-        Sort Name
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <a class="dropdown-item" id="filter_up">Sort name A to Z</a>
-        </li>
-        <li>
-          <a class="dropdown-item" id="filter_down">Sort name Z to A</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!--Sort Exam Venue -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
+      {%endblock%}
+    </li>
+    <li class="nav-item">
       <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+        type="submit"
+        form="filter-diagnostic-form"
+        class="btn btn-primary"
       >
-        Sort Venue
+        Apply Filters
       </button>
-      <ul class="dropdown-menu">
-        <li>
-          <p class="dropdown-item">CSU Gymnasium</p>
-        </li>
+    </li>
+  </ul>
+  <!--Mobile Filters-->
+  {% include "mobile-filters.html" %}
 
-        <li>
-          <p class="dropdown-item">Quirino Theater</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Isabela Hall A</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Nueva Vizcaya Hall B</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Batanes Hall C</p>
-        </li>
-      </ul>
-    </div>
+  <!--Main Table-->
+  <div class="table-responsive my-2">
+    <table class="table table-striped">
+      <thead>
+        <tr class="table-primary">
+          <th scope="col"></th>
+          <th scope="col">
+            <!--Oldest ID Filter-->
+            <div class="dropdown">
+              <select
+                class="form-select fw-semibold"
+                aria-label="Default ID"
+                style="min-width: 140px"
+                name="sort_id"
+                id="sort_id"
+              >
+                <option value="">Applicant ID</option>
+                <option value="oldest_id">Oldest ID</option>
+                <option value="newest_id">Newest ID</option>
+              </select>
+            </div>
+          </th>
+          <th scope="col">
+            <!--Sort Name Filter-->
+            <select
+              class="form-select fw-semibold"
+              aria-label="Default Name order"
+              style="min-width: 120px"
+              name="sort_name"
+            >
+              <option value="">Name</option>
+              <option value="asc_name">Sort A to Z</option>
+              <option value="desc_name">Sort Z to A</option>
+            </select>
+          </th>
+          <th scope="col">
+            <!--Sort Sex-->
+            <select
+              class="form-select fw-semibold"
+              aria-label="Default Sex order"
+              style="min-width: 75px"
+              name="sort_sex"
+            >
+              <option value="">Sex</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </th>
+          <th scope="col">
+            <!--Sort Province-->
+            <select
+              class="form-select fw-semibold"
+              aria-label="Default province order"
+              name="sort_province"
+              id="sort_province"
+              style="min-width: 105px"
+            >
+              <option value="">Province</option>
+              <option value="Isabela">Isabela</option>
+              <option value="Cagayan">Cagayan</option>
+              <option value="Batanes">Batanes</option>
+              <option value="Nueva Vizcaya">Nueva Vizcaya</option>
+              <option value="Quirino">Quirino</option>
+            </select>
+          </th>
+          <th scope="col">
+            <!--Filter Exam Date-->
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control fw-semibold rounded"
+                placeholder="Exam date"
+                id="sort_date_exam"
+                name="sort_date_exam"
+              />
+            </div>
+          </th>
+          <th scope="col">
+            <!--Filter Exam Venue-->
+            <select
+              class="form-select fw-semibold"
+              name="sort_venue"
+              id="sort_venue"
+              style="min-width: 130px"
+            >
+              <option value="">Exam Venue</option>
+              <option value="CSU Gymnasium">CSU Gymnasium</option>
+              <option value="Quirino Theater">Quirino Theater</option>
+              <option value="Isabela Hall A">Isabela Hall A</option>
+              <option value="Nueva Vizcaya Hall B">Nueva Vizcaya Hall B</option>
+              <option value="Batanes Hall C">Batanes Hall C</option>
+            </select>
+          </th>
+
+          <th scope="col">
+            <!--Filter Notified Date-->
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control fw-semibold rounded"
+                placeholder="Notified date"
+                id="sort_date_notified"
+                name="sort_date_notified"
+              />
+            </div>
+          </th>
+          <th scope="col">
+            <!--Filter Proctor-->
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control fw-semibold"
+                placeholder="Enter proctor"
+                id="sort_proctor"
+                name="sort_proctor"
+              />
+            </div>
+          </th>
+          <th scope="col">
+            <!--Filter Status-->
+            <select
+              class="form-select fw-semibold"
+              name="sort_status"
+              id="sort_status"
+              style="min-width: 95px"
+            >
+              <option value="">Status</option>
+              <option value="passed">Passed</option>
+              <option value="failed">Failed</option>
+            </select>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for display in d_results %}
+        <tr>
+          {% include "diagnostic_table_modals/display_modal.html" with context%}
+          <td>
+            <div class="button-modals">
+              {% include "diagnostic_table_modals/edit_modal.html" with context
+              %} {% include "diagnostic_table_modals/delete_modal.html" with
+              context %}
+            </div>
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+          >
+            {{display.applicant_id}}
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+          >
+            {{display.first_name}} {% if display.middle_name %}
+            {{display.middle_name[0] + "."}} {% endif %} {{display.last_name}}
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+          >
+            {{display.sex | capitalize}}
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+          >
+            {{display.province}}
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+          >
+            {{ display.date_of_examination.strftime('%B %d, %Y') if
+            display.date_of_examination else 'N/A' }}
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+          >
+            {{display.exam_venue}}
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+          >
+            {{display.date_of_notification.strftime('%B %d, %Y') if
+            display.date_of_notification else 'N/A' }}
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+          >
+            {{display.proctor}}
+          </td>
+          <td
+            data-bs-target="#showDetails_{{display.applicant_id}}"
+            data-bs-toggle="modal"
+            class="{% if display.status == 'Passed' %} table-success {% else %} table-danger {% endif %}"
+          >
+            {{display.status}}
+          </td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
   </div>
-</div>
+</form>
 
-<div class="row row-cols-2 px-2 mobile">
-  <!--Filter Date of Examination-->
-  <div class="col py-2">
-    <input
-      type="text"
-      class="rounded border border-1 p-1"
-      placeholder="Date of Exam"
-      autocomplete="off"
-      name="filter_date_exam_mobile"
-      id="filter_date_exam_mobile"
-    />
-  </div>
-  <!--Filter Date of Notification-->
-  <div class="col py-2">
-    <input
-      type="text"
-      class="rounded border border-1 p-1"
-      placeholder="Date of Notification"
-      autocomplete="off"
-      name="filter_date_notif_mobile"
-      id="filter_date_notif_mobile"
-    />
-  </div>
-</div>
-
-<!--Main Table-->
-<div class="table-responsive my-2">
-  <table class="table table-striped">
-    <thead>
-      <tr class="table-primary">
-        <th scope="col"></th>
-        <th scope="col">
-          <!--Oldest ID Filter-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="oldest_id"
-              id="oldest_id"
-            >
-              Applicant ID
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Oldest ID</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Name Filter-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_name"
-              id="filter_name"
-            >
-              Name
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Sort Name A to Z</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Sort Name Z to A</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Sex-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_sex"
-              id="filter_sex"
-            >
-              Sex
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Male</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Female</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Province-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_province"
-              id="filter_province"
-            >
-              Province
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Isabela</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Cagayan</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Batanes</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Nueva Vizcaya</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Quirino</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Exam Date-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold rounded"
-              placeholder="Exam date"
-              id="filter_date_exam"
-              name="filter_date_exam"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Exam Venue-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_venue"
-              id="filter_venue"
-            >
-              Exam Venue
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">CSU Gymnasium</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Quirino Theater</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Isabela Hall A</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Nueva Vizcaya Hall B</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Batanes Hall C</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-
-        <th scope="col">
-          <!--Filter Notified Date-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold rounded"
-              placeholder="Notified date"
-              id="filter_date_notif"
-              name="filter_date_notif"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Proctor-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold"
-              placeholder="Enter proctor"
-              id="filter_proctor"
-              name="filter_proctor"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Status-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_status"
-              id="filter_status"
-            >
-              Status
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Passed</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Failed</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {%for display in d_results %}
-      <tr>
-        {% include "diagnostic_table_modals/display_modal.html" with context%}
-        <td>
-          <div class="button-modals">
-            {% include "diagnostic_table_modals/edit_modal.html" with context %}
-            {% include "diagnostic_table_modals/delete_modal.html" with context
-            %}
-          </div>
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-        >
-          {{display.applicant_id}}
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-        >
-          {{display.first_name}} {% if display.middle_name %}
-          {{display.middle_name[0] + "."}} {% endif %} {{display.last_name}}
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-        >
-          {{display.sex}}
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-        >
-          {{display.province}}
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-        >
-          {{ display.date_of_examination.strftime('%B %d, %Y') if
-          display.date_of_examination else 'N/A' }}
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-        >
-          {{display.exam_venue}}
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-        >
-          {{display.date_of_notification.strftime('%B %d, %Y') if
-          display.date_of_notification else 'N/A' }}
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-        >
-          {{display.proctor}}
-        </td>
-        <td
-          data-bs-target="#showDetails_{{display.applicant_id}}"
-          data-bs-toggle="modal"
-          class="{% if display.status == 'Passed' %} table-success {% else %} table-danger {% endif %}"
-        >
-          {{display.status}}
-        </td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-</div>
 <!--Pagination-->
 <nav aria-label="Page navigation" class="pagination justify-content-center">
   <ul class="pagination my-3">

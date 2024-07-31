@@ -26,12 +26,19 @@ def create_app():
     from .queries.update import update_bp
     from .queries.diagnostic_dashboard import diagnostic_dashboard
     from .queries.handson_dashboard import handson_dashboard
+    from .queries.delete import delete_bp
+    from .queries.filter import filter_bp
+
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(insert_bp, url_prefix='/')
     app.register_blueprint(update_bp,url_prefix='/')
     app.register_blueprint(diagnostic_dashboard,url_prefix ='/')
     app.register_blueprint(handson_dashboard,url_prefix ='/')
+    app.register_blueprint(delete_bp,url_prefix='/')
+    app.register_blueprint(filter_bp,url_prefix='/')
+
+
     from .models import Admin, DiagnosticResults, HandsonResults, HistoryTable
     create_database(app)
     return app
