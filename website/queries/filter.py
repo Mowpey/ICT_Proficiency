@@ -24,12 +24,13 @@ def applyFilterDiagnostic():
     if sort_id == 'oldest_id':
         filter_conditions.append(DiagnosticResults.applicant_id.asc())
 
-    else:
-        filter_conditions.append(DiagnosticResults.applicant_id)
+    elif sort_id == 'newest_id':
+        filter_conditions.append(DiagnosticResults.applicant_id.desc())
+
 
     if sort_name == 'asc_name':
         filter_conditions.append(DiagnosticResults.last_name.asc())
-    else:
+    elif sort_name == 'desc_name':
         filter_conditions.append(DiagnosticResults.last_name.desc())
 
 
