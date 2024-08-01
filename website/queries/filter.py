@@ -21,17 +21,23 @@ def applyFilterDiagnostic():
     sort_proctor = request.form.get('sort_proctor')
     sort_status = request.form.get('sort_status')
 
+
+    if sort_id and sort_name:
+        flash('Error: You can only use either sort_id or sort_name, not both.', 'diagnostic_error')
+        return redirect(url_for('views.showDiagnosticTable'))
+
+
     if sort_id == 'oldest_id':
         filter_conditions.append(DiagnosticResults.applicant_id.asc())
 
-    elif sort_id == 'newest_id':
+    else:
         filter_conditions.append(DiagnosticResults.applicant_id.desc())
 
 
     if sort_name == 'asc_name':
         filter_conditions.append(DiagnosticResults.last_name.asc())
     elif sort_name == 'desc_name':
-        filter_conditions.append(DiagnosticResults.last_name.desc())
+            filter_conditions.append(DiagnosticResults.last_name.desc())
 
 
     if filter_conditions:
