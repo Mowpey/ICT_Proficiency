@@ -5,10 +5,12 @@ from flask_login import UserMixin
 
 
 class Admin(db.Model,UserMixin):
-    admin_id = db.Column(db.Integer, primary_key=True)
-    admin_name = db.Column(db.String(64),unique=True)
-    password = db.Column(db.String(64))
-    history_entries = db.relationship('HistoryTable',backref='admin')
+    admin_id = db.Column(db.Integer,primary_key = True)
+    admin_name = db.Column(db.String(150),unique = True)
+    password = db.Column(db.String(150))
+    def get_id(self):
+        return str(self.admin_id)
+
 
 class DiagnosticResults(db.Model):
     applicant_id = db.Column(db.Integer,primary_key=True)
@@ -50,3 +52,4 @@ class HistoryTable(db.Model):
     action_done = db.Column(db.String(64))
     date_modified = db.Column(db.DateTime(timezone=True))
     applicant_name = db.Column(db.String(64))
+
