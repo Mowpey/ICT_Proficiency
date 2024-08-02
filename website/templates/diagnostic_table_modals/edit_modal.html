@@ -143,19 +143,19 @@ input[type=number] {
 
                                         >
                                             <option selected></option>
-                                            <option value="Isabela"  {% if display.province == 'Isabela' %} selected {% endif %}>
+                                            <option value="isabela"  {% if display.province == 'isabela' %} selected {% endif %}>
                                                 Isabela
                                             </option>
-                                            <option value="Cagayan"  {% if display.province == 'Cagayan' %} selected {% endif %}>
+                                            <option value="cagayan"  {% if display.province == 'cagayan' %} selected {% endif %}>
                                                 Cagayan
                                             </option>
-                                            <option value="Batanes"  {% if display.province== 'Batanes' %} selected {% endif %}>
+                                            <option value="batanes"  {% if display.province== 'batanes' %} selected {% endif %}>
                                                 Batanes
                                             </option>
-                                            <option value="Nueva_Vizcaya"  {% if display.province == 'Nueva_Vizcaya' %} selected {% endif %}>
+                                            <option value="nueva_vizcaya"  {% if display.province == 'nueva_vizcaya' %} selected {% endif %}>
                                                 Nueva Vizcaya
                                             </option>
-                                            <option value="Quirino"  {% if display.province == 'Quirino' %} selected {% endif %}>
+                                            <option value="quirino"  {% if display.province == 'quirino' %} selected {% endif %}>
                                                 Quirino
                                             </option>
                                         </select>
@@ -248,6 +248,23 @@ input[type=number] {
                                         value="{{display.date_of_notification}}"
                                     />
                                 </div>
+                            </div>         
+                            <div class="row venue_address py-2">
+                                <div class="">
+                                <div class="input-group mb-3 venue_address">
+                                    <label class="input-group-text" for="venue_address"
+                                    >Venue Address (Optional)</label
+                                    >
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    id="venue_address"
+                                    name="venue_address"
+                                    aria-describedby="venueAddressHelp"
+                                    value="{{display.venue_address}}"
+                                    />
+                                </div>
+                                </div>
                             </div>
                             <div class="row exam_venue py-2">
                                 <div class="">
@@ -263,20 +280,20 @@ input[type=number] {
                                             name="exam_venue"
                                         >
                                             <option selected></option>
-                                            <option value="CSU Gymnasium" {%if display.exam_venue == 'CSU Gymnasium'%} selected {% endif %}>
-                                                CSU Gymnasium
+                                            <option value="isabela"  {% if display.province == 'isabela' %} selected {% endif %}>
+                                                Isabela
                                             </option>
-                                            <option value="Quirino Theater" {%if display.exam_venue == 'Quirino Theater'%} selected {% endif %}>
-                                                Quirino Theater
+                                            <option value="cagayan"  {% if display.province == 'cagayan' %} selected {% endif %}>
+                                                Cagayan
                                             </option>
-                                            <option value="Isabela Hall A" {%if display.exam_venue == 'Isabela Hall A'%} selected {%endif%}>
-                                                Isabela Hall A
+                                            <option value="batanes"  {% if display.province== 'batanes' %} selected {% endif %}>
+                                                Batanes
                                             </option>
-                                            <option value="Nueva Vizcaya Hall B" {%if display.exam_venue == 'Nueva Vizcaya Hall B'%} selected {%endif%}>
-                                                Nueva Vizcaya Hall B
+                                            <option value="nueva vizcaya"  {% if display.province == 'nueva vizcaya' %} selected {% endif %}>
+                                                Nueva Vizcaya
                                             </option>
-                                            <option value="Batanes Hall C" {%if display.exam_venue == 'Batanes Hall C'%} selected {%endif%}>
-                                                Batanes Hall C
+                                            <option value="quirino"  {% if display.province == 'quirino' %} selected {% endif %}>
+                                                Quirino
                                             </option>
                                         </select>
                                     </div>

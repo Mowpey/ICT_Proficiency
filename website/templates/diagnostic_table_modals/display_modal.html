@@ -55,7 +55,10 @@
               display.date_of_notification.strftime('%B %d, %Y') if
               display.date_of_notification else 'N/A' }}
             </p>
-            <p><b class="me-2">Exam Venue:</b> {{display.exam_venue}}</p>
+            <p>
+              <b class="me-2">Exam Venue:</b>
+              {{display.venue_address}} {{display.exam_venue}}
+            </p>
             <p><b class="me-2">Proctor:</b> {{display.proctor}}</p>
             <p><b class="me-2">Status:</b> {{display.status}}</p>
             <p>

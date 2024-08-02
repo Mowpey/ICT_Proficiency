@@ -408,6 +408,7 @@ for category, message in messages %} {% if category == 'handson_error' %}
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
+          {{display.HandsonResults.venue_address}}
           {{display.HandsonResults.exam_venue}}
         </td>
         <td

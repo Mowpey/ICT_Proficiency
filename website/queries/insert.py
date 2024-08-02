@@ -33,6 +33,7 @@ def insertDiagnosticData():
             sex=request.form['sex'].strip(),
             province=request.form['province'].strip(),
             exam_venue=request.form['exam_venue'].strip(),
+            venue_address=request.form['venue_address'].strip(),
             date_of_examination=datetime.strptime(request.form['date_exam'], '%B %d, %Y').date(),
             date_of_notification=datetime.strptime(request.form['date_notified'],'%B %d, %Y').date(),
             proctor=request.form['proctor'].strip(),
@@ -65,6 +66,7 @@ def insertHandsonData():
         handson_form_data = insert(HandsonResults).values(
             applicant_id=foreign_id,
             exam_venue=request.form.get('exam_venue'),
+            venue_address=request.form['venue_address_handson'].strip(),
             date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
             date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
             proctor=request.form.get('proctor'),
