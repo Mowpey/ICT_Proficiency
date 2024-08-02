@@ -39,4 +39,38 @@
     td:nth-of-type(6)::before {
         content: "Time Modified";
     }
+    
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.form-select-sm {
+
+    border-color: #6c757d;
+    border:none
+}
+
+.form-select-sm option {
+    font-weight: bold;
+    border:none
+}
+
+.form-control-sm {
+
+    border-color: #6c757d;
+    border:none
+}
+
+.form-select-sm option[value="Delete"] {
+    color: #dc3545;
+}
+
+.form-select-sm option[value="Insert"] {
+    color: #28a745;
+}
+
+.form-select-sm option[value="Edit"] {
+    color: #007bff;
 }

@@ -16,6 +16,8 @@
             integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK"
             crossorigin="anonymous"
         />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="static/css/login.css">
     </head>
     <body>
         <div
@@ -38,7 +40,15 @@
                             <h1 class="card-title mb-3">
                                 ICT Proficiency Examination
                             </h1>
+                            {% with messages = get_flashed_messages(with_categories=true,
+                                category_filter=["error", "success"]) %} {% if messages %}
+                                {% for category, message in messages %} {% if category == 'error' %}
+                                <div class="alert alert-danger" role="alert">Error: {{ message }}</div>
+                                {% elif category == 'success' %}
+                                <div class="alert alert-success" role="alert">Success: {{ message }}</div>
+                                {% endif %} {% endfor %} {% endif %} {% endwith %}
                             <form method="POST">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                 <div class="my-4">
                                     <label for="admin" class="form-label"
                                         >Admin</label
@@ -50,7 +60,8 @@
                                         name="admin"
                                     />
                                 </div>
-                                <div class="my-4">
+                                <div class="my-4 eye">
+                                    
                                     <label for="password" class="form-label"
                                         >Password</label
                                     >
@@ -60,6 +71,9 @@
                                         id="password"
                                         name="password"
                                     />
+                                    <button type="button" class="btn" id="togglePassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
                                 </div>
                                 <button type="submit" class="btn btn-primary">
                                     Login
@@ -87,5 +101,6 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
+        <script src="static/js/login.js"></script>
     </body>
 </html>
