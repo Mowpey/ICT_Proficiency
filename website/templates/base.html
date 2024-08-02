@@ -73,11 +73,7 @@
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                            {% if current_user.is_authenticated %}
-                            {{ current_user.admin_name }}
-                        {% else %}
-                             Unknown
-                        {% endif %}
+                                Admin Mark
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
@@ -97,7 +93,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item fs-5" href="/logout" 
+                                    <a class="dropdown-item fs-5" href="#"
                                         >Logout</a
                                     >
                                 </li>
