@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask,make_response
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from os import path
 from flask_wtf.csrf import CSRFProtect
+from flask_login import LoginManager
 
 csrf = CSRFProtect()
 db=SQLAlchemy()
@@ -41,6 +42,16 @@ def create_app():
 
     from .models import Admin, DiagnosticResults, HandsonResults, HistoryTable
     create_database(app)
+
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Admin.query.filter_by(admin_id=int(user_id)).first()
+    
+    
     return app
 
 def create_database(app):
