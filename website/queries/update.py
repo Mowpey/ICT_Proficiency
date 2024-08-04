@@ -28,6 +28,7 @@ def updateValues(applicant_id):
             last_name = request.form.get('last_name', '').strip() or None,
             sex = request.form.get('sex', '').strip() or None,
             province = request.form.get('province', '').strip() or None,
+            venue_address = request.form.get('venue_address','').strip() or None,
             exam_venue = request.form.get('exam_venue', '').strip() or None,
             date_of_examination = datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date() if request.form.get('date_exam') else None,
             date_of_notification = datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date() if request.form.get('date_notified') else None,
@@ -64,6 +65,7 @@ def updateValues(applicant_id):
 def updateValues_handson(applicant_id):
     handson_form_data = update(HandsonResults).where(HandsonResults.applicant_id == applicant_id).values(
         exam_venue=request.form.get('exam_venue'),
+        venue_address = request.form.get('venue_address','').strip() or None,
         date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
         date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
         proctor=request.form.get('proctor'),

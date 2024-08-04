@@ -29,6 +29,7 @@ def create_app():
     from .queries.handson_dashboard import handson_dashboard
     from .queries.delete import delete_bp
     from .queries.filter import filter_bp
+    from .queries.search import search_bp
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
@@ -38,6 +39,7 @@ def create_app():
     app.register_blueprint(handson_dashboard,url_prefix ='/')
     app.register_blueprint(delete_bp,url_prefix='/')
     app.register_blueprint(filter_bp,url_prefix='/')
+    app.register_blueprint(search_bp,url_prefix='/')
 
 
     from .models import Admin, DiagnosticResults, HandsonResults, HistoryTable
@@ -50,8 +52,8 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return Admin.query.filter_by(admin_id=int(user_id)).first()
-    
-    
+
+
     return app
 
 def create_database(app):

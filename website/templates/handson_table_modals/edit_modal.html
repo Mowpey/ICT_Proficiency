@@ -13,7 +13,7 @@ input[type=number] {
 <button
   type="button"
   class="btn btn-secondary"
-  data-bs-target="#handson_edit"
+  data-bs-target="#handson_edit_{{display.HandsonResults.applicant_id}}"
   data-bs-toggle="modal"
 >
   <svg
@@ -37,7 +37,7 @@ input[type=number] {
 <!-- Edit Modal -->
 <div
   class="modal fade"
-  id="handson_edit"
+  id="handson_edit_{{display.HandsonResults.applicant_id}}"
   tabindex="-1"
   aria-hidden="true"
   aria-labelledby="handsonEditModalLabel"

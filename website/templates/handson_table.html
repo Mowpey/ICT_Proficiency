@@ -15,13 +15,18 @@ for category, message in messages %} {% if category == 'handson_error' %}
   <div class="col-6">
     <form
       class="form-inline my-2 my-lg-0 d-flex gap-2 header-buttons align-items-center justify-content-start"
+      id="handson_table_submit"
+      action="{{url_for('search.searchHandson')}}"
+      method="POST"
     >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <input
         class="form-control mr-sm-2 search"
         type="search"
         placeholder="Search"
         aria-label="Search"
         id="handson_table_input"
+        name="handson_table_input"
       />
       <button
         class="btn btn-outline-success my-sm-0"
@@ -68,300 +73,136 @@ for category, message in messages %} {% if category == 'handson_error' %}
   </li>
 </ul>
 <!--Mobile Filters-->
-<div class="row row-cols-3 px-2 mobile">
-  <!--Sort ID -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
-      <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Sort ID
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" id="oldest_id"> Oldest ID</a></li>
-      </ul>
-    </div>
-  </div>
-  <!--Sort Name -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
-      <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Sort Name
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <a class="dropdown-item" id="filter_up">Sort name A to Z</a>
-        </li>
-        <li>
-          <a class="dropdown-item" id="filter_down">Sort name Z to A</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!--Sort Exam Venue -->
-  <div class="col px-1 py-2">
-    <div class="btn-group">
-      <button
-        class="btn btn-outline btn-sm dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Sort Venue
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <p class="dropdown-item">CSU Gymnasium</p>
-        </li>
-
-        <li>
-          <p class="dropdown-item">Quirino Theater</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Isabela Hall A</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Nueva Vizcaya Hall B</p>
-        </li>
-        <li>
-          <p class="dropdown-item">Batanes Hall C</p>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="row row-cols-2 px-2 mobile">
-  <!--Filter Date of Examination-->
-  <div class="col py-2">
-    <input
-      type="text"
-      class="rounded border border-1 p-1"
-      placeholder="Date of Exam"
-      autocomplete="off"
-      name="filter_date_exam_mobile"
-      id="filter_date_exam_mobile"
-    />
-  </div>
-  <!--Filter Date of Notification-->
-  <div class="col py-2">
-    <input
-      type="text"
-      class="rounded border border-1 p-1"
-      placeholder="Date of Notification"
-      autocomplete="off"
-      name="filter_date_notif_mobile"
-      id="filter_date_notif_mobile"
-    />
-  </div>
-</div>
+{% include "mobile-filters-handson.html"%}
 
 <!--Main Table-->
 <div class="table-responsive my-2">
   <table class="table table-striped">
-    <thead>
-      <tr class="table-primary">
-        <th scope="col"></th>
-        <th scope="col">
-          <!--Oldest ID Filter-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="oldest_id"
-              id="oldest_id"
-            >
-              Applicant ID
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Oldest ID</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Name Filter-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_name"
-              id="filter_name"
-            >
-              Name
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Sort Name A to Z</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Sort Name Z to A</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Sex-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_sex"
-              id="filter_sex"
-            >
-              Sex
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Male</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Female</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Sort Province-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_province"
-              id="filter_province"
-            >
-              Province
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Isabela</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Cagayan</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Batanes</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Nueva Vizcaya</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Quirino</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Exam Date-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold rounded"
-              placeholder="Exam date"
-              id="filter_date_exam"
-              name="filter_date_exam"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Exam Venue-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_venue"
-              id="filter_venue"
-            >
-              Exam Venue
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">CSU Gymnasium</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Quirino Theater</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Isabela Hall A</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Nueva Vizcaya Hall B</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Batanes Hall C</p>
-              </li>
-            </ul>
-          </div>
-        </th>
+      <form action="{{url_for('filter.applyFilterHandson')}}" method="POST" id="filter-handson-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">
+                  <button
+                    type="submit"
+                    form="filter-handson-form"
+                    class="btn btn-primary float-end"
+                  >
+                    Apply Filters
+                  </button>
+              </th>
+              <th scope="col" colspan="2">
+                <!--Sorting Only-->
+                <select
+                  class="form-select fw-semibold"
+                  aria-label="Default ID"
+                  style="min-width: 140px"
+                  name="sort_option"
+                  id="sort_option"
+                >
+                  <option value="">Sort Options</option>
+                  <option value="oldest_id" {% if request.form.get('sort_option') == 'oldest_id' %}selected{% endif %}>Oldest ID</option>
+                  <option value="asc_name" {% if request.form.get('sort_option') == 'asc_name' %}selected{% endif %}>Sort A to Z</option>
+                  <option value="desc_name" {% if request.form.get('sort_option') == 'desc_name' %}selected{% endif %}>Sort Z to A</option>
+                </select>
+              </th>
+              <th scope="col">
+                <!--Sort Sex-->
+                <select
+                  class="form-select fw-semibold"
+                  aria-label="Default Sex order"
+                  style="min-width: 75px"
+                  name="sort_sex"
+                >
+                  <option value="">Sex</option>
+                  <option value="male"  {% if request.form.get('sort_sex') == 'male' %}selected{% endif %}>Male</option>
+                  <option value="female" {% if request.form.get('sort_sex') == 'female' %}selected{% endif %}>Female</option>
+                </select>
+              </th>
+              <th scope="col">
+                <!--Sort Province-->
+                <select
+                  class="form-select fw-semibold"
+                  aria-label="Default province order"
+                  name="sort_province"
+                  id="sort_province"
+                  style="min-width: 105px"
+                >
+                  <option value="">Province</option>
+                  <option value="isabela" {% if request.form.get('sort_province') == 'isabela' %}selected{% endif %}>Isabela</option>
+                  <option value="cagayan" {% if request.form.get('sort_province') == 'cagayan' %}selected{% endif %}>Cagayan</option>
+                  <option value="batanes" {% if request.form.get('sort_province') == 'batanes' %}selected{% endif %}>Batanes</option>
+                  <option value="nueva_vizcaya" {% if request.form.get('sort_province') == 'nueva_vizcaya' %}selected{% endif %}>Nueva Vizcaya</option>
+                  <option value="quirino" {% if request.form.get('sort_province') == 'quirino' %}selected{% endif %}>Quirino</option>
+                </select>
+              </th>
+              <th scope="col">
+                <!--Filter Exam Date-->
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control fw-semibold rounded"
+                    placeholder="Exam date"
+                    id="sort_date_exam"
+                    name="sort_date_exam"
+                    value="{% if request.form.get('sort_date_exam') %}{{ request.form.get('sort_date_exam') }}{% endif %}"
+                  />
+                </div>
+              </th>
+              <th scope="col">
+                <!--Filter Exam Venue-->
+                 <input
+                    type="text"
+                    class="form-control fw-semibold"
+                    placeholder="Venue"
+                    id="sort_venue"
+                    name="sort_venue"
+                    value="{% if request.form.get('sort_venue') %}{{ request.form.get('sort_venue') }}{% endif %}"
+                  />
+              </th>
 
-        <th scope="col">
-          <!--Filter Notified Date-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold rounded"
-              placeholder="Notified date"
-              id="filter_date_notif"
-              name="filter_date_notif"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Proctor-->
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control fw-semibold"
-              placeholder="Enter proctor"
-              id="filter_proctor"
-              name="filter_proctor"
-            />
-          </div>
-        </th>
-        <th scope="col">
-          <!--Filter Status-->
-          <div class="dropdown">
-            <button
-              class="btn btn-outline dropdown-toggle fw-semibold"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              name="filter_status"
-              id="filter_status"
-            >
-              Status
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <p class="dropdown-item fw-semibold">Passed</p>
-              </li>
-              <li>
-                <p class="dropdown-item fw-semibold">Failed</p>
-              </li>
-            </ul>
-          </div>
-        </th>
-      </tr>
-    </thead>
+              <th scope="col">
+                <!--Filter Notified Date-->
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control fw-semibold rounded"
+                    placeholder="Notified date"
+                    id="sort_date_notified"
+                    name="sort_date_notified"
+                    value="{% if request.form.get('sort_date_notified') %}{{ request.form.get('sort_date_notified') }}{% endif %}"
+                  />
+                </div>
+              </th>
+              <th scope="col">
+                <!--Filter Proctor-->
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control fw-semibold"
+                    placeholder="Enter proctor"
+                    id="sort_proctor"
+                    name="sort_proctor"
+                    value="{% if request.form.get('sort_proctor') %}{{ request.form.get('sort_proctor') }}{% endif %}"
+                  />
+                </div>
+              </th>
+              <th scope="col">
+                <!--Filter Status-->
+                <select
+                  class="form-select fw-semibold"
+                  name="sort_status"
+                  id="sort_status"
+                  style="min-width: 95px"
+                >
+                  <option value="">Status</option>
+                  <option value="Passed" {% if request.form.get('sort_status') == 'Passed' %}selected{% endif %}>Passed</option>
+                  <option value="Failed" {% if request.form.get('sort_status') == 'Failed' %}selected{% endif %}>Failed</option>
+                </select>
+              </th>
+            </tr>
+          </thead>
+      </form>
     <tbody>
       {%for display in h_results%}
       <tr>
@@ -382,20 +223,20 @@ for category, message in messages %} {% if category == 'handson_error' %}
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.first_name}} {% if display.middle_name %}
-          {{display.middle_name[0] + "."}} {% endif %} {{display.last_name}}
+          {{display.first_name | capitalize}} {% if display.middle_name %}
+          {{display.middle_name[0]| capitalize + "."}} {% endif %} {{display.last_name | capitalize}}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.sex}}
+          {{display.sex| capitalize}}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.province}}
+          {{display.province| capitalize}}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
@@ -408,8 +249,8 @@ for category, message in messages %} {% if category == 'handson_error' %}
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.venue_address}}
-          {{display.HandsonResults.exam_venue}}
+          {{display.HandsonResults.venue_address}}{% if display.HandsonResults.venue_address %},{%endif%}
+          {{display.HandsonResults.exam_venue| capitalize}}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
@@ -422,7 +263,7 @@ for category, message in messages %} {% if category == 'handson_error' %}
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.proctor}}
+          {{display.HandsonResults.proctor| capitalize}}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
@@ -439,11 +280,25 @@ for category, message in messages %} {% if category == 'handson_error' %}
 <!--Pagination-->
 <nav aria-label="Page navigation" class="pagination justify-content-center">
   <ul class="pagination my-3">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    {% if page > 1 %}
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showHandsonTable', page=page-1) }}">Previous</a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+    {% endif %}
+
+    {% for i in range(1, total_pages+1) %}
+    {% if i == page %}
+    <li class="page-item active"><a class="page-link" href="{{ url_for('views.showHandsonTable', page=i) }}">{{ i }}</a></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showHandsonTable', page=i) }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages %}
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showHandsonTable', page=page+1) }}">Next</a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+    {% endif %}
   </ul>
 </nav>
 

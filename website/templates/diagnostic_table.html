@@ -13,11 +13,13 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
 <div class="alert alert-success" role="alert">Success: {{ message }}</div>
 {% endif %} {% endfor %} {% endif %} {% endwith %}
 <!--Search Bar-->
-<div class="row row-col-2 align-items-center pb-4">
-  <div class="col-6">
+<div class="row row-col-2 align-items-center pb-4 ">
+  <div class="col-6 pe-0">
     <form
       class="form-inline my-2 my-lg-0 d-flex gap-2 header-buttons align-items-center justify-content-start"
       method="POST"
+      id="diagnostic_table_submit"
+      action="{{url_for('search.searchDiagnostic')}}"
     >
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <input
@@ -26,6 +28,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
         placeholder="Search"
         aria-label="Search"
         id="diagnostic_table_input"
+        name="diagnostic_table_input"
       />
       <button
         class="btn btn-outline-success my-sm-0"
@@ -48,7 +51,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
     </form>
   </div>
 
-  <div class="col-6 d-flex justify-content-end gap-2 header-buttons">
+  <div class="col-6 d-flex justify-content-end gap-2" >
     {% include "diagnostic_table_modals/add_modal.html" %} {% include
     "diagnostic_table_modals/clear_modal.html" %}
   </div>
@@ -65,7 +68,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
     >
     {%endblock%}
   </li>
-  <li class="nav-item me-4">
+  <li class="nav-item">
     {%block handsonTab%}<a class="nav-link" href="handson_table">
       Hands-On Results</a
     >
@@ -73,7 +76,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
   </li>
 </ul>
 <!--Mobile Filters-->
-{% include "mobile-filters-diagnostic.html" with context%}
+{% include "mobile-filters-diagnostic.html" %}
 
 <!--Main Table-->
 <div class="table-responsive my-2">
@@ -83,7 +86,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
       method="POST"
       id="filter-diagnostic-form"
     >
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <thead>
         <tr class="table-primary">
           <th scope="col">
@@ -95,33 +98,22 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
               Apply Filters
             </button>
           </th>
-          <th scope="col">
-            <!--Oldest ID Filter-->
+          <th scope="col" colspan="2">
+            <!--Sorting Only-->
             <select
               class="form-select fw-semibold"
               aria-label="Default ID"
               style="min-width: 140px"
-              name="sort_id"
-              id="sort_id"
+              name="sort_option"
+              id="sort_option"
             >
-              <option value="">Applicant ID</option>
-              <option value="oldest_id"  {% if request.form.get('sort_id') == 'oldest_id' %}selected{% endif %}>Oldest ID</option>
+              <option value="">Sort Options</option>
+              <option value="oldest_id" {% if request.form.get('sort_option') == 'oldest_id' %}selected{% endif %}>Oldest ID</option>
+              <option value="asc_name" {% if request.form.get('sort_option') == 'asc_name' %}selected{% endif %}>Sort A to Z</option>
+              <option value="desc_name" {% if request.form.get('sort_option') == 'desc_name' %}selected{% endif %}>Sort Z to A</option>
             </select>
           </th>
-          <th scope="col">
-            <!--Sort Name Filter-->
-            <select
-              class="form-select fw-semibold"
-              aria-label="Default Name order"
-              style="min-width: 120px"
-              name="sort_name"
-              id="sort_name"
-            >
-              <option value="">Name</option>
-              <option value="asc_name" {% if request.form.get('sort_name') == 'asc_name' %}selected{% endif %}>Sort A to Z</option>
-              <option value="desc_name"  {% if request.form.get('sort_name') == 'desc_name' %}selected{% endif %}>Sort Z to A</option>
-            </select>
-          </th>
+
           <th scope="col">
             <!--Sort Sex-->
             <select
@@ -241,8 +233,8 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
           data-bs-target="#showDetails_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.first_name}} {% if display.middle_name %}
-          {{display.middle_name[0] + "."}} {% endif %} {{display.last_name}}
+          {{display.first_name | capitalize}} {% if display.middle_name  %}
+          {{display.middle_name[0]| capitalize + "." }} {% endif %} {{display.last_name | capitalize}}
         </td>
         <td
           data-bs-target="#showDetails_{{display.applicant_id}}"
@@ -254,7 +246,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
           data-bs-target="#showDetails_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.province}}
+          {{display.province | capitalize}}
         </td>
         <td
           data-bs-target="#showDetails_{{display.applicant_id}}"
@@ -267,7 +259,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
           data-bs-target="#showDetails_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-         {{display.venue_address}} {{display.exam_venue}}
+         {{display.venue_address}}{% if display.venue_address %}, {% endif %}{{display.exam_venue | capitalize}}
         </td>
         <td
           data-bs-target="#showDetails_{{display.applicant_id}}"
@@ -280,7 +272,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
           data-bs-target="#showDetails_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.proctor}}
+          {{display.proctor | capitalize}}
         </td>
         <td
           data-bs-target="#showDetails_{{display.applicant_id}}"
@@ -298,11 +290,25 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
 <!--Pagination-->
 <nav aria-label="Page navigation" class="pagination justify-content-center">
   <ul class="pagination my-3">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    {% if page > 1 %}
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showDiagnosticTable', page=page-1) }}">Previous</a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+    {% endif %}
+
+    {% for i in range(1, total_pages+1) %}
+    {% if i == page %}
+    <li class="page-item active"><a class="page-link" href="{{ url_for('views.showDiagnosticTable', page=i) }}">{{ i }}</a></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showDiagnosticTable', page=i) }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages %}
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showDiagnosticTable', page=page+1) }}">Next</a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+    {% endif %}
   </ul>
 </nav>
 
