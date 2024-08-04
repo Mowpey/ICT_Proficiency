@@ -5,7 +5,7 @@ from sqlalchemy import select,update
 import io
 from datetime import datetime
 import magic
-
+from ..queries import insert_history
 update_bp = Blueprint('update',__name__)
 
 
@@ -18,7 +18,7 @@ def is_pdf(applicant_attachment):
     return mime.from_buffer(applicant_attachment_isValid) == 'application/pdf'
 
 
-@update_bp.route('/update_diagnostic/<int:applicant_id>',methods = ['POST'])
+@update_bp.route('/<int:applicant_id>',methods = ['POST'])
 def updateValues(applicant_id):
 
     diagnostic_form_data = update(DiagnosticResults).where(DiagnosticResults.applicant_id
@@ -28,6 +28,7 @@ def updateValues(applicant_id):
             last_name = request.form.get('last_name', '').strip() or None,
             sex = request.form.get('sex', '').strip() or None,
             province = request.form.get('province', '').strip() or None,
+            venue_address = request.form.get('venue_address','').strip() or None,
             exam_venue = request.form.get('exam_venue', '').strip() or None,
             date_of_examination = datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date() if request.form.get('date_exam') else None,
             date_of_notification = datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date() if request.form.get('date_notified') else None,
@@ -53,6 +54,7 @@ def updateValues(applicant_id):
         db.session.commit()
 
     db.session.execute(diagnostic_form_data)
+    insert_history.add_diagnostic_edit_history(request.form['first_name'], request.form['last_name'])
     db.session.commit()
     flash("Diagnostic Record has been updated successfully",'diagnostic_success')
     return redirect(url_for('views.showDiagnosticTable'))
@@ -63,16 +65,16 @@ def updateValues(applicant_id):
 def updateValues_handson(applicant_id):
     handson_form_data = update(HandsonResults).where(HandsonResults.applicant_id == applicant_id).values(
         exam_venue=request.form.get('exam_venue'),
+        venue_address = request.form.get('venue_address','').strip() or None,
         date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
         date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
         proctor=request.form.get('proctor'),
         handson_score=request.form.get('handson_score'),
         status=request.form.get('status')
     )
-
     db.session.execute(handson_form_data)
+    insert_history.add_handson_edit_history(applicant_id)
     db.session.commit()
-    flash("Handson Record has been updated successfully",'handson_success')
     return redirect(url_for('views.showHandsonTable'))
 
 

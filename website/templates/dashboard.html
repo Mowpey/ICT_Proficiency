@@ -22,6 +22,8 @@ content%} {%block stylesheet%}
   </div>
 </div>
 <!-- Diagnostic Filters-->
+ <form  action="{{url_for('diagnostic_dashboard.filterdashboard')}}" method="POST">
+   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 <div class="row align-items-center">
   <div class="col-auto date-filter">
     <label class="py-2 fw-semibold"> Start Exam Date</label>
@@ -33,6 +35,9 @@ content%} {%block stylesheet%}
         placeholder="Exam date"
         id="filter_date_exam_start"
         name="filter_date_exam_start"
+        autocomplete="off"
+        required
+        value="{{datestart}}"
       />
     </div>
   </div>
@@ -45,21 +50,25 @@ content%} {%block stylesheet%}
         placeholder="Exam date"
         id="filter_date_exam_end"
         name="filter_date_exam_end"
+        autocomplete="off"
+        required
+        value="{{dateend}}"
       />
-      <button type="button" class="btn btn-success rounded filter-submit">
+      <button type="submit" class="btn btn-success rounded filter-submit">
         Submit
       </button>
     </div>
   </div>
 </div>
-
+</form>
+{% if results %}
 <!-- Diagnostic Card Summary-->
 <div class="row card-summary">
   <div class="col-4 my-4 total-applicants">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Total Applicants</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Some Number</h6>
+        <h6 id="total-applicants" class="card-subtitle mb-2 text-body-secondary"> {{ results.total_applicants }}</h6>
       </div>
     </div>
   </div>
@@ -67,7 +76,7 @@ content%} {%block stylesheet%}
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Passed Summary</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Some Number</h6>
+        <h6  id ="passed-summary"class="card-subtitle mb-2 text-body-secondary">{{ results.passed_count }}</h6>
       </div>
     </div>
   </div>
@@ -75,7 +84,7 @@ content%} {%block stylesheet%}
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Failed Summary</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Some Number</h6>
+        <h6 id = "failed-summary"class="card-subtitle mb-2 text-body-secondary"> {{ results.failed_count }}</h6>
       </div>
     </div>
   </div>
@@ -97,9 +106,24 @@ content%} {%block stylesheet%}
   </div>
 </div>
 
+    <ul style="display: none;">
+    {% for province, count in results.passers_per_province.items() %}
+        <li data-province="{{ province }}" data-count="{{ count }}">{{ province }}: {{ count }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No results to display. Please use the filter above to see results.</p>
+{% endif %}
+
+
+
+
 {% block customScripts%}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="{{url_for('static',filename='js/diagnostic-pieChart.js')}}"></script>
 <script src="{{url_for('static',filename='js/diagnostic-barChart.js')}}"></script>
+<script src="{{url_for('static',filename='js/diagnostic-dashboard-filter-end-exam-date.js')}}"></script>
+<script src="{{url_for('static',filename='js/diagnostic-dashboard-filter-start-exam-date.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
 {%endblock%} {%endblock%}

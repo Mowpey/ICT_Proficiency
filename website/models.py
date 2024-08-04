@@ -5,10 +5,11 @@ from flask_login import UserMixin
 
 
 class Admin(db.Model,UserMixin):
-    admin_id = db.Column(db.Integer, primary_key=True)
-    admin_name = db.Column(db.String(64),unique=True)
-    password = db.Column(db.String(64))
-    history_entries = db.relationship('HistoryTable',backref='admin')
+    admin_id = db.Column(db.Integer,primary_key = True)
+    admin_name = db.Column(db.String(150),unique = True)
+    password = db.Column(db.String(150))
+    def get_id(self):
+        return str(self.admin_id)
 
 class DiagnosticResults(db.Model):
     applicant_id = db.Column(db.Integer,primary_key=True)
@@ -18,6 +19,7 @@ class DiagnosticResults(db.Model):
     sex = db.Column(db.String(64))
     province = db.Column(db.String(64))
     exam_venue = db.Column(db.String(64))
+    venue_address = db.Column(db.String(128))
     date_of_examination = db.Column(db.Date)
     date_of_notification = db.Column(db.Date)
     proctor = db.Column(db.String(64))
@@ -37,6 +39,7 @@ class HandsonResults(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     applicant_id = db.Column(db.Integer, db.ForeignKey('diagnostic_results.applicant_id'))
     exam_venue = db.Column(db.String(64))
+    venue_address = db.Column(db.String(128))
     date_of_examination = db.Column(db.Date)
     date_of_notification = db.Column(db.Date)
     proctor = db.Column(db.String(64))

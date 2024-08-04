@@ -25,11 +25,11 @@
             <h5 class="py-2">Personal Information</h5>
             <p><b class="me-2">Applicant ID:</b> {{display.applicant_id}}</p>
             <p>
-              <b class="me-2">Name:</b> {{display.first_name}}
-              {{display.middle_name}} {{display.last_name}}
+              <b class="me-2">Name:</b> {{display.first_name | capitalize}}
+              {{display.middle_name | capitalize}} {{display.last_name | capitalize}}
             </p>
-            <p><b class="me-2">Sex:</b> {{display.sex}}</p>
-            <p><b class="me-2">Province:</b> {{display.province}}</p>
+            <p><b class="me-2">Sex:</b> {{display.sex | capitalize}}</p>
+            <p><b class="me-2">Province:</b> {{display.province | capitalize}}</p>
             <p>
               <b class="me-2">Contact Number:</b> {{display.contact_number}}
             </p>
@@ -55,8 +55,11 @@
               display.date_of_notification.strftime('%B %d, %Y') if
               display.date_of_notification else 'N/A' }}
             </p>
-            <p><b class="me-2">Exam Venue:</b> {{display.exam_venue}}</p>
-            <p><b class="me-2">Proctor:</b> {{display.proctor}}</p>
+            <p>
+              <b class="me-2">Exam Venue:</b>
+              {{display.venue_address}}, {{display.exam_venue | capitalize}}
+            </p>
+            <p><b class="me-2">Proctor:</b> {{display.proctor | capitalize}}</p>
             <p><b class="me-2">Status:</b> {{display.status}}</p>
             <p>
               {% if display.applicant_form %}

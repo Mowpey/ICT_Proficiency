@@ -13,7 +13,7 @@ input[type=number] {
 <button
   type="button"
   class="btn btn-secondary"
-  data-bs-target="#handson_edit"
+  data-bs-target="#handson_edit_{{display.HandsonResults.applicant_id}}"
   data-bs-toggle="modal"
 >
   <svg
@@ -37,7 +37,7 @@ input[type=number] {
 <!-- Edit Modal -->
 <div
   class="modal fade"
-  id="handson_edit"
+  id="handson_edit_{{display.HandsonResults.applicant_id}}"
   tabindex="-1"
   aria-hidden="true"
   aria-labelledby="handsonEditModalLabel"
@@ -111,6 +111,23 @@ input[type=number] {
                   />
                 </div>
               </div>
+             <div class="row venue_address py-2">
+                <div class="">
+                  <div class="input-group mb-3 venue_address">
+                    <label class="input-group-text" for="venue_address"
+                      >Venue Address (Optional)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="venue_address"
+                      name="venue_address"
+                      aria-describedby="venueAddressHelp"]
+                      value="{{display.HandsonResults.venue_address}}"
+                    />
+                  </div>
+                </div>
+              </div>
               <div class="row exam_venue py-2">
                 <div class="">
                   <div class="input-group mb-3 exam_venue">
@@ -124,13 +141,11 @@ input[type=number] {
                       required
                     >
                       <option selected></option>
-                      <option value="CSU Gymnasium" {% if display.HandsonResults.exam_venue == 'CSU Gymnasium' %} selected {%endif%} >CSU Gymnasium</option>
-                      <option value="Quirino Theater" {% if display.HandsonResults.exam_venue == 'Quirino Theater' %} selected {%endif%}>Quirino Theater</option>
-                      <option value="Isabela Hall A" {% if display.HandsonResults.exam_venue == 'Isabela Hall A' %} selected {%endif%}>Isabela Hall A</option>
-                      <option value="Nueva Vizcaya Hall B" {% if display.HandsonResults.exam_venue == 'Nueva Vizcaya Hall B' %} selected {%endif%}>
-                        Nueva Vizcaya Hall B
-                      </option>
-                      <option value="Batanes Hall C" {% if display.HandsonResults.exam_venue == 'Batanes Hall C' %} selected {%endif%}>Batanes Hall C</option>
+                      <option value="isabela" {% if display.HandsonResults.exam_venue == 'isabela' %} selected {% endif %}>Isabela</option>
+                      <option value="cagayan" {% if display.HandsonResults.exam_venue == 'cagayan' %} selected {% endif %}>Cagayan</option>
+                      <option value="batanes" {% if display.HandsonResults.exam_venue == 'batanes' %} selected {% endif %}>Batanes</option>
+                      <option value="nueva vizcaya" {% if display.HandsonResults.exam_venue == 'nueva vizcaya' %} selected {% endif %}>Nueva Vizcaya</option>
+                      <option value="quirino" {% if display.HandsonResults.exam_venue == 'quirino' %} selected {% endif %}>Quirino</option>
                     </select>
                   </div>
                 </div>

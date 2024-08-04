@@ -1,42 +1,73 @@
 @media (max-width: 991px) {
-    td {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: 14ch auto;
-        padding: 0.5rem 1rem;
-        margin-inline: 0.5rem;
-    }
-    th {
-        display: none;
-    }
-    td:first-child {
-        padding-top: 2rem;
-    }
-    td:last-child {
-        padding-bottom: 2rem;
-        margin-bottom: 2rem;
-    }
-    td::before {
-        font-weight: 700;
-        text-transform: capitalize;
-        margin-left: 0.7rem;
-    }
-    td:nth-of-type(1)::before {
-        content: "Action Icon";
-    }
-    td:nth-of-type(2)::before {
-        content: "ID";
-    }
-    td:nth-of-type(3)::before {
-        content: "Admin Name";
-    }
-    td:nth-of-type(4)::before {
-        content: "Action";
-    }
-    td:nth-of-type(5)::before {
-        content: "Date";
-    }
-    td:nth-of-type(6)::before {
-        content: "Time Modified";
-    }
+  td {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 14ch auto;
+    padding: 0.5rem 1rem;
+  }
+  th {
+    display: block;
+  }
+  td:first-child {
+    padding-top: 2rem;
+  }
+  td:last-child {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+  td::before {
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-left: 0.7rem;
+  }
+  td:nth-of-type(1)::before {
+    content: "Action Icon";
+  }
+  td:nth-of-type(2)::before {
+    content: "ID";
+  }
+  td:nth-of-type(3)::before {
+    content: "Admin Name";
+  }
+  td:nth-of-type(4)::before {
+    content: "Action";
+  }
+  td:nth-of-type(5)::before {
+    content: "Date";
+  }
+  td:nth-of-type(6)::before {
+    content: "Time Modified";
+  }
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.form-select-sm {
+  border-color: #6c757d;
+  border: none;
+}
+
+.form-select-sm option {
+  font-weight: bold;
+  border: none;
+}
+
+.form-control-sm {
+  border-color: #6c757d;
+  border: none;
+}
+
+.form-select-sm option[value="Delete"] {
+  color: #dc3545;
+}
+
+.form-select-sm option[value="Insert"] {
+  color: #28a745;
+}
+
+.form-select-sm option[value="Edit"] {
+  color: #007bff;
 }

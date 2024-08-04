@@ -31,11 +31,11 @@
               {{display.HandsonResults.applicant_id}}
             </p>
             <p>
-              <b class="me-2">Name:</b> {{display.first_name}}
-              {{display.middle_name}} {{display.last_name}}
+              <b class="me-2">Name:</b> {{display.first_name| capitalize}}
+              {{display.middle_name| capitalize}} {{display.last_name| capitalize}}
             </p>
-            <p><b class="me-2">Sex:</b> {{display.sex}}</p>
-            <p><b class="me-2">Province:</b> {{display.province}}</p>
+            <p><b class="me-2">Sex:</b> {{display.sex| capitalize}}</p>
+            <p><b class="me-2">Province:</b> {{display.province| capitalize}}</p>
             <p>
               <b class="me-2">Contact Number:</b> {{display.contact_number}}
             </p>
@@ -61,7 +61,8 @@
             </p>
             <p>
               <b class="me-2">Exam Venue:</b>
-              {{display.HandsonResults.exam_venue}}
+              {{display.HandsonResults.venue_address}},
+              {{display.HandsonResults.exam_venue| capitalize}}
             </p>
             <p>
               <b class="me-2">Proctor:</b> {{display.HandsonResults.proctor}}

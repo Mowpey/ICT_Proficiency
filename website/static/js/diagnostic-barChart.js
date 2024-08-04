@@ -3,74 +3,95 @@
 
   Chart.register(ChartDataLabels);
 
-  const labels = ["Cagayan", "Isabela", "Batanes", "Nueva Vizcaya", "Quirino"];
-  const rawData = [65, 59, 80, 81, 56];
+  let myChart;
 
-  const total = rawData.reduce((acc, val) => acc + val, 0);
-  const percentages = rawData.map((value) =>
-    ((value / total) * 100).toFixed(2)
-  );
+  const updateBarChart = (labels, data) => {
+    const total = data.reduce((acc, val) => acc + val, 0);
+    const percentages = data.map((value) => ((value / total) * 100).toFixed(0));
 
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Top Performing Regions",
-        data: percentages,
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-        ],
-        borderColor: [
-          "rgb(255, 99, 132)",
-          "rgb(255, 159, 64)",
-          "rgb(255, 205, 86)",
-          "rgb(75, 192, 192)",
-          "rgb(54, 162, 235)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+    const chartData = {
+      labels: labels,
+      datasets: [
+        {
+          label: "Top Performing Regions",
+          data: percentages,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(255, 205, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+          ],
+          borderColor: [
+            "rgb(255, 99, 132)",
+            "rgb(255, 159, 64)",
+            "rgb(255, 205, 86)",
+            "rgb(75, 192, 192)",
+            "rgb(54, 162, 235)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
 
-  const config = {
-    type: "bar",
-    data: data,
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 100,
-          ticks: {
-            callback: function (value) {
+    const config = {
+      type: "bar",
+      data: chartData,
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+              callback: function (value) {
+                return value + "%";
+              },
+            },
+          },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return context.parsed.y.toFixed(0) + "%";
+              },
+            },
+          },
+          datalabels: {
+            formatter: (value) => {
               return value + "%";
             },
+            color: "#000",
+            anchor: "end",
+            align: "top",
           },
         },
       },
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return context.parsed.y.toFixed(2) + "%";
-            },
-          },
-        },
-      },
-      datalabels: {
-        formatter: (value) => {
-          return value + "%";
-        },
-        color: "#000",
-        anchor: "end",
-        align: "top",
-      },
-    },
+    };
+
+    if (!myChart) {
+      myChart = new Chart(diagnostic_BarChart, config);
+    } else {
+      myChart.data = chartData;
+      myChart.update();
+    }
   };
 
-  new Chart(diagnostic_BarChart, config);
+  var passersList = document.querySelectorAll('li[data-province]');
+  var passersData = [];
+
+  Array.from(passersList).forEach(function (passer) {
+    var province = passer.getAttribute('data-province');
+    var count = parseInt(passer.getAttribute('data-count'));
+    passersData.push({ province: province, count: count });
+  });
+
+  const labels = passersData.map(function (passer) {
+    return passer.province;
+  });
+  const rawData = passersData.map(function (passer) {
+    return passer.count;
+  });
+  updateBarChart(labels, rawData);
 })();

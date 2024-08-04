@@ -1,0 +1,132 @@
+<form action="{{url_for('filter.applyFilterDiagnostic')}}" method="POST" id="mobile-filters-diagnostic">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="row row-cols-2 px-2 mobile">
+            <!--Sort Options -->
+            <div class="col px-1 py-2">
+                <select
+                    class="form-select fw-semibold"
+                    aria-label="Default ID"
+                    style="min-width: fit-content;"
+                    name="sort_option"
+                    id="sort_option"
+                >
+                    <option value="">Sort Options</option>
+                    <option value="oldest_id" {% if request.form.get('sort_option') == 'oldest_id' %}selected{% endif %}>Oldest ID</option>
+                    <option value="asc_name" {% if request.form.get('sort_option') == 'asc_name' %}selected{% endif %}>Sort A to Z</option>
+                    <option value="desc_name" {% if request.form.get('sort_option') == 'desc_name' %}selected{% endif %}>Sort Z to A</option>
+                </select>
+            </div>
+            <!--Sort Exam Venue -->
+            <div class="col px-1 py-2">
+                <input
+                type="text"
+                class="form-control fw-semibold"
+                placeholder="Venue"
+                id="sort_venue"
+                name="sort_venue"
+                value="{% if request.form.get('sort_venue') %}{{ request.form.get('sort_venue') }}{% endif %}"
+                />
+            </div>
+        </div>
+        <div class="row row-cols-2 px-2 mobile">
+            <div class="col px-1 py-2">
+                <!--Sort Sex-->
+                <select
+                  class="form-select fw-semibold"
+                  aria-label="Default Sex order"
+                  style="min-width: 75px"
+                  name="sort_sex"
+                >
+                  <option value="">Sex</option>
+                  <option value="male"  {% if request.form.get('sort_sex') == 'male' %}selected{% endif %}>Male</option>
+                  <option value="female" {% if request.form.get('sort_sex') == 'female' %}selected{% endif %}>Female</option>
+                </select>
+            </div>
+
+            <div class="col px-1 py-2">
+                <select
+                  class="form-select fw-semibold"
+                  aria-label="Default province order"
+                  name="sort_province"
+                  id="sort_province"
+                  style="min-width: 105px"
+                >
+                  <option value="">Province</option>
+                  <option value="isabela" {% if request.form.get('sort_province') == 'isabela' %}selected{% endif %}>Isabela</option>
+                  <option value="cagayan" {% if request.form.get('sort_province') == 'cagayan' %}selected{% endif %}>Cagayan</option>
+                  <option value="batanes" {% if request.form.get('sort_province') == 'batanes' %}selected{% endif %}>Batanes</option>
+                  <option value="nueva_vizcaya" {% if request.form.get('sort_province') == 'nueva_vizcaya' %}selected{% endif %}>Nueva Vizcaya</option>
+                  <option value="quirino" {% if request.form.get('sort_province') == 'quirino' %}selected{% endif %}>Quirino</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row row-cols-2 px-2 mobile">
+            <div class="col px-1 py-2">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control fw-semibold"
+                    placeholder="Enter proctor"
+                    id="sort_proctor"
+                    name="sort_proctor"
+                    value="{% if request.form.get('sort_proctor') %}{{ request.form.get('sort_proctor') }}{% endif %}"
+                  />
+                </div>
+            </div>
+
+            <div class="col px-1 py-2">
+                <select
+                  class="form-select fw-semibold"
+                  name="sort_status"
+                  id="sort_status"
+                  style="min-width: 95px"
+                >
+                  <option value="">Status</option>
+                  <option value="Passed" {% if request.form.get('sort_status') == 'Passed' %}selected{% endif %}>Passed</option>
+                  <option value="Failed" {% if request.form.get('sort_status') == 'Failed' %}selected{% endif %}>Failed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row row-cols-2 px-2 mobile">
+            <!--Filter Date of Examination-->
+            <div class="col px-1 py-2">
+                <input
+                type="text"
+                class="rounded border border-1 p-2"
+                placeholder="Date of Exam"
+                autocomplete="off"
+                id="mobile_sort_date_exam"
+                name="sort_date_exam"
+                value="{% if request.form.get('sort_date_exam') %}{{ request.form.get('sort_date_exam') }}{% endif %}"
+                style="max-width: 100%; min-width: 100%;"
+                />
+            </div>
+            <!--Filter Date of Notification-->
+            <div class="col px-1 py-2">
+                <input
+                type="text"
+                class="rounded border border-1 p-2"
+                placeholder="Date of Notification"
+                autocomplete="off"
+                id="mobile_sort_date_notified"
+                name="sort_date_notified"
+                value="{% if request.form.get('sort_date_notified') %}{{ request.form.get('sort_date_notified') }}{% endif %}"
+                style="max-width: 100%; min-width: 100%;"
+                />
+            </div>
+        </div>
+
+        <div class="row row-cols-auto px-2 mobile">
+            <div class="col px-1 py-2">
+                <button
+                type="submit"
+                form="mobile-filters-diagnostic"
+                class="btn btn-primary float-left"
+                >
+                Apply Filters
+                </button>
+            </div>
+        </div>
+</form>

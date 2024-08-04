@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask,make_response
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from os import path
 from flask_wtf.csrf import CSRFProtect
+from flask_login import LoginManager
 
 csrf = CSRFProtect()
 db=SQLAlchemy()
@@ -24,17 +25,35 @@ def create_app():
     from .auth import auth
     from .queries.insert import insert_bp
     from .queries.update import update_bp
+    from .queries.diagnostic_dashboard import diagnostic_dashboard
+    from .queries.handson_dashboard import handson_dashboard
     from .queries.delete import delete_bp
+    from .queries.filter import filter_bp
+    from .queries.search import search_bp
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(insert_bp, url_prefix='/')
     app.register_blueprint(update_bp,url_prefix='/')
+    app.register_blueprint(diagnostic_dashboard,url_prefix ='/')
+    app.register_blueprint(handson_dashboard,url_prefix ='/')
     app.register_blueprint(delete_bp,url_prefix='/')
+    app.register_blueprint(filter_bp,url_prefix='/')
+    app.register_blueprint(search_bp,url_prefix='/')
 
 
     from .models import Admin, DiagnosticResults, HandsonResults, HistoryTable
     create_database(app)
+
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Admin.query.filter_by(admin_id=int(user_id)).first()
+
+
     return app
 
 def create_database(app):

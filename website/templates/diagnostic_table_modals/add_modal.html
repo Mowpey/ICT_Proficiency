@@ -120,11 +120,11 @@
                       required
                     >
                       <option selected></option>
-                      <option value="Isabela">Isabela</option>
-                      <option value="Cagayan">Cagayan</option>
-                      <option value="Batanes">Batanes</option>
-                      <option value="Nueva_Vizcaya">Nueva Vizcaya</option>
-                      <option value="Quirino">Quirino</option>
+                      <option value="isabela">Isabela</option>
+                      <option value="cagayan">Cagayan</option>
+                      <option value="batanes">Batanes</option>
+                      <option value="nueva vizcaya">Nueva Vizcaya</option>
+                      <option value="quirino">Quirino</option>
                     </select>
                   </div>
                 </div>
@@ -208,11 +208,27 @@
                   />
                 </div>
               </div>
+              <div class="row venue_address py-2">
+                <div class="">
+                  <div class="input-group mb-3 venue_address">
+                    <label class="input-group-text" for="venue_address"
+                      >Venue Address (Optional)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="venue_address"
+                      name="venue_address"
+                      aria-describedby="venueAddressHelp"
+                    />
+                  </div>
+                </div>
+              </div>
               <div class="row exam_venue py-2">
                 <div class="">
                   <div class="input-group mb-3 exam_venue">
                     <label class="input-group-text" for="exam_venue"
-                      >Exam Venue</label
+                      >Exam Venue Province</label
                     >
                     <select
                       class="form-select"
@@ -221,13 +237,11 @@
                       required
                     >
                       <option selected></option>
-                      <option value="CSU Gymnasium">CSU Gymnasium</option>
-                      <option value="Quirino Theater">Quirino Theater</option>
-                      <option value="Isabela Hall A">Isabela Hall A</option>
-                      <option value="Nueva Vizcaya Hall B">
-                        Nueva Vizcaya Hall B
-                      </option>
-                      <option value="Batanes Hall C">Batanes Hall C</option>
+                      <option value="isabela">Isabela</option>
+                      <option value="cagayan">Cagayan</option>
+                      <option value="batanes">Batanes</option>
+                      <option value="nueva vizcaya">Nueva Vizcaya</option>
+                      <option value="quirino">Quirino</option>
                     </select>
                   </div>
                 </div>
@@ -269,7 +283,7 @@
                     >Part I Score</label
                   >
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
                     id="part_one_score"
                     name="part_one_score"
@@ -286,7 +300,7 @@
                     >Part II Score</label
                   >
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
                     id="part_two_score"
                     name="part_two_score"
@@ -303,7 +317,7 @@
                     >Part III Score</label
                   >
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
                     id="part_three_score"
                     name="part_three_score"

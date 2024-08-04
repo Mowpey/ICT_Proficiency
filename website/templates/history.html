@@ -4,63 +4,76 @@ block stylesheet%}
   rel="stylesheet"
   href="{{url_for('static',filename='css/history-style.css')}}"
 />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css">
 {% endblock%} {%block content%}
+
+{% block customScripts%}
+<script src="{{url_for('static',filename='js/history-filter-date.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
+ {%endblock%}
 
 <div class="row row-col-2 align-items-center pb-4">
   <div class="col-4">
-    <form
-      class="form-inline my-2 my-lg-0 d-flex gap-2 header-buttons align-items-center justify-content-start"
-    >
-      <input
-        class="form-control mr-sm-2 search"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-        id="history_table_input"
-      />
-      <button
-        class="btn btn-outline-success my-sm-0"
-        type="submit"
-        id="history_table_input"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-search"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
-          />
+    <form class="form-inline my-2 my-lg-0 d-flex gap-2 header-buttons align-items-center justify-content-start" method="GET" action="{{ url_for('views.showHistory') }}">
+      <input class="form-control mr-sm-2 search" type="search" placeholder="Search applicant name" aria-label="Search" name="search" value="{{ search_query }}" />
+      <button class="btn btn-outline-success my-sm-0" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
         </svg>
       </button>
     </form>
   </div>
 </div>
 
+
+
+
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
-      <tr class="table-primary">
-        <th scope="col"></th>
-        <th scope="col">ID</th>
-        <th scope="col">Admin Name</th>
-        <th scope="col">Action</th>
-        <th scope="col">Date</th>
-        <th scope="col">Time Modified</th>
-      </tr>
+      <form method="GET" action="{{ url_for('views.showHistory') }}">
+        <tr class="table-primary">
+          <th scope="col">
+            <button type="submit" class="btn btn-primary btn-sm filter-button">Filter</button>
+          </th>
+          <th scope="col">ID</th>
+          <th scope="col">
+            <select name="admin_name" class="form-select form-select-sm admin-select fw-bold">
+              <option value="">All Admins</option>
+              {% for admin in admin_list %}
+                <option value="{{ admin.admin_name }}" {% if admin.admin_name == admin_query %}selected{% endif %}>{{ admin.admin_name }}</option>
+              {% endfor %}
+            </select>
+          </th>
+          <th scope="col">
+            <select name="action" class="form-select form-select-sm action-select fw-bold">
+              <option value="">All Actions</option>
+              <option value="Delete" {% if action_query == 'Delete' %}selected{% endif %} class="action-delete">Deleted</option>
+              <option value="Insert" {% if action_query == 'Insert' %}selected{% endif %} class="action-insert">Inserted</option>
+              <option value="Edit" {% if action_query == 'Edit' %}selected{% endif %} class="action-edit">Edited</option>
+            </select>
+          </th>
+          <th scope="col">
+            <input autocomplete="off" type="text" name="date" class="form-control form-select-sm date-input fw-bold" id="date" value="{{ date_query }}" placeholder="Date">
+            
+          </th>
+          <th scope="col">Time Modified</th>
+        </tr>
+      </form>
     </thead>
     <tbody>
       <!--UPDATED ROW -->
+      {% if history_entries %}
+      {% for entry in history_entries %}
       <tr>
-        <td>
+          {% if 'Insert' in entry.action_done %}
+          <td>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            fill="currentColor"
+            fill="green"
             class="bi bi-pencil-square"
             viewBox="0 0 16 16"
           >
@@ -73,27 +86,13 @@ block stylesheet%}
             />
           </svg>
         </td>
-        <td scope="row">1</td>
-        <td><b>Admin Mark</b></td>
-        <td>
-          <div>
-            <b>UPDATED</b> the applicant record for
-            <b>Mark Angelo Manuel</b>
-            in
-            <b>Diagnostic Results Table</b>
-          </div>
-        </td>
-        <td>July 24,2024</td>
-        <td>10:15 PM</td>
-      </tr>
-      <!--DELETED ROW -->
-      <tr>
+        {% elif 'Delete' in entry.action_done%}
         <td>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            fill="currentColor"
+            fill="red"
             class="bi bi-trash"
             viewBox="0 0 16 16"
           >
@@ -105,27 +104,13 @@ block stylesheet%}
             />
           </svg>
         </td>
-        <td scope="row">2</td>
-        <td><b>Admin Mark</b></td>
-        <td>
-          <div>
-            <b>DELETED</b> the applicant record for
-            <b>Ken Robbie Galapate</b>
-            in
-            <b>Handson Results Table</b>
-          </div>
-        </td>
-        <td>July 26,2024</td>
-        <td>8:15 PM</td>
-      </tr>
-      <!--ADDED ROW -->
-      <tr>
+        {% else %}
         <td>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            fill="currentColor"
+            fill="blue"
             class="bi bi-plus-circle"
             viewBox="0 0 16 16"
           >
@@ -137,19 +122,37 @@ block stylesheet%}
             />
           </svg>
         </td>
-        <td scope="row">3</td>
-        <td><b>Admin Mark</b></td>
+        {% endif %}
+        <td scope="row">{{ entry.id }}</td>
+        <td><b> {{ admin_names[entry.admin_id] }}</b></td>
         <td>
           <div>
-            <b>ADDED</b> the applicant record for
-            <b>Ian Pamittan</b>
-            in
-            <b>Diagnostic Results Table</b>
+            {% set words = entry.action_done.split(' ') %}
+                {% if words|length > 0 %}
+                {% set color = 'black' %}
+                {% if 'Insert' in entry.action_done %}
+                    {% set color = 'green' %}
+                {% elif 'Delete' in entry.action_done %}
+                    {% set color = 'red' %}
+                {% elif 'Edited' in entry.action_done %}
+                    {% set color = 'blue' %}
+                {% endif %}
+    <strong style ="color: {{color}};">{{ words[0] }}</strong> {{ words[1:]|join(' ') }}
+                {% endif %}
+            for
+           <b>{{ entry.applicant_name }}</b>
           </div>
         </td>
-        <td>July 12,2024</td>
-        <td>5:30 AM</td>
+        <td>{{ entry.date_modified.strftime('%B %d, %Y') }}</td>
+        <td>{{ entry.date_modified.strftime('%I:%M %p') }}</td>
       </tr>
+      {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="6" style="text-align: center;">No records found</td>
+
+        </tr>
+      {% endif %}
     </tbody>
   </table>
 </div>
@@ -157,11 +160,37 @@ block stylesheet%}
 <!--Pagination-->
 <nav aria-label="Page navigation" class="pagination justify-content-center">
   <ul class="pagination my-3">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    {% if pagination.has_prev %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('views.showHistory', page=pagination.prev_num, search=search_query, date=date_query, admin_name=admin_query, action=action_query) }}">Previous</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Previous</span>
+      </li>
+    {% endif %}
+
+    {% for page_num in range(1, total_pages + 1) %}
+      {% if page_num == pagination.page %}
+        <li class="page-item active">
+          <span class="page-link">{{ page_num }}</span>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('views.showHistory', page=page_num, search=search_query, date=date_query, admin_name=admin_query, action=action_query) }}">{{ page_num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if pagination.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('views.showHistory', page=pagination.next_num, search=search_query, date=date_query, admin_name=admin_query, action=action_query) }}">Next</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Next</span>
+      </li>
+    {% endif %}
   </ul>
 </nav>
 
