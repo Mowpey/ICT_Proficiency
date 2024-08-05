@@ -1,17 +1,17 @@
-{% extends "base.html" %} {% block title %} Handson Result Table {% endblock %}
+{% extends "base.html" %} {% block title %} Assessment Result Table {% endblock %}
 {%block content%} {%block stylesheet%}<link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/table-style.css') }}"
 />
 {%endblock%} {% with messages = get_flashed_messages(with_categories=true,
-category_filter=["handson_error", "handson_success"]) %} {% if messages %} {%
-for category, message in messages %} {% if category == 'handson_error' %}
+category_filter=["assessment_error", "assessment_success"]) %} {% if messages %} {%
+for category, message in messages %} {% if category == 'assessment_error' %}
 <div class="alert alert-danger" role="alert">Error: {{ message }}</div>
-{% elif category == 'handson_success' %}
+{% elif category == 'assessment_success' %}
 <div class="alert alert-success" role="alert">Success: {{ message }}</div>
 {% endif %} {% endfor %} {% endif %} {% endwith %}
 <!--Search Bar-->
-<div class="row row-col-2 align-items-center pb-4">
+<!-- <div class="row row-col-2 align-items-center pb-4">
   <div class="col-6">
     <form
       class="form-inline my-2 my-lg-0 d-flex gap-2 header-buttons align-items-center justify-content-start"
@@ -53,8 +53,9 @@ for category, message in messages %} {% if category == 'handson_error' %}
     {% include "handson_table_modals/add_modal.html"%} {% include
     "handson_table_modals/clear_modal.html" %}
   </div>
-</div>
+</div> -->
 <!--Tab Headers-->
+
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a
@@ -65,12 +66,12 @@ for category, message in messages %} {% if category == 'handson_error' %}
     >
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="handson_table">
+    <a class="nav-link" href="handson_table">
       Hands-On Results</a
     >
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="assessment_table"> Assessment Results</a>
+ <li class="nav-item">
+    <a class="nav-link active" href="assessment_table"> Assessment Results</a>
   </li>
 </ul>
 <!--Mobile Filters-->

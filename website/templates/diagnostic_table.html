@@ -60,19 +60,20 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
 <!--Tab Headers-->
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    {%block diagnosticTab %}<a
+    <a
       class="nav-link active"
       aria-current="page"
       href="#"
       >Diagnostic Results</a
     >
-    {%endblock%}
   </li>
   <li class="nav-item">
-    {%block handsonTab%}<a class="nav-link" href="handson_table">
+    <a class="nav-link" href="handson_table">
       Hands-On Results</a
     >
-    {%endblock%}
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="assessment_table"> Assessment Results</a>
   </li>
 </ul>
 <!--Mobile Filters-->
