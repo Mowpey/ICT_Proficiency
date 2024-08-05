@@ -80,6 +80,7 @@ input[type=number] {
                                         name="first_name"
                                         aria-describedby="firstNameHelp"
                                         value="{{display.first_name}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>
@@ -95,6 +96,7 @@ input[type=number] {
                                         id="middle_name"
                                         aria-describedby="middleNameHelp"
                                         value="{{display.middle_name}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>
@@ -110,6 +112,7 @@ input[type=number] {
                                         id="last_name"
                                         aria-describedby="lastNameHelp"
                                         value="{{display.last_name}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>
@@ -121,7 +124,7 @@ input[type=number] {
                                             for="sex"
                                             >Sex</label
                                         >
-                                        <select class="form-select" id="sex" name="sex">
+                                        <select class="form-select" id="sex" name="sex" autocomplete="off">
                                             <option value="male" {% if display.sex == 'male' %} selected {% endif %}>Male</option>
                                             <option value="female" {% if display.sex == 'female' %} selected {% endif %}>Female</option>
                                         </select>
@@ -140,7 +143,7 @@ input[type=number] {
                                             class="form-select"
                                             id="province"
                                             name="province"
-
+                                            autocomplete="off"
                                         >
                                             <option selected></option>
                                             <option value="isabela"  {% if display.province == 'isabela' %} selected {% endif %}>
@@ -176,6 +179,7 @@ input[type=number] {
                                         id="contact_number"
                                         aria-describedby="contactNumberHelp"
                                         value="{{display.contact_number}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>
@@ -193,6 +197,7 @@ input[type=number] {
                                         id="email_address"
                                         aria-describedby="emailAddressHelp"
                                         value="{{display.email_address}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>
@@ -229,6 +234,7 @@ input[type=number] {
                                         id="edit_date_exam_{{display.applicant_id}}"
                                         aria-describedby="dateExamHelp"
                                         value="{{display.date_of_examination}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>
@@ -246,6 +252,7 @@ input[type=number] {
                                         id="edit_date_notified_{{display.applicant_id}}"
                                         aria-describedby="dateNotifiedHelp"
                                         value="{{display.date_of_notification}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>         
@@ -262,6 +269,7 @@ input[type=number] {
                                     name="venue_address"
                                     aria-describedby="venueAddressHelp"
                                     value="{{display.venue_address}}"
+                                    autocomplete="off"
                                     />
                                 </div>
                                 </div>
@@ -278,6 +286,7 @@ input[type=number] {
                                             class="form-select"
                                             id="exam_venue"
                                             name="exam_venue"
+                                            autocomplete="off"
                                         >
                                             <option selected></option>
                                             <option value="isabela"  {% if display.province == 'isabela' %} selected {% endif %}>
@@ -311,6 +320,7 @@ input[type=number] {
                                         name="proctor"
                                         aria-describedby="proctorHelp"
                                         value="{{display.proctor}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>
@@ -322,7 +332,7 @@ input[type=number] {
                                             for="status"
                                             >Status</label
                                         >
-                                        <select class="form-select" id="status" name="status">
+                                        <select class="form-select" id="status" name="status" autocomplete="off">
                                             <option selected></option>
                                             <option value="Passed" {%if display.status == 'Passed'%} selected {%endif%}>
                                                 Passed
@@ -347,7 +357,7 @@ input[type=number] {
                                         class="form-control"
                                         id="part_one_score"
                                         name="part_one_score"
-                                        
+                                        autocomplete="off"
                                         aria-describedby="partOneScoreHelp"
                                         value="{{display.part_one_score}}"
                                     />
@@ -365,7 +375,7 @@ input[type=number] {
                                         class="form-control"
                                         id="part_two_score"
                                         name="part_two_score"
-                                       
+                                        autocomplete="off"
                                         aria-describedby="partTwoScoreHelp"
                                         value="{{display.part_two_score}}"
                                     />
@@ -386,6 +396,7 @@ input[type=number] {
                                         x-model.number="part_three"
                                         aria-describedby="partThreeScoreHelp"
                                         value="{{display.part_three_score}}"
+                                        autocomplete="off"
                                     />
                                 </div>
                             </div>

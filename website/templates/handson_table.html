@@ -263,7 +263,7 @@ for category, message in messages %} {% if category == 'handson_error' %}
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.proctor| capitalize}}
+          {{display.HandsonResults.proctor| title}}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
