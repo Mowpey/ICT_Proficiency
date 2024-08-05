@@ -101,7 +101,7 @@ def showHistory():
 
 @views.route('/assessment_table')
 @login_required
-def showAssessment():
+def showAssessmentTable():
     page = request.args.get('page',1,type=int)
     per_page = 25
     display_all = (

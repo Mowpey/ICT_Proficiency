@@ -1,6 +1,6 @@
 from flask import Blueprint, request,redirect,url_for,flash,current_app
 from .. import Session, db
-from ..models import Admin, DiagnosticResults, HandsonResults, HistoryTable
+from ..models import Admin, DiagnosticResults, HandsonResults, HistoryTable,UserAssessment
 from datetime import date as d, datetime
 import magic
 from sqlalchemy import insert
@@ -82,3 +82,31 @@ def insertHandsonData():
     return redirect(url_for('views.showHandsonTable'))
 
 
+@insert_bp.route('/insert_assessment',methods=['POST'])
+def insertAssessmentData():
+
+    if request.method == 'POST':
+        foreign_id = request.form.get('applicant_id')
+        isPresentInDiagnostic = DiagnosticResults.query.get(foreign_id)
+
+        if not isPresentInDiagnostic:
+            flash("Sorry! Your record is not present in any diagnostic records!", 'assessment_error')
+            return redirect(url_for('views.showAssessmentTable'))
+
+        assessment_form_data = insert(UserAssessment).values(
+            applicant_id=foreign_id,
+            exam_venue=request.form.get('exam_venue'),
+            venue_address=request.form['venue_address_assessment'].strip(),
+            date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
+            date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
+            proctor=request.form.get('proctor'),
+            assessment_score=request.form.get('assessment_score'),
+            status=request.form.get('status'),
+            remarks=request.form.get('remarks')
+        )
+
+        db.session.execute(assessment_form_data)
+        db.session.commit()
+        flash("User Assessment Record has been inserted successfully", 'assessment_success')
+
+    return redirect(url_for('views.showAssessmentTable'))

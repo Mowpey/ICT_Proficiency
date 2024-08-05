@@ -55,7 +55,7 @@ input[type=number] {
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" x-data="{ part_one: '{{display.part_one_score}}', part_two: '{{display.part_two_score}}', part_three:'{{display.part_three_score}}' }">
         <form action="{{url_for('update.updateValues_handson',applicant_id=display.HandsonResults.applicant_id)}}" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="row row-col-auto">
@@ -191,12 +191,71 @@ input[type=number] {
               <h5 class="py-3">Score Details</h5>
               <div class="row handson_score">
                 <div class="mb-3">
-                  <label for="handson_score" class="form-label"
+                  <label
+                      for="part_one_score"
+                      class="form-label my-1"
+                      >Part I Score</label
+                  >
+                  <input
+                      type="number"
+                      class="form-control my-1"
+                      id="part_one_score"
+                      name="part_one_score"
+                      autocomplete="off"
+                      aria-describedby="partOneScoreHelp"
+                      value="{{display.part_one_score}}"
+                  />
+
+                  <label
+                      for="part_two_score"
+                      class="form-label my-1"
+                      >Part II Score</label
+                  >
+                  <input
+                      type="number"
+                      class="form-control my-1"
+                      id="part_two_score"
+                      name="part_two_score"
+                      autocomplete="off"
+                      aria-describedby="partTwoScoreHelp"
+                      value="{{display.part_two_score}}"
+                  />
+
+                  <label
+                      for="part_three_score"
+                      class="form-label my-1"
+                      >Part III Score</label
+                  >
+                  <input
+                      type="number"
+                      class="form-control my-1"
+                      id="part_three_score"
+                      name="part_three_score"
+                      x-model.number="part_three"
+                      aria-describedby="partThreeScoreHelp"
+                      value="{{display.part_three_score}}"
+                      autocomplete="off"
+                  />
+
+                  <label for="total_score" class="form-label my-1"
+                      >Diagnostic Score</label
+                  >
+                  <input
+                      type="text"
+                      class="form-control my-1"
+                      id="total_score"
+                      name="total_score"
+                      x-bind:value="Number(part_one) + Number(part_two) + Number(part_three)"
+                      aria-describedby="totalScoreHelp"
+                      readonly
+                  />
+
+                  <label for="handson_score" class="form-label my-1"
                     >Hands-on Score</label
                   >
                   <input
                     type="number"
-                    class="form-control"
+                    class="form-control my-1"
                     id="handson_score"
                     name="handson_score"
                     value="{{display.HandsonResults.handson_score}}"
