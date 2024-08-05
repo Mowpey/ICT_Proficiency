@@ -59,10 +59,6 @@
         padding: 0.5rem;
         max-height: 2.35rem;
     }
-
-    .header-buttons button {
-        min-width: fit-content;
-    }
 }
 
 @media (min-width: 992px) {

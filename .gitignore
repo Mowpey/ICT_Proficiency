@@ -309,3 +309,4 @@ dist
 instance/applicantrecords.db
 *.db
 instance/applicantrecords.db
+.zed/settings.json

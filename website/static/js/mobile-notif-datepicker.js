@@ -7,7 +7,6 @@ if (typeof mobile_notif_picker === "undefined") {
     calendars: 1,
     readonly: false,
     format: "MMMM DD, YYYY",
-    autoApply: false,
     AmpPlugin: {
       resetButton: true,
     },

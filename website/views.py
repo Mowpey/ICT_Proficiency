@@ -1,7 +1,7 @@
 from flask import Blueprint,render_template,request
 from flask_sqlalchemy import SQLAlchemy
 from website.models import *
-from sqlalchemy import select,desc,or_
+from sqlalchemy import select,desc,or_,func
 from sqlalchemy.orm import joinedload
 from .queries.diagnostic_dashboard import get_dashboard_data
 from .queries.handson_dashboard import get_handson_data
@@ -24,21 +24,30 @@ def showDashboard():
 @views.route('/diagnostic_table')
 @login_required
 def showDiagnosticTable():
+    page = request.args.get('page', 1, type=int)
+    per_page = 25
     display_all = select(DiagnosticResults).order_by(desc(DiagnosticResults.applicant_id))
-    diagnostic_table_entries = db.session.execute(display_all).scalars().all()
-    return render_template("diagnostic_table.html",d_results= diagnostic_table_entries,active_page="table")
+    total_count = db.session.execute(select(func.count(DiagnosticResults.applicant_id))).scalar() or 0
+    total_pages = ceil(total_count / per_page)
+    offset = (page - 1) * per_page
+    diagnostic_table_entries = db.session.execute(display_all.limit(per_page).offset(offset)).scalars().all()
+    return render_template("diagnostic_table.html", d_results=diagnostic_table_entries, active_page="table", page=page, total_pages=total_pages)
 
 @views.route('/handson_table')
 @login_required
 def showHandsonTable():
+    page = request.args.get('page', 1, type=int)
+    per_page = 25
     display_all = (
-        select(HandsonResults,*DiagnosticResults.__table__.columns).join(
-            DiagnosticResults,HandsonResults.applicant_id ==
-            DiagnosticResults.applicant_id).order_by(desc(HandsonResults.applicant_id))
+        select(HandsonResults, *DiagnosticResults.__table__.columns)
+        .join(DiagnosticResults, HandsonResults.applicant_id == DiagnosticResults.applicant_id)
+        .order_by(desc(HandsonResults.applicant_id))
     )
-    handson_table_entries = db.session.execute(display_all).mappings().all()
-    return render_template("handson_table.html",h_results=handson_table_entries, active_page="table")
-
+    total_count = db.session.execute(select(func.count(HandsonResults.applicant_id))).scalar() or 0
+    total_pages = ceil(total_count / per_page)
+    offset = (page - 1) * per_page
+    handson_table_entries = db.session.execute(display_all.limit(per_page).offset(offset)).mappings().all()
+    return render_template("handson_table.html", h_results=handson_table_entries, active_page="table", page=page, total_pages=total_pages)
 
 
 @views.route('/')

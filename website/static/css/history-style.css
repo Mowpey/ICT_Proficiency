@@ -4,10 +4,9 @@
     gap: 1rem;
     grid-template-columns: 14ch auto;
     padding: 0.5rem 1rem;
-    margin-inline: 0.5rem;
   }
   th {
-    display: none;
+    display: block;
   }
   td:first-child {
     padding-top: 2rem;
