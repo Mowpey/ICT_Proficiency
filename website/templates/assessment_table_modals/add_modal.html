@@ -10,11 +10,11 @@ input[type=number] {
 </style>
 
 
-<!--Handson Add Modal-->
+<!--Assessment Add Modal-->
 <button
   type="button"
   class="btn btn-primary"
-  data-bs-target="#handson_add"
+  data-bs-target="#assessment_add"
   data-bs-toggle="modal"
 >
   <svg
@@ -35,16 +35,16 @@ input[type=number] {
 <!-- Add Modal -->
 <div
   class="modal fade"
-  id="handson_add"
+  id="assessment_add"
   tabindex="-1"
   aria-hidden="true"
-  aria-labelledby="handsonAddModalLabel"
+  aria-labelledby="assessmentAddModalLabel"
 >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="handsonAddModalLabel">
-          Handson Add Modal
+        <h1 class="modal-title fs-5" id="assessmentAddModalLabel">
+          User Assessment Add Modal
         </h1>
         <button
           type="button"
@@ -54,7 +54,7 @@ input[type=number] {
         ></button>
       </div>
       <div class="modal-body">
-        <form action="{{url_for('insert.insertHandsonData')}}" method="POST">
+        <form action="{{url_for('insert.insertAssessmentData')}}" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="row row-col-auto">
             <div class="col-12">
@@ -117,8 +117,8 @@ input[type=number] {
                     <input
                       type="text"
                       class="form-control"
-                      id="venue_address_handson"
-                      name="venue_address_handson"
+                      id="venue_address_assessment"
+                      name="venue_address_assessment"
                       aria-describedby="venueAddressHelp"
                       autocomplete="off"
                     />
@@ -180,18 +180,31 @@ input[type=number] {
                   </div>
                 </div>
               </div>
+
+              <div class="row remarks py-2">
+                <div class="">
+                  <div class="input-group mb-3 remarks">
+
+                    <div class="form-floating">
+                      <textarea class="form-control" placeholder="Remarks" id="remarks" name="remarks" style="height: 10rem;"></textarea>
+                      <label for="floatingTextarea">Remarks</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <h5 class="py-3">Score Details</h5>
-              <div class="row handson_score">
+              <div class="row assessment_score">
                 <div class="mb-3">
-                  <label for="handson_score" class="form-label"
-                    >Hands-on Score</label
+                  <label for="assessment_score" class="form-label"
+                    >Assessment Score</label
                   >
                   <input
                     type="number"
                     class="form-control"
-                    id="handson_score"
-                    name="handson_score"
-                    aria-describedby="handsOnScoreHelp"
+                    id="assessment_score"
+                    name="assessment_score"
+                    aria-describedby="assessmentScoreHelp"
                     autocomplete="off"
                   />
                 </div>

@@ -26,10 +26,13 @@
             <p><b class="me-2">Applicant ID:</b> {{display.applicant_id}}</p>
             <p>
               <b class="me-2">Name:</b> {{display.first_name | capitalize}}
-              {{display.middle_name | capitalize}} {{display.last_name | capitalize}}
+              {{display.middle_name | capitalize}} {{display.last_name |
+              capitalize}}
             </p>
             <p><b class="me-2">Sex:</b> {{display.sex | capitalize}}</p>
-            <p><b class="me-2">Province:</b> {{display.province | capitalize}}</p>
+            <p>
+              <b class="me-2">Province:</b> {{display.province | capitalize}}
+            </p>
             <p>
               <b class="me-2">Contact Number:</b> {{display.contact_number}}
             </p>
@@ -57,7 +60,8 @@
             </p>
             <p>
               <b class="me-2">Exam Venue:</b>
-              {{display.venue_address}}, {{display.exam_venue | capitalize}}
+              {{display.venue_address}} {% if display.venue_address %}, {% endif
+              %} {{display.exam_venue | capitalize}}
             </p>
             <p><b class="me-2">Proctor:</b> {{display.proctor | capitalize}}</p>
             <p><b class="me-2">Status:</b> {{display.status}}</p>

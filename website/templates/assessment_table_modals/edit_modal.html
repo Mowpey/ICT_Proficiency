@@ -9,11 +9,11 @@ input[type=number] {
 }
 </style>
 
-<!-- Handson Edit Modal -->
+<!-- Assessment Edit Modal -->
 <button
   type="button"
   class="btn btn-secondary"
-  data-bs-target="#handson_edit_{{display.HandsonResults.applicant_id}}"
+  data-bs-target="#assessment_edit_{{display.UserAssessment.applicant_id}}"
   data-bs-toggle="modal"
 >
   <svg
@@ -37,16 +37,16 @@ input[type=number] {
 <!-- Edit Modal -->
 <div
   class="modal fade"
-  id="handson_edit_{{display.HandsonResults.applicant_id}}"
+  id="assessment_edit_{{display.UserAssessment.applicant_id}}"
   tabindex="-1"
   aria-hidden="true"
-  aria-labelledby="handsonEditModalLabel"
+  aria-labelledby="assessmentEditModalLabel"
 >
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="handsonEditModalLabel">
-          Handson Edit Modal
+        <h1 class="modal-title fs-5" id="assessmentEditModalLabel">
+          User Assessment Edit Modal
         </h1>
         <button
           type="button"
@@ -55,8 +55,8 @@ input[type=number] {
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body" x-data="{ part_one: '{{display.part_one_score}}', part_two: '{{display.part_two_score}}', part_three:'{{display.part_three_score}}' }">
-        <form action="{{url_for('update.updateValues_handson',applicant_id=display.HandsonResults.applicant_id)}}" method="POST">
+      <div class="modal-body">
+        <form action="{{url_for('update.updateValues_assessment',applicant_id=display.UserAssessment.applicant_id)}}" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="row row-col-auto">
             <div class="col-12">
@@ -72,7 +72,7 @@ input[type=number] {
                     id="applicant_id"
                     name="applicant_id"
                     aria-describedby="firstNameHelp"
-                    value="{{display.HandsonResults.applicant_id}}"
+                    value="{{display.UserAssessment.applicant_id}}"
                     autocomplete="off"
                     required
                     readonly
@@ -91,7 +91,7 @@ input[type=number] {
                     id="date_exam"
                     name="date_exam"
                     aria-describedby="dateExamHelp"
-                    value="{{display.HandsonResults.date_of_examination.strftime('%B %d, %Y')}}"
+                    value="{{display.UserAssessment.date_of_examination.strftime('%B %d, %Y')}}"
                     autocomplete="off"
                     required
                   />
@@ -107,7 +107,7 @@ input[type=number] {
                     class="form-control edit-date-notified"
                     id="date_notified"
                     name="date_notified"
-                    value="{{display.HandsonResults.date_of_notification.strftime('%B %d, %Y')}}"
+                    value="{{display.UserAssessment.date_of_notification.strftime('%B %d, %Y')}}"
                     autocomplete="off"
                     aria-describedby="dateNotifiedHelp"
                     required
@@ -127,7 +127,7 @@ input[type=number] {
                       name="venue_address"
                       aria-describedby="venueAddressHelp"
                       autocomplete="off"
-                      value="{{display.HandsonResults.venue_address}}"
+                      value="{{display.UserAssessment.venue_address}}"
                     />
                   </div>
                 </div>
@@ -146,11 +146,11 @@ input[type=number] {
                       required
                     >
                       <option selected></option>
-                      <option value="isabela" {% if display.HandsonResults.exam_venue == 'isabela' %} selected {% endif %}>Isabela</option>
-                      <option value="cagayan" {% if display.HandsonResults.exam_venue == 'cagayan' %} selected {% endif %}>Cagayan</option>
-                      <option value="batanes" {% if display.HandsonResults.exam_venue == 'batanes' %} selected {% endif %}>Batanes</option>
-                      <option value="nueva vizcaya" {% if display.HandsonResults.exam_venue == 'nueva vizcaya' %} selected {% endif %}>Nueva Vizcaya</option>
-                      <option value="quirino" {% if display.HandsonResults.exam_venue == 'quirino' %} selected {% endif %}>Quirino</option>
+                      <option value="isabela" {% if display.UserAssessment.exam_venue == 'isabela' %} selected {% endif %}>Isabela</option>
+                      <option value="cagayan" {% if display.UserAssessment.exam_venue == 'cagayan' %} selected {% endif %}>Cagayan</option>
+                      <option value="batanes" {% if display.UserAssessment.exam_venue == 'batanes' %} selected {% endif %}>Batanes</option>
+                      <option value="nueva vizcaya" {% if display.UserAssessment.exam_venue == 'nueva vizcaya' %} selected {% endif %}>Nueva Vizcaya</option>
+                      <option value="quirino" {% if display.UserAssessment.exam_venue == 'quirino' %} selected {% endif %}>Quirino</option>
                     </select>
                   </div>
                 </div>
@@ -163,7 +163,7 @@ input[type=number] {
                     class="form-control"
                     id="proctor"
                     name="proctor"
-                    value="{{display.HandsonResults.proctor}}"
+                    value="{{display.UserAssessment.proctor}}"
                     aria-describedby="proctorHelp"
                     autocomplete="off"
                     required
@@ -182,86 +182,37 @@ input[type=number] {
                       required
                     >
                       <option selected></option>
-                      <option value="Passed" {% if display.HandsonResults.status == 'Passed' %} selected {%endif%}>Passed</option>
-                      <option value="Failed" {% if display.HandsonResults.status == 'Failed' %} selected {%endif%}>Failed</option>
+                      <option value="Passed" {% if display.UserAssessment.status == 'Passed' %} selected {%endif%}>Passed</option>
+                      <option value="Failed" {% if display.UserAssessment.status == 'Failed' %} selected {%endif%}>Failed</option>
                     </select>
                   </div>
                 </div>
               </div>
+
+              <div class="row remarks py-2">
+                <div class="">
+                  <div class="input-group mb-3 remarks">
+                    <div class="form-floating">
+                      <textarea class="form-control" placeholder="Remarks" id="remarks" name="remarks" style="height: 10rem;">{{display.UserAssessment.remarks}}</textarea>
+                      <label for="floatingTextarea">Remarks</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <h5 class="py-3">Score Details</h5>
-              <div class="row handson_score">
+              <div class="row assessment_score">
                 <div class="mb-3">
-                  <label
-                      for="part_one_score"
-                      class="form-label my-1"
-                      >Part I Score</label
-                  >
-                  <input
-                      type="number"
-                      class="form-control my-1"
-                      id="part_one_score"
-                      name="part_one_score"
-                      x-model.number="part_one"
-                      autocomplete="off"
-                      aria-describedby="partOneScoreHelp"
-                      value="{{display.part_one_score}}"
-                  />
-
-                  <label
-                      for="part_two_score"
-                      class="form-label my-1"
-                      >Part II Score</label
-                  >
-                  <input
-                      type="number"
-                      class="form-control my-1"
-                      id="part_two_score"
-                      name="part_two_score"
-                      x-model.number="part_two"
-                      autocomplete="off"
-                      aria-describedby="partTwoScoreHelp"
-                      value="{{display.part_two_score}}"
-                  />
-
-                  <label
-                      for="part_three_score"
-                      class="form-label my-1"
-                      >Part III Score</label
-                  >
-                  <input
-                      type="number"
-                      class="form-control my-1"
-                      id="part_three_score"
-                      name="part_three_score"
-                      x-model.number="part_three"
-                      aria-describedby="partThreeScoreHelp"
-                      value="{{display.part_three_score}}"
-                      autocomplete="off"
-                  />
-
-                  <label for="total_score" class="form-label my-1"
-                      >Diagnostic Score</label
-                  >
-                  <input
-                      type="text"
-                      class="form-control my-1"
-                      id="total_score"
-                      name="total_score"
-                      x-bind:value="Number(part_one) + Number(part_two) + Number(part_three)"
-                      aria-describedby="totalScoreHelp"
-                      readonly
-                  />
-
-                  <label for="handson_score" class="form-label my-1"
-                    >Hands-on Score</label
+                  <label for="assessment_score" class="form-label my-1"
+                    >Assessment Score</label
                   >
                   <input
                     type="number"
                     class="form-control my-1"
-                    id="handson_score"
-                    name="handson_score"
-                    value="{{display.HandsonResults.handson_score}}"
-                    aria-describedby="handsOnScoreHelp"
+                    id="assessment_score"
+                    name="assessment_score"
+                    value="{{display.UserAssessment.assessment_score}}"
+                    aria-describedby="assessmentScoreHelp"
                     autocomplete="off"
                   />
                 </div>
