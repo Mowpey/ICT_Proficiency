@@ -13,7 +13,9 @@ Date of Examination,{{ applicant.date_of_examination.strftime('%B-%d-%Y') if app
 Date of Notification,{{ applicant.date_of_notification.strftime('%B-%d-%Y') if applicant.date_of_notification else 'N/A' }}
 Proctor,{{ applicant.proctor }}
 Status,{{ applicant.status }}
-{% if handson_details %}
+
+{%- if handson_details %}
+
 Hands-on Examination Details
 Exam Venue,{{ handson_details.exam_venue.capitalize() }}
 Venue Address,{{ handson_details.venue_address if handson_details.venue_address else 'N/A' }}
@@ -21,7 +23,20 @@ Date of Examination,{{ handson_details.date_of_examination.strftime('%B-%d-%Y') 
 Date of Notification,{{ handson_details.date_of_notification.strftime('%B-%d-%Y') if handson_details.date_of_notification else 'N/A' }}
 Proctor,{{ handson_details.proctor }}
 Status,{{ handson_details.status }}
-{% endif %}
+
+{%- endif %}
+
+{%- if assessment %}
+
+User Assessment Details
+Exam Venue,{{ assessment.exam_venue.capitalize() }}
+Venue Address,{{ assessment.venue_address if assessment.venue_address else 'N/A' }}
+Date of Examination,{{ assessment.date_of_examination.strftime('%B-%d-%Y') if assessment.date_of_examination else 'N/A' }}
+Date of Notification,{{ assessment.date_of_notification.strftime('%B-%d-%Y') if assessment.date_of_notification else 'N/A' }}
+Proctor,{{ assessment.proctor }}
+Status,{{ assessment.status }}
+
+{%- endif %}
 
 Score Summary
 Part I Diagnostic Score,{{ applicant.part_one_score }}
@@ -29,6 +44,12 @@ Part II Diagnostic Score,{{ applicant.part_two_score }}
 Part III Diagnostic Score,{{ applicant.part_three_score }}
 Total Diagnostic Score,{{ applicant.total_score }}
 
-{% if handson_details %}
+{%- if handson_details %}
+
 Hands-on Score,{{ handson_details.handson_score }}
-{% endif %}
+{%- endif %}
+
+{%- if assessment %}
+
+User Assessment Score,{{ assessment.assessment_score }}
+{%- endif %}

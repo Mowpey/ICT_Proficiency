@@ -106,6 +106,7 @@ def insertAssessmentData():
         )
 
         db.session.execute(assessment_form_data)
+        insert_history.add_assessment_insert_history(foreign_id)
         db.session.commit()
         flash("User Assessment Record has been inserted successfully", 'assessment_success')
 

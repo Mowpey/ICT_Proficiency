@@ -73,9 +73,10 @@
                 class="btn btn-outline-primary"
                 >View Applicant Attachment</a
               >
-              <a href="{{ url_for('export.export_applicant', applicant_id=display.applicant_id) }}" class="btn btn-secondary">Export</a>
-              {% endif %}
+            
             </p>
+            <p> <a href="{{ url_for('export.export_applicant', applicant_id=display.applicant_id) }}" class="btn btn-success">Export as .csv file</a>
+              {% endif %}</p>
           </div>
         </div>
       </div>
