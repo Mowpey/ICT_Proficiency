@@ -42,6 +42,7 @@ def sign_up():
             db.session.commit()
             return redirect(url_for('auth.login'))
     except:
-        flash("Admin already exsist!",category='error')
+        flash('Admin already exists',category='error')
+
 
     return render_template('authentication/sign_up.html')
