@@ -44,4 +44,5 @@ def sign_up():
     except:
         flash('Admin already exists',category='error')
 
+
     return render_template('authentication/sign_up.html')

@@ -1,8 +1,8 @@
 <div
   class="modal fade"
-  id="showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+  id="showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
   tabindex="-1"
-  aria-labelledby="showDetailsHandsonLabel_{{display.HandsonResults.applicant_id}}"
+  aria-labelledby="showDetailsAssessmentLabel_{{display.UserAssessment.applicant_id}}"
   aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -10,7 +10,7 @@
       <div class="modal-header">
         <h1
           class="modal-title fs-5"
-          id="showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          id="showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
         >
           Applicant Details
         </h1>
@@ -28,7 +28,7 @@
             <h5 class="py-2">Personal Information</h5>
             <p>
               <b class="me-2">Applicant ID:</b>
-              {{display.HandsonResults.applicant_id}}
+              {{display.UserAssessment.applicant_id}}
             </p>
             <p>
               <b class="me-2">Name:</b> {{display.first_name| capitalize}}
@@ -45,12 +45,8 @@
             <p><b class="me-2">Email Address:</b> {{display.email_address}}</p>
             <h5 class="py-2">Score Summary</h5>
             <p>
-              <b class="me-2">Hands-on Score:</b>
-              {{display.HandsonResults.handson_score}}
-            </p>
-            <p class="my-2">
-              <b class="me-2">Diagnostic Score:</b>
-              {{display.total_score}}
+              <b class="me-2">Assessment Score:</b>
+              {{display.UserAssessment.assessment_score}}
             </p>
 
           </div>
@@ -59,28 +55,29 @@
             <h5 class="py-2">Examination Details</h5>
             <p>
               <b class="me-2">Date of Examination:</b> {{
-              display.HandsonResults.date_of_examination.strftime('%B %d, %Y')
-              if display.HandsonResults.date_of_examination else 'N/A' }}
+              display.UserAssessment.date_of_examination.strftime('%B %d, %Y')
+              if display.UserAssessment.date_of_examination else 'N/A' }}
             </p>
             <p>
               <b class="me-2">Date of Notification:</b> {{
-              display.HandsonResults.date_of_notification.strftime('%B %d, %Y')
-              if display.HandsonResults.date_of_notification else 'N/A' }}
+              display.UserAssessment.date_of_notification.strftime('%B %d, %Y')
+              if display.UserAssessment.date_of_notification else 'N/A' }}
             </p>
             <p>
               <b class="me-2">Exam Venue:</b>
-              {% if display.HandsonResults.venue_address %} {{
-              display.HandsonResults.venue_address }}, {% endif %} {{
-              display.HandsonResults.exam_venue | default('') | capitalize }}
+              {% if display.UserAssessment.venue_address %} {{
+              display.UserAssessment.venue_address }}, {% endif %} {{
+              display.UserAssessment.exam_venue | default('') | capitalize }}
             </p>
             <p>
-              <b class="me-2">Proctor:</b> {{display.HandsonResults.proctor}}
+              <b class="me-2">Proctor:</b> {{display.UserAssessment.proctor}}
             </p>
-            <p><b class="me-2">Status:</b> {{display.HandsonResults.status}}</p>
+            <p><b class="me-2">Status:</b> {{display.UserAssessment.status}}</p>
+            <p><b class="me-2">Remarks:</b> {{display.UserAssessment.remarks}}</p>
             <p>
               {% if display.applicant_form %}
               <a
-                href="{{ url_for('update.view_attachment', applicant_id=display.HandsonResults.applicant_id) }}"
+                href="{{ url_for('update.view_attachment', applicant_id=display.UserAssessment.applicant_id) }}"
                 target="_blank"
                 class="btn btn-outline-primary"
                 >View Applicant Attachment</a

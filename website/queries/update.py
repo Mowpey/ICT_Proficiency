@@ -1,6 +1,6 @@
 from flask import Blueprint,request,redirect,url_for,flash,render_template,send_file
 from .. import Session, db
-from ..models import Admin, DiagnosticResults, HandsonResults, HistoryTable
+from ..models import Admin, DiagnosticResults, HandsonResults, HistoryTable,UserAssessment
 from sqlalchemy import select,update
 import io
 from datetime import datetime
@@ -72,9 +72,18 @@ def updateValues_handson(applicant_id):
         handson_score=request.form.get('handson_score'),
         status=request.form.get('status')
     )
+    diagnostic_total_data = update(DiagnosticResults).where(
+        DiagnosticResults.applicant_id == applicant_id).values(
+            part_one_score = request.form.get('part_one_score', '').strip() or None,
+            part_two_score = request.form.get('part_two_score', '').strip() or None,
+            part_three_score = request.form.get('part_three_score', '').strip() or None,
+            total_score = request.form.get('total_score', '').strip() or None,
+        )
     db.session.execute(handson_form_data)
+    db.session.execute(diagnostic_total_data)
     insert_history.add_handson_edit_history(applicant_id)
     db.session.commit()
+    flash("Handson Record has been updated successfully",'handson_success')
     return redirect(url_for('views.showHandsonTable'))
 
 
@@ -91,3 +100,22 @@ def view_attachment(applicant_id):
         )
 
     return redirect(url_for('views.showDiagnosticTable'))
+
+
+@update_bp.route('/update_assessment/<int:applicant_id>',methods = ['POST'])
+def updateValues_assessment(applicant_id):
+    assessment_form_data = update(UserAssessment).where(UserAssessment.applicant_id == applicant_id).values(
+        exam_venue=request.form.get('exam_venue'),
+        venue_address = request.form.get('venue_address','').strip() or None,
+        date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
+        date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
+        proctor=request.form.get('proctor'),
+        assessment_score=request.form.get('assessment_score'),
+        status=request.form.get('status'),
+        remarks=request.form.get('remarks')
+    )
+
+    db.session.execute(assessment_form_data)
+    db.session.commit()
+    flash("Assessment Record has been updated successfully",'assessment_success')
+    return redirect(url_for('views.showAssessmentTable'))

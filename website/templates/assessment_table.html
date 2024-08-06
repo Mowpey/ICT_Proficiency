@@ -1,13 +1,13 @@
-{% extends "base.html" %} {% block title %} Handson Result Table {% endblock %}
+{% extends "base.html" %} {% block title %} Assessment Table {% endblock %}
 {%block content%} {%block stylesheet%}<link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/table-style.css') }}"
 />
 {%endblock%} {% with messages = get_flashed_messages(with_categories=true,
-category_filter=["handson_error", "handson_success"]) %} {% if messages %} {%
-for category, message in messages %} {% if category == 'handson_error' %}
+category_filter=["assessment_error", "assessment_success"]) %} {% if messages %} {%
+for category, message in messages %} {% if category == 'assessment_error' %}
 <div class="alert alert-danger" role="alert">Error: {{ message }}</div>
-{% elif category == 'handson_success' %}
+{% elif category == 'assessment_success' %}
 <div class="alert alert-success" role="alert">Success: {{ message }}</div>
 {% endif %} {% endfor %} {% endif %} {% endwith %}
 <!--Search Bar-->
@@ -15,8 +15,8 @@ for category, message in messages %} {% if category == 'handson_error' %}
   <div class="col-6">
     <form
       class="form-inline my-2 my-lg-0 d-flex gap-2 header-buttons align-items-center justify-content-start"
-      id="handson_table_submit"
-      action="{{url_for('search.searchHandson')}}"
+      id="assessment_table_submit"
+      action="{{url_for('search.searchAssessment')}}"
       method="POST"
     >
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -25,13 +25,13 @@ for category, message in messages %} {% if category == 'handson_error' %}
         type="search"
         placeholder="Search"
         aria-label="Search"
-        id="handson_table_input"
-        name="handson_table_input"
+        id="assessment_table_input"
+        name="assessment_table_input"
       />
       <button
         class="btn btn-outline-success my-sm-0"
         type="submit"
-        id="handson_table_submit"
+        id="assessment_table_submit"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -50,14 +50,14 @@ for category, message in messages %} {% if category == 'handson_error' %}
   </div>
 
   <div class="col-6 d-flex justify-content-end gap-2 header-buttons">
-    {% include "handson_table_modals/add_modal.html"%} {% include
-    "handson_table_modals/clear_modal.html" %}
+    {% include "assessment_table_modals/add_modal.html"%} {% include
+    "assessment_table_modals/clear_modal.html" %}
   </div>
 </div>
 <!--Tab Headers-->
 <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link" href="assessment_table"> Assessment Results</a>
+      <a class="nav-link active" href="assessment_table"> Assessment Results</a>
     </li>
     <li class="nav-item">
         <a
@@ -68,25 +68,25 @@ for category, message in messages %} {% if category == 'handson_error' %}
         >
     </li>
     <li class="nav-item">
-        <a class="nav-link active" href="handson_table">
+        <a class="nav-link" href="handson_table">
         Hands-On Results</a
         >
     </li>
 </ul>
 <!--Mobile Filters-->
-{% include "mobile-filters-handson.html"%}
+{% include "mobile-filters-assessment.html"%}
 
 <!--Main Table-->
 <div class="table-responsive my-2">
   <table class="table table-striped">
-      <form action="{{url_for('filter.applyFilterHandson')}}" method="POST" id="filter-handson-form">
+      <form action="{{url_for('filter.applyFilterAssessment')}}" method="POST" id="filter-assessment-form">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <thead>
             <tr class="table-primary">
               <th scope="col">
                   <button
                     type="submit"
-                    form="filter-handson-form"
+                    form="filter-assessment-form"
                     class="btn btn-primary float-end"
                   >
                     Apply Filters
@@ -205,73 +205,73 @@ for category, message in messages %} {% if category == 'handson_error' %}
           </thead>
       </form>
     <tbody>
-      {%for display in h_results%}
+      {%for display in a_results%}
       <tr>
-        {% include "handson_table_modals/display_modal.html" with context%}
+         {% include "assessment_table_modals/display_modal.html" with context%}
         <td>
           <div class="button-modals">
-            {% include "handson_table_modals/edit_modal.html" with context %}
-            {%include "handson_table_modals/delete_modal.html" with context %}
+            {% include "assessment_table_modals/edit_modal.html" with context %}
+            {%include "assessment_table_modals/delete_modal.html" with context %}
           </div>
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.applicant_id}}
+          {{display.UserAssessment.applicant_id}}
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
         >
           {{display.first_name | capitalize}} {% if display.middle_name %}
           {{display.middle_name[0]| capitalize + "."}} {% endif %} {{display.last_name | capitalize}}
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
         >
           {{display.sex| capitalize}}
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
         >
           {{display.province| capitalize}}
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.date_of_examination.strftime('%B %d, %Y') if
-          display.HandsonResults.date_of_examination else ''}}
+          {{display.UserAssessment.date_of_examination.strftime('%B %d, %Y') if
+          display.UserAssessment.date_of_examination else ''}}
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.venue_address}}{% if display.HandsonResults.venue_address %},{%endif%}
-          {{display.HandsonResults.exam_venue| capitalize}}
+          {{display.UserAssessment.venue_address}}{% if display.UserAssessment.venue_address %},{%endif%}
+          {{display.UserAssessment.exam_venue| capitalize}}
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.date_of_notification.strftime('%B %d, %Y') if
-          display.HandsonResults.date_of_notification else ''}}
+          {{display.UserAssessment.date_of_notification.strftime('%B %d, %Y') if
+          display.UserAssessment.date_of_notification else ''}}
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.proctor| title}}
+          {{display.UserAssessment.proctor| title}}
         </td>
         <td
-          data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
           data-bs-toggle="modal"
-          class="{% if display.HandsonResults.status == 'Passed' %} table-success {% else %} table-danger {% endif %}"
+          class="{% if display.UserAssessment.status == 'Passed' %} table-success {% else %} table-danger {% endif %}"
         >
-          {{display.HandsonResults.status}}
+          {{display.UserAssessment.status}}
         </td>
       </tr>
       {%endfor%}
@@ -318,13 +318,13 @@ for category, message in messages %} {% if category == 'handson_error' %}
   type="text/javascript"
   src="{{ url_for('static', filename='js/notif-datepicker.js')}}"
 ></script>
-<script
+<!-- <script
   type="text/javascript"
   src="{{ url_for('static', filename='js/mobile-exam-datepicker.js')}}"
 ></script>
 <script
   type="text/javascript"
   src="{{ url_for('static', filename='js/mobile-notif-datepicker.js')}}"
-></script>
+></script> -->
 
 {%endblock%} {%endblock%}

@@ -9,12 +9,11 @@ input[type=number] {
 }
 </style>
 
-
-<!--Handson Add Modal-->
+<!-- Assessment Edit Modal -->
 <button
   type="button"
-  class="btn btn-primary"
-  data-bs-target="#handson_add"
+  class="btn btn-secondary"
+  data-bs-target="#assessment_edit_{{display.UserAssessment.applicant_id}}"
   data-bs-toggle="modal"
 >
   <svg
@@ -22,29 +21,32 @@ input[type=number] {
     width="16"
     height="16"
     fill="currentColor"
-    class="bi bi-plus-lg"
+    class="bi bi-pencil-square"
     viewBox="0 0 16 16"
   >
     <path
+      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+    />
+    <path
       fill-rule="evenodd"
-      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
     />
   </svg>
 </button>
 
-<!-- Add Modal -->
+<!-- Edit Modal -->
 <div
   class="modal fade"
-  id="handson_add"
+  id="assessment_edit_{{display.UserAssessment.applicant_id}}"
   tabindex="-1"
   aria-hidden="true"
-  aria-labelledby="handsonAddModalLabel"
+  aria-labelledby="assessmentEditModalLabel"
 >
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="handsonAddModalLabel">
-          Handson Add Modal
+        <h1 class="modal-title fs-5" id="assessmentEditModalLabel">
+          User Assessment Edit Modal
         </h1>
         <button
           type="button"
@@ -54,7 +56,7 @@ input[type=number] {
         ></button>
       </div>
       <div class="modal-body">
-        <form action="{{url_for('insert.insertHandsonData')}}" method="POST">
+        <form action="{{url_for('update.updateValues_assessment',applicant_id=display.UserAssessment.applicant_id)}}" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="row row-col-auto">
             <div class="col-12">
@@ -65,13 +67,15 @@ input[type=number] {
                     >Applicant ID</label
                   >
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
                     id="applicant_id"
                     name="applicant_id"
                     aria-describedby="firstNameHelp"
+                    value="{{display.UserAssessment.applicant_id}}"
                     autocomplete="off"
                     required
+                    readonly
                   />
                 </div>
               </div>
@@ -83,10 +87,11 @@ input[type=number] {
                   >
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control edit-date-exam"
                     id="date_exam"
                     name="date_exam"
                     aria-describedby="dateExamHelp"
+                    value="{{display.UserAssessment.date_of_examination.strftime('%B %d, %Y')}}"
                     autocomplete="off"
                     required
                   />
@@ -99,16 +104,17 @@ input[type=number] {
                   >
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control edit-date-notified"
                     id="date_notified"
                     name="date_notified"
-                    aria-describedby="dateNotifiedHelp"
+                    value="{{display.UserAssessment.date_of_notification.strftime('%B %d, %Y')}}"
                     autocomplete="off"
+                    aria-describedby="dateNotifiedHelp"
                     required
                   />
                 </div>
               </div>
-              <div class="row venue_address py-2">
+             <div class="row venue_address py-2">
                 <div class="">
                   <div class="input-group mb-3 venue_address">
                     <label class="input-group-text" for="venue_address"
@@ -117,10 +123,11 @@ input[type=number] {
                     <input
                       type="text"
                       class="form-control"
-                      id="venue_address_handson"
-                      name="venue_address_handson"
+                      id="venue_address"
+                      name="venue_address"
                       aria-describedby="venueAddressHelp"
                       autocomplete="off"
+                      value="{{display.UserAssessment.venue_address}}"
                     />
                   </div>
                 </div>
@@ -139,11 +146,11 @@ input[type=number] {
                       required
                     >
                       <option selected></option>
-                      <option value="isabela">Isabela</option>
-                      <option value="cagayan">Cagayan</option>
-                      <option value="batanes">Batanes</option>
-                      <option value="nueva vizcaya">Nueva Vizcaya</option>
-                      <option value="quirino">Quirino</option>
+                      <option value="isabela" {% if display.UserAssessment.exam_venue == 'isabela' %} selected {% endif %}>Isabela</option>
+                      <option value="cagayan" {% if display.UserAssessment.exam_venue == 'cagayan' %} selected {% endif %}>Cagayan</option>
+                      <option value="batanes" {% if display.UserAssessment.exam_venue == 'batanes' %} selected {% endif %}>Batanes</option>
+                      <option value="nueva vizcaya" {% if display.UserAssessment.exam_venue == 'nueva vizcaya' %} selected {% endif %}>Nueva Vizcaya</option>
+                      <option value="quirino" {% if display.UserAssessment.exam_venue == 'quirino' %} selected {% endif %}>Quirino</option>
                     </select>
                   </div>
                 </div>
@@ -156,6 +163,7 @@ input[type=number] {
                     class="form-control"
                     id="proctor"
                     name="proctor"
+                    value="{{display.UserAssessment.proctor}}"
                     aria-describedby="proctorHelp"
                     autocomplete="off"
                     required
@@ -174,24 +182,37 @@ input[type=number] {
                       required
                     >
                       <option selected></option>
-                      <option value="Passed">Passed</option>
-                      <option value="Failed">Failed</option>
+                      <option value="Passed" {% if display.UserAssessment.status == 'Passed' %} selected {%endif%}>Passed</option>
+                      <option value="Failed" {% if display.UserAssessment.status == 'Failed' %} selected {%endif%}>Failed</option>
                     </select>
                   </div>
                 </div>
               </div>
+
+              <div class="row remarks py-2">
+                <div class="">
+                  <div class="input-group mb-3 remarks">
+                    <div class="form-floating">
+                      <textarea class="form-control" placeholder="Remarks" id="remarks" name="remarks" style="height: 10rem;">{{display.UserAssessment.remarks}}</textarea>
+                      <label for="floatingTextarea">Remarks</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <h5 class="py-3">Score Details</h5>
-              <div class="row handson_score">
+              <div class="row assessment_score">
                 <div class="mb-3">
-                  <label for="handson_score" class="form-label"
-                    >Hands-on Score</label
+                  <label for="assessment_score" class="form-label my-1"
+                    >Assessment Score</label
                   >
                   <input
                     type="number"
-                    class="form-control"
-                    id="handson_score"
-                    name="handson_score"
-                    aria-describedby="handsOnScoreHelp"
+                    class="form-control my-1"
+                    id="assessment_score"
+                    name="assessment_score"
+                    value="{{display.UserAssessment.assessment_score}}"
+                    aria-describedby="assessmentScoreHelp"
                     autocomplete="off"
                   />
                 </div>
@@ -213,13 +234,12 @@ input[type=number] {
     </div>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
 <script
-  type="text/javascript"
-  src="{{url_for('static',filename='js/handson-date_exam.js')}}"
+    type="text/javascript"
+    src="{{url_for('static',filename='js/diagnostic-edit_exam.js')}}"
 ></script>
 <script
-  type="text/javascript"
-  src="{{url_for('static',filename='js/handson-date_notified.js')}}"
+    type="text/javascript"
+    src="{{url_for('static',filename='js/diagnostic-edit_notified.js')}}"
 ></script>

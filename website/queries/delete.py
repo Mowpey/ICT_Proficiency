@@ -1,6 +1,6 @@
 from flask import Blueprint, request,redirect,url_for,flash
 from .. import Session, db
-from ..models import Admin, DiagnosticResults, HandsonResults, HistoryTable
+from ..models import Admin, DiagnosticResults, HandsonResults, HistoryTable, UserAssessment
 from datetime import datetime
 import magic
 from sqlalchemy import insert,delete,select
@@ -33,3 +33,13 @@ def deleteHandsonRecord(applicant_id):
         flash('Handson record deleted successfully', 'handson_success')
 
         return redirect(url_for('views.showHandsonTable'))
+
+@delete_bp.route('/delete_assessment/<int:applicant_id>', methods=['POST'])
+def deleteAssessmentRecord(applicant_id):
+
+        assessment_record = delete(UserAssessment).where(UserAssessment.applicant_id == applicant_id)
+
+        db.session.execute(assessment_record)
+        db.session.commit()
+        flash('Assessment record deleted successfully', 'assessment_success')
+        return redirect(url_for('views.showAssessmentTable'))
