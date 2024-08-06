@@ -116,6 +116,7 @@ def updateValues_assessment(applicant_id):
     )
 
     db.session.execute(assessment_form_data)
+    insert_history.add_assessment_edit_history(applicant_id)
     db.session.commit()
     flash("Assessment Record has been updated successfully",'assessment_success')
     return redirect(url_for('views.showAssessmentTable'))
