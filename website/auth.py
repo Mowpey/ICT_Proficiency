@@ -33,12 +33,15 @@ def logout():
 
 @auth.route('/sign_up',methods=['GET','POST'])
 def sign_up():
-    if request.method == "POST":
-        name = request.form.get('name')
-        password = request.form.get("password")
-        new_admin = Admin(admin_name=name, password=generate_password_hash(password, method='pbkdf2:sha256'))
-        db.session.add(new_admin)
-        db.session.commit()
-        return redirect(url_for('auth.login'))
+    try:
+        if request.method == "POST":
+            name = request.form.get('name')
+            password = request.form.get("password")
+            new_admin = Admin(admin_name=name, password=generate_password_hash(password, method='pbkdf2:sha256'))
+            db.session.add(new_admin)
+            db.session.commit()
+            return redirect(url_for('auth.login'))
+    except:
+        flash('Admin already exists',category='error')
 
     return render_template('authentication/sign_up.html')
