@@ -47,18 +47,8 @@
               callback: function (value) {
                 return value + "%";
               },
-              font: {
-                weight: 'bold'
-              }
             },
           },
-          x: {
-            ticks: {
-              font: {
-                weight: 'bold'
-              }
-            }
-          }
         },
         plugins: {
           tooltip: {
@@ -74,7 +64,7 @@
             },
             color: "#000",
             anchor: "end",
-            align: "center",
+            align: "top",
           },
         },
       },
@@ -90,15 +80,15 @@
 
   var passersList = document.querySelectorAll('li[data-province]');
   var passersData = [];
-  
+
   Array.from(passersList).forEach(function (passer) {
     var province = passer.getAttribute('data-province');
     var count = parseInt(passer.getAttribute('data-count'));
     passersData.push({ province: province, count: count });
   });
-  
+
   const labels = passersData.map(function (passer) {
-    return passer.province.charAt(0).toUpperCase() + passer.province.slice(1);
+    return passer.province;
   });
   const rawData = passersData.map(function (passer) {
     return passer.count;
