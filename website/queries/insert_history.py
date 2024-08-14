@@ -71,7 +71,7 @@ def add_handson_delete_history(applicant_id):
 # user assessment
 
 def add_assessment_edit_history(applicant_id):
-    result = DiagnosticResults.query.get(applicant_id)
+    result = UserAssessment.query.get(applicant_id)
     applicant_name=f"{result.first_name} {result.last_name}"
     history_entry = HistoryTable(
         admin_id=current_user.admin_id,
