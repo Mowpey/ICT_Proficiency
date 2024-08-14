@@ -138,7 +138,7 @@ def applyFilterAssessment():
     page = request.args.get('page', 1, type=int)
     per_page = 25
 
-    filter_stmt = select(UserAssessment, *DiagnosticResults.__table__.columns).join(DiagnosticResults, UserAssessment.applicant_id == DiagnosticResults.applicant_id)
+    filter_stmt = select(UserAssessment)
     filtering_conditions = []
 
     sort_option = request.form.get("sort_option")
@@ -154,15 +154,15 @@ def applyFilterAssessment():
     if sort_option == 'oldest_id':
         filter_stmt = filter_stmt.order_by(asc(UserAssessment.applicant_id))
     elif sort_option == 'asc_name':
-        filter_stmt = filter_stmt.order_by(asc(DiagnosticResults.last_name))
+        filter_stmt = filter_stmt.order_by(asc(UserAssessment.last_name))
     elif sort_option == 'desc_name':
-        filter_stmt = filter_stmt.order_by(desc(DiagnosticResults.last_name))
+        filter_stmt = filter_stmt.order_by(desc(UserAssessment.last_name))
 
     # Filtering
     if sort_sex:
-        filtering_conditions.append(DiagnosticResults.sex == sort_sex)
+        filtering_conditions.append(UserAssessment.sex == sort_sex)
     if sort_province:
-        filtering_conditions.append(DiagnosticResults.province == sort_province)
+        filtering_conditions.append(UserAssessment.province == sort_province)
     if sort_date_exam:
         start_date, end_date = sort_date_exam.split(' - ')
         start_date = datetime.strptime(start_date, '%B %d, %Y').date()
@@ -191,6 +191,6 @@ def applyFilterAssessment():
     total_count = db.session.execute(select(func.count(UserAssessment.applicant_id))).scalar() or 0
     total_pages = ceil(total_count / per_page)
     offset = (page - 1) * per_page
-    execute_results = db.session.execute(filter_stmt.limit(per_page).offset(offset)).all()
+    execute_results = db.session.scalars(filter_stmt.limit(per_page).offset(offset)).all()
 
     return render_template('assessment_table.html', a_results=execute_results, active_page="table", page=page, total_pages=total_pages)

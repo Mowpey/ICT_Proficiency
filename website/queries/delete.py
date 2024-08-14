@@ -40,7 +40,6 @@ def deleteAssessmentRecord(applicant_id):
         assessment_record = delete(UserAssessment).where(UserAssessment.applicant_id == applicant_id)
 
         db.session.execute(assessment_record)
-        insert_history.add_assessment_delete_history(applicant_id)
         db.session.commit()
         flash('Assessment record deleted successfully', 'assessment_success')
         return redirect(url_for('views.showAssessmentTable'))
