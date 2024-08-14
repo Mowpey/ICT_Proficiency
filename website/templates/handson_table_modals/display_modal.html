@@ -36,9 +36,7 @@
               capitalize}}
             </p>
             <p><b class="me-2">Sex:</b> {{display.sex| capitalize}}</p>
-            <p>
-              <b class="me-2">Province:</b> {{display.province| capitalize}}
-            </p>
+            <p><b class="me-2">Province:</b> {{display.province| title}}</p>
             <p>
               <b class="me-2">Contact Number:</b> {{display.contact_number}}
             </p>
@@ -52,7 +50,6 @@
               <b class="me-2">Diagnostic Score:</b>
               {{display.total_score}}
             </p>
-
           </div>
           <!--Examination Details-->
           <div class="col-6 examination-details">
@@ -71,7 +68,7 @@
               <b class="me-2">Exam Venue:</b>
               {% if display.HandsonResults.venue_address %} {{
               display.HandsonResults.venue_address }}, {% endif %} {{
-              display.HandsonResults.exam_venue | default('') | capitalize }}
+              display.HandsonResults.exam_venue | default('') | title }}
             </p>
             <p>
               <b class="me-2">Proctor:</b> {{display.HandsonResults.proctor}}
@@ -87,7 +84,13 @@
               >
               {% endif %}
             </p>
-            <p> <a href="{{ url_for('export.export_applicant', applicant_id=display.applicant_id) }}" class="btn btn-success">Export applicant</a>
+            <p>
+              <a
+                href="{{ url_for('export.export_applicant', applicant_id=display.applicant_id) }}"
+                class="btn btn-success"
+                >Export applicant</a
+              >
+            </p>
           </div>
         </div>
       </div>

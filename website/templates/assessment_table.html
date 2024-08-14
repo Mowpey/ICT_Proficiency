@@ -239,7 +239,7 @@ for category, message in messages %} {% if category == 'assessment_error' %}
           data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.province| capitalize}}
+          {{display.province| title}}
         </td>
         <td
           data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
@@ -253,7 +253,7 @@ for category, message in messages %} {% if category == 'assessment_error' %}
           data-bs-toggle="modal"
         >
           {{display.venue_address}}{% if display.venue_address %},{%endif%}
-          {{display.exam_venue| capitalize}}
+          {{display.exam_venue| title}}
         </td>
         <td
           data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"

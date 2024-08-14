@@ -224,8 +224,8 @@ for category, message in messages %} {% if category == 'handson_error' %}
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.first_name | capitalize}} {% if display.middle_name %}
-          {{display.middle_name[0]| capitalize + "."}} {% endif %} {{display.last_name | capitalize}}
+          {{display.first_name | title}} {% if display.middle_name %}
+          {{display.middle_name[0]| capitalize + "."}} {% endif %} {{display.last_name | title}}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
@@ -237,7 +237,7 @@ for category, message in messages %} {% if category == 'handson_error' %}
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.province| capitalize}}
+          {{display.province| title}}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
@@ -250,8 +250,8 @@ for category, message in messages %} {% if category == 'handson_error' %}
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.HandsonResults.venue_address}}{% if display.HandsonResults.venue_address %},{%endif%}
-          {{display.HandsonResults.exam_venue| capitalize}}
+          {% if display.HandsonResults.venue_address %} {{display.HandsonResults.venue_address }}, {% endif %} 
+          {{ display.HandsonResults.exam_venue | default('') | title }}
         </td>
         <td
           data-bs-target="#showDetailsHandson_{{display.HandsonResults.applicant_id}}"
