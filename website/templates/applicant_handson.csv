@@ -1,0 +1,8 @@
+Applicant ID,Name,Sex,Province,Contact Number,Email Address,Exam Venue,Venue Address,Date of Examination,Date of Notification,Proctor,Status,Handson Score
+{%- for applicant in applicants %}
+{%- for handson in handson_details %}
+{%- if applicant.applicant_id == handson.applicant_id %}
+{{ applicant.applicant_id }},{{ applicant.first_name }} {{ applicant.middle_name[0]+'.' if applicant.middle_name else '' }} {{ applicant.last_name }},{{ applicant.sex.capitalize() }},{{ applicant.province.capitalize() }},{{ applicant.contact_number }},{{ applicant.email_address }},{{ handson.exam_venue if handson.exam_venue else 'N/A' }},{{ handson.venue_address if handson.venue_address else 'N/A' }},{{ handson.date_of_examination.strftime('%B-%d-%Y') if handson.date_of_examination else 'N/A' }},{{ handson.date_of_notification.strftime('%B-%d-%Y') if handson.date_of_notification else 'N/A' }},{{ handson.proctor if handson.proctor else 'N/A' }},{{ handson.status if handson.status else 'N/A' }},{{ handson.handson_score if handson else 'N/A' }}
+{%- endif %}
+{%- endfor %}
+{%- endfor %}

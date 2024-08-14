@@ -286,6 +286,7 @@ category_filter=["diagnostic_error", "diagnostic_success"]) %} {% if messages %}
       {%endfor%}
     </tbody>
   </table>
+  <p> <a href="{{ url_for('export.export_applicant', applicant_id=0) }}" class="btn btn-success">Export all diagnostic</a>
 </div>
 
 <!--Pagination-->
