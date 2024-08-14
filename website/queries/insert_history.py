@@ -81,19 +81,17 @@ def add_assessment_edit_history(applicant_id):
     )
     db.session.add(history_entry)
 
-def add_assessment_insert_history(applicant_id):
-    result = DiagnosticResults.query.get(applicant_id)
-    applicant_name=f"{result.first_name} {result.last_name}"
+def add_assessment_insert_history(first_name, last_name):
     history_entry = HistoryTable(
         admin_id=current_user.admin_id,
-        action_done="Inserted User Assessment data",
+        action_done="Inserted diagnostic data",
         date_modified=datetime.now(),
-        applicant_name = applicant_name
+        applicant_name=f"{first_name} {last_name}"
     )
     db.session.add(history_entry)
 
 def add_assessment_delete_history(applicant_id):
-    result = DiagnosticResults.query.get(applicant_id)
+    result = UserAssessment.query.get(applicant_id)
     applicant_name=f"{result.first_name} {result.last_name}"
     history_entry = HistoryTable(
         admin_id=current_user.admin_id,

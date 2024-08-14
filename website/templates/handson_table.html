@@ -277,7 +277,7 @@ for category, message in messages %} {% if category == 'handson_error' %}
       {%endfor%}
     </tbody>
   </table>
-  <p> <a href="{{ url_for('export.export_applicant', applicant_id=2) }}" class="btn btn-success">Export all hands-on</a>
+  <p> <a href="{{ url_for('export.export_applicant', applicant_id= 'handson') }}" class="btn btn-success">Export all hands-on</a>
 </div>
 <!--Pagination-->
 <nav aria-label="Page navigation" class="pagination justify-content-center">
