@@ -1,7 +1,7 @@
 # ICT Proficiency System
 
 ## Description
-A web system built with Flask and Bootstrap for managing applicant records. This application have admin that could create, read, update, and delete applicant records.
+A web system built with Flask and Bootstrap for managing applicant records. This application has an admin interface that allows creating, reading, updating, and deleting applicant records.
 
 ## Table of Contents
 1. [Installation](#installation)
@@ -14,8 +14,6 @@ A web system built with Flask and Bootstrap for managing applicant records. This
 
 ### Prerequisites
 - Python 3.12
-- Flask
-- Bootstrap
 
 ### Setup
 1. Clone the repository:
@@ -26,29 +24,23 @@ A web system built with Flask and Bootstrap for managing applicant records. This
 
 2. Create a virtual environment:
 
-    For Linux or macOS
+    For Linux or macOS:
     ```bash
     python3 -m venv myvenv 
+    source myvenv/bin/activate
     ```
-    For Windows
-   ```bash
+    For Windows:
+    ```bash
     python -m venv myvenv
-   `myvenv\Scripts\activate`
+    myvenv\Scripts\activate
     ```
 
-4. Install the required packages:
+3. Install the required packages:
     ```bash
-    pip install flask
-    pip install flask-login
-    pip install flask-sqlalchemy
+    pip install -r requirements.txt
     ```
 
-5. Run the application:
-    ```bash
-    flask run
-    ```
-    If the above command doesn't work try the command below
-   
+4. Run the application:
     ```bash
     flask --app main.py --debug run
     ```
