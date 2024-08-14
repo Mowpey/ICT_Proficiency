@@ -86,27 +86,32 @@ def insertHandsonData():
 def insertAssessmentData():
 
     if request.method == 'POST':
-        foreign_id = request.form.get('applicant_id')
-        isPresentInDiagnostic = DiagnosticResults.query.get(foreign_id)
+        applicant_attachment = request.files.get('applicant_attachment')
 
-        if not isPresentInDiagnostic:
-            flash("Sorry! Your record is not present in any diagnostic records!", 'assessment_error')
+        if not applicant_attachment or not is_pdf(applicant_attachment):
+            flash("Please upload a valid PDF file", 'assessment_error')
             return redirect(url_for('views.showAssessmentTable'))
 
         assessment_form_data = insert(UserAssessment).values(
-            applicant_id=foreign_id,
-            exam_venue=request.form.get('exam_venue'),
-            venue_address=request.form['venue_address_assessment'].strip(),
-            date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
-            date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
-            proctor=request.form.get('proctor'),
+            first_name=request.form['first_name'].strip(),
+            middle_name=request.form['middle_name'].strip(),
+            last_name=request.form['last_name'].strip(),
+            sex=request.form['sex'].strip(),
+            province=request.form['province'].strip(),
+            exam_venue=request.form['exam_venue'].strip(),
+            venue_address=request.form['venue_address'].strip(),
+            date_of_examination=datetime.strptime(request.form['date_exam'], '%B %d, %Y').date(),
+            date_of_notification=datetime.strptime(request.form['date_notified'],'%B %d, %Y').date(),
+            proctor=request.form['proctor'].strip(),
+            status=request.form['status'].strip(),
+            contact_number=request.form['contact_number'].strip(),
+            email_address=request.form['email_address'].strip(),
+            remarks=request.form.get('remarks'),
             assessment_score=request.form.get('assessment_score'),
-            status=request.form.get('status'),
-            remarks=request.form.get('remarks')
+            applicant_form=applicant_attachment.read()
         )
 
         db.session.execute(assessment_form_data)
-        insert_history.add_assessment_insert_history(foreign_id)
         db.session.commit()
         flash("User Assessment Record has been inserted successfully", 'assessment_success')
 

@@ -1,19 +1,19 @@
 <style>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type=number] {
-  -moz-appearance: textfield;
-}
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 </style>
 
 <!-- Assessment Edit Modal -->
 <button
   type="button"
   class="btn btn-secondary"
-  data-bs-target="#assessment_edit_{{display.UserAssessment.applicant_id}}"
+  data-bs-target="#assessment_edit_{{display.applicant_id}}"
   data-bs-toggle="modal"
 >
   <svg
@@ -37,7 +37,7 @@ input[type=number] {
 <!-- Edit Modal -->
 <div
   class="modal fade"
-  id="assessment_edit_{{display.UserAssessment.applicant_id}}"
+  id="assessment_edit_{{display.applicant_id}}"
   tabindex="-1"
   aria-hidden="true"
   aria-labelledby="assessmentEditModalLabel"
@@ -56,29 +56,163 @@ input[type=number] {
         ></button>
       </div>
       <div class="modal-body">
-        <form action="{{url_for('update.updateValues_assessment',applicant_id=display.UserAssessment.applicant_id)}}" method="POST">
+        <form
+          action="{{url_for('update.updateValues_assessment',applicant_id=display.applicant_id)}}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="row row-col-auto">
-            <div class="col-12">
-              <h5 class="py-3">Matching Applicant ID</h5>
-              <div class="row applicant_id">
+            <div class="col-6 left-side">
+              <h5 class="py-3">Personal Information</h5>
+              <div class="row first_name">
                 <div class="mb-3">
-                  <label for="applicant_id" class="form-label"
-                    >Applicant ID</label
+                  <label for="first_name" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="first_name"
+                    name="first_name"
+                    aria-describedby="firstNameHelp"
+                    autocomplete="off"
+                    required
+                    value="{{display.first_name}}"
+                  />
+                </div>
+              </div>
+              <div class="row middle_name">
+                <div class="mb-3">
+                  <label for="middle_name" class="form-label"
+                    >Middle Name</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    id="applicant_id"
-                    name="applicant_id"
-                    aria-describedby="firstNameHelp"
-                    value="{{display.UserAssessment.applicant_id}}"
+                    id="middle_name"
+                    name="middle_name"
+                    aria-describedby="middleNameHelp"
                     autocomplete="off"
                     required
-                    readonly
+                    value="{{display.middle_name}}"
                   />
                 </div>
               </div>
+              <div class="row last_name">
+                <div class="mb-3">
+                  <label for="last_name" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="last_name"
+                    name="last_name"
+                    aria-describedby="lastNameHelp"
+                    autocomplete="off"
+                    required
+                    value="{{display.last_name}}"
+                  />
+                </div>
+              </div>
+              <div class="row sex py-2">
+                <div class="">
+                  <div class="input-group mb-3 sex">
+                    <label class="input-group-text" for="sex">Sex</label>
+                    <select
+                      class="form-select"
+                      id="sex"
+                      name="sex"
+                      required
+                      autocomplete="off"
+                    
+                    >
+                      <option value="male" {% if display.sex == 'male' %} selected {% endif %}>Male</option>
+                      <option value="female" {% if display.sex == 'female' %} selected {% endif %}>Female</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row province py-2">
+                <div class="">
+                  <div class="input-group mb-3 province">
+                    <label class="input-group-text" for="province"
+                      >Province</label
+                    >
+                    <select
+                      class="form-select"
+                      id="province"
+                      name="province"
+                      autocomplete="off"
+                      required
+                      
+                    >
+                       <option value="isabela"  {% if display.province == 'isabela' %} selected {% endif %}>Isabela</option>
+                       <option value="cagayan"  {% if display.province == 'cagayan' %} selected {% endif %}>Cagayan</option>
+                       <option value="batanes"  {% if display.province== 'batanes' %} selected {% endif %}>Batanes</option>
+                       <option value="nueva vizcaya"  {% if display.province == 'nueva vizcaya' %} selected {% endif %}>Nueva Vizcaya</option>
+                       <option value="quirino"  {% if display.province == 'quirino' %} selected {% endif %}>Quirino</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row contact_number">
+                <div class="mb-3">
+                  <label for="contact_number" class="form-label"
+                    >Contact Number</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="contact_number"
+                    name="contact_number"
+                    pattern="^(\+63|0)(9\d{9}|[2-8]\d{7})$"
+                    required
+                    aria-describedby="contactNumberHelp"
+                    autocomplete="off"
+                    value="{{display.contact_number}}"
+                  />
+                </div>
+              </div>
+              <div class="row email_address">
+                <div class="mb-3">
+                  <label for="email_address" class="form-label"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email_address"
+                    name="email_address"
+                    aria-describedby="emailAddressHelp"
+                    autocomplete="off"
+                    required
+                    value="{{display.email_address}}"
+                  />
+                </div>
+              </div>
+              <div class="row py-2 applicant_attachment">
+                <div class="col">
+                  <h5 class="py-3">Applicant Attachment</h5>
+                  <div class="input-group mb-3">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="applicant_attachment"
+                      name="applicant_attachment"
+                      accept=".pdf"
+                      
+                    />
+                  </div>
+                  {% if display.applicant_form %}
+                  <a
+                    href="{{ url_for('update.view_attachment', applicant_id=display.applicant_id) }}"
+                    target="_blank"
+                    class="btn btn-outline-secondary"
+                    >View Applicant Attachment</a
+                  >
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="col-6 right-side">
               <h5 class="py-3">Examination Details</h5>
               <div class="row date_exam">
                 <div class="mb-3">
@@ -91,9 +225,9 @@ input[type=number] {
                     id="date_exam"
                     name="date_exam"
                     aria-describedby="dateExamHelp"
-                    value="{{display.UserAssessment.date_of_examination.strftime('%B %d, %Y')}}"
                     autocomplete="off"
                     required
+                    value="{{display.date_of_examination.strftime('%B %d, %Y')}}"
                   />
                 </div>
               </div>
@@ -107,14 +241,14 @@ input[type=number] {
                     class="form-control edit-date-notified"
                     id="date_notified"
                     name="date_notified"
-                    value="{{display.UserAssessment.date_of_notification.strftime('%B %d, %Y')}}"
-                    autocomplete="off"
                     aria-describedby="dateNotifiedHelp"
+                    autocomplete="off"
                     required
+                    value="{{display.date_of_notification.strftime('%B %d, %Y')}}"
                   />
                 </div>
               </div>
-             <div class="row venue_address py-2">
+              <div class="row venue_address py-2">
                 <div class="">
                   <div class="input-group mb-3 venue_address">
                     <label class="input-group-text" for="venue_address"
@@ -127,7 +261,7 @@ input[type=number] {
                       name="venue_address"
                       aria-describedby="venueAddressHelp"
                       autocomplete="off"
-                      value="{{display.UserAssessment.venue_address}}"
+                      value="{{display.venue_address}}"
                     />
                   </div>
                 </div>
@@ -136,7 +270,7 @@ input[type=number] {
                 <div class="">
                   <div class="input-group mb-3 exam_venue">
                     <label class="input-group-text" for="exam_venue"
-                      >Exam Venue</label
+                      >Exam Venue Province</label
                     >
                     <select
                       class="form-select"
@@ -146,11 +280,21 @@ input[type=number] {
                       required
                     >
                       <option selected></option>
-                      <option value="isabela" {% if display.UserAssessment.exam_venue == 'isabela' %} selected {% endif %}>Isabela</option>
-                      <option value="cagayan" {% if display.UserAssessment.exam_venue == 'cagayan' %} selected {% endif %}>Cagayan</option>
-                      <option value="batanes" {% if display.UserAssessment.exam_venue == 'batanes' %} selected {% endif %}>Batanes</option>
-                      <option value="nueva vizcaya" {% if display.UserAssessment.exam_venue == 'nueva vizcaya' %} selected {% endif %}>Nueva Vizcaya</option>
-                      <option value="quirino" {% if display.UserAssessment.exam_venue == 'quirino' %} selected {% endif %}>Quirino</option>
+                      <option value="isabela"  {% if display.province == 'isabela' %} selected {% endif %}>
+                          Isabela
+                      </option>
+                      <option value="cagayan"  {% if display.province == 'cagayan' %} selected {% endif %}>
+                          Cagayan
+                      </option>
+                      <option value="batanes"  {% if display.province== 'batanes' %} selected {% endif %}>
+                          Batanes
+                      </option>
+                      <option value="nueva vizcaya"  {% if display.province == 'nueva vizcaya' %} selected {% endif %}>
+                          Nueva Vizcaya
+                      </option>
+                      <option value="quirino"  {% if display.province == 'quirino' %} selected {% endif %}>
+                          Quirino
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -163,10 +307,10 @@ input[type=number] {
                     class="form-control"
                     id="proctor"
                     name="proctor"
-                    value="{{display.UserAssessment.proctor}}"
                     aria-describedby="proctorHelp"
                     autocomplete="off"
                     required
+                    value="{{display.proctor}}"
                   />
                 </div>
               </div>
@@ -182,38 +326,43 @@ input[type=number] {
                       required
                     >
                       <option selected></option>
-                      <option value="Passed" {% if display.UserAssessment.status == 'Passed' %} selected {%endif%}>Passed</option>
-                      <option value="Failed" {% if display.UserAssessment.status == 'Failed' %} selected {%endif%}>Failed</option>
+                      <option value="Passed" {%if display.status == 'Passed'%} selected {%endif%}>Passed</option>
+                      <option value="Failed" {%if display.status == 'Failed'%} selected {%endif%}>Failed</option>
                     </select>
                   </div>
                 </div>
               </div>
-
               <div class="row remarks py-2">
                 <div class="">
                   <div class="input-group mb-3 remarks">
                     <div class="form-floating">
-                      <textarea class="form-control" placeholder="Remarks" id="remarks" name="remarks" style="height: 10rem;">{{display.UserAssessment.remarks}}</textarea>
+                      <textarea
+                        class="form-control"
+                        placeholder="Remarks"
+                        id="remarks"
+                        name="remarks"
+                        style="height: 10rem"
+                      >{{display.remarks if display.remarks else ''}}</textarea>
                       <label for="floatingTextarea">Remarks</label>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <h5 class="py-3">Score Details</h5>
+              <h5 class="py-2">Score Details</h5>
               <div class="row assessment_score">
                 <div class="mb-3">
-                  <label for="assessment_score" class="form-label my-1"
+                  <label for="assessment_score" class="form-label"
                     >Assessment Score</label
                   >
                   <input
                     type="number"
-                    class="form-control my-1"
+                    class="form-control"
                     id="assessment_score"
                     name="assessment_score"
-                    value="{{display.UserAssessment.assessment_score}}"
                     aria-describedby="assessmentScoreHelp"
                     autocomplete="off"
+                    value="{{display.assessment_score}}"
                   />
                 </div>
               </div>
@@ -236,10 +385,10 @@ input[type=number] {
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
 <script
-    type="text/javascript"
-    src="{{url_for('static',filename='js/diagnostic-edit_exam.js')}}"
+  type="text/javascript"
+  src="{{url_for('static',filename='js/diagnostic-edit_exam.js')}}"
 ></script>
 <script
-    type="text/javascript"
-    src="{{url_for('static',filename='js/diagnostic-edit_notified.js')}}"
+  type="text/javascript"
+  src="{{url_for('static',filename='js/diagnostic-edit_notified.js')}}"
 ></script>
