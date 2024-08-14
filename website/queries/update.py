@@ -45,15 +45,15 @@ def updateValues(applicant_id):
     new_applicant_form = request.files.get('edit_applicant_attachment') #checks if a new file is uploaded
 
 
-    if new_applicant_form and is_pdf(new_applicant_form):
-        new_pdf = update(DiagnosticResults).where(DiagnosticResults.applicant_id == applicant_id).values(
+    if new_applicant_form:
+       if is_pdf(new_applicant_form):
+            new_pdf = update(DiagnosticResults).where(DiagnosticResults.applicant_id == applicant_id).values(
             applicant_form=new_applicant_form.read()
         )
-        db.session.execute(new_pdf)
-        db.session.commit()
-    else:
-        flash("The file is not a valid PDF File. Only PDF files are accepted!", 'diagnostic_error')
-        return redirect(url_for('views.showDiagnosticTable'))
+            db.session.execute(new_pdf)
+       else:
+            flash("The file is not a valid PDF File. Only PDF files are accepted!", 'diagnostic_error')
+            return redirect(url_for('views.showDiagnosticTable'))
 
     db.session.execute(diagnostic_form_data)
     insert_history.add_diagnostic_edit_history(request.form['first_name'], request.form['last_name'])
@@ -133,14 +133,15 @@ def updateValues_assessment(applicant_id):
     )
     
     new_applicant_form = request.files.get('applicant_attachment')
-    if new_applicant_form and is_pdf(new_applicant_form):
-        new_pdf = update(UserAssessment).where(UserAssessment.applicant_id == applicant_id).values(
-            applicant_form=new_applicant_form.read()
-        )
-        db.session.execute(new_pdf)
-    else:
-        flash("The file is not a valid PDF File. Only PDF files are accepted!", 'assessment_error')
-        return redirect(url_for('views.showAssessmentTable'))
+    if new_applicant_form:
+        if is_pdf(new_applicant_form):
+            new_pdf = update(UserAssessment).where(UserAssessment.applicant_id == applicant_id).values(
+                applicant_form=new_applicant_form.read()
+            )
+            db.session.execute(new_pdf)
+        else:
+            flash("The file is not a valid PDF File. Only PDF files are accepted!", 'assessment_error')
+            return redirect(url_for('views.showAssessmentTable'))
 
     db.session.execute(assessment_form_data)
     db.session.commit()
