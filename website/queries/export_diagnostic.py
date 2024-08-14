@@ -40,9 +40,9 @@ def export_applicant(applicant_id):
         return response
     else:
         applicant_id = int(applicant_id)
-        applicant = DiagnosticResults.query.get_or_404(applicant_id)
+        applicant = DiagnosticResults.query.get(applicant_id)
         handson_details = applicant.handson_results
-        assessment = UserAssessment.query.get_or_404(applicant_id)
+        assessment = UserAssessment.query.get(applicant_id)
         
         csv_data = render_template('applicant_export.csv', applicant=applicant,handson_details=handson_details,assessment = assessment)
 
