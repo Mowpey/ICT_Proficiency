@@ -59,6 +59,9 @@ A web system built with Flask and Bootstrap for managing applicant records. This
 1. Open your browser and navigate to `http://localhost:5000`.
 2. Use the interface to manage applicant records.
 
+## Create an Admin Account
+1. To Create an admin account, access directly the sign up page using "/sign_up" in the browser
+
 ## Contributing
 
 1. Fork the repository.
