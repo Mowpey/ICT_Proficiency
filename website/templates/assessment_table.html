@@ -57,7 +57,7 @@ for category, message in messages %} {% if category == 'assessment_error' %}
 <!--Tab Headers-->
 <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" href="assessment_table"> Assessment Results</a>
+      <a class="nav-link active" href="assessment_table"> User Assessment</a>
     </li>
     <li class="nav-item">
         <a
@@ -147,6 +147,7 @@ for category, message in messages %} {% if category == 'assessment_error' %}
                     id="sort_date_exam"
                     name="sort_date_exam"
                     value="{% if request.form.get('sort_date_exam') %}{{ request.form.get('sort_date_exam') }}{% endif %}"
+                    autocomplete="off"
                   />
                 </div>
               </th>
@@ -172,6 +173,7 @@ for category, message in messages %} {% if category == 'assessment_error' %}
                     id="sort_date_notified"
                     name="sort_date_notified"
                     value="{% if request.form.get('sort_date_notified') %}{{ request.form.get('sort_date_notified') }}{% endif %}"
+                    autocomplete="off"
                   />
                 </div>
               </th>
@@ -215,88 +217,89 @@ for category, message in messages %} {% if category == 'assessment_error' %}
           </div>
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.UserAssessment.applicant_id}}
+          {{display.applicant_id}}
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
           {{display.first_name | capitalize}} {% if display.middle_name %}
           {{display.middle_name[0]| capitalize + "."}} {% endif %} {{display.last_name | capitalize}}
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
           {{display.sex| capitalize}}
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.province| capitalize}}
+          {{display.province| title}}
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.UserAssessment.date_of_examination.strftime('%B %d, %Y') if
-          display.UserAssessment.date_of_examination else ''}}
+          {{display.date_of_examination.strftime('%B %d, %Y') if
+          display.date_of_examination else ''}}
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.UserAssessment.venue_address}}{% if display.UserAssessment.venue_address %},{%endif%}
-          {{display.UserAssessment.exam_venue| capitalize}}
+          {{display.venue_address}}{% if display.venue_address %},{%endif%}
+          {{display.exam_venue| title}}
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.UserAssessment.date_of_notification.strftime('%B %d, %Y') if
-          display.UserAssessment.date_of_notification else ''}}
+          {{display.date_of_notification.strftime('%B %d, %Y') if
+          display.date_of_notification else ''}}
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
         >
-          {{display.UserAssessment.proctor| title}}
+          {{display.proctor| title}}
         </td>
         <td
-          data-bs-target="#showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          data-bs-target="#showDetailsAssessment_{{display.applicant_id}}"
           data-bs-toggle="modal"
-          class="{% if display.UserAssessment.status == 'Passed' %} table-success {% else %} table-danger {% endif %}"
+          class="{% if display.status == 'Passed' %} table-success {% else %} table-danger {% endif %}"
         >
-          {{display.UserAssessment.status}}
+          {{display.status}}
         </td>
       </tr>
       {%endfor%}
     </tbody>
   </table>
+  <p> <a href="{{ url_for('export.export_applicant', applicant_id= 'assessment') }}" class="btn btn-success">Export all user assessment</a> </p>
 </div>
 <!--Pagination-->
 <nav aria-label="Page navigation" class="pagination justify-content-center">
   <ul class="pagination my-3">
     {% if page > 1 %}
-    <li class="page-item"><a class="page-link" href="{{ url_for('views.showHandsonTable', page=page-1) }}">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showAssessmentTable', page=page-1) }}">Previous</a></li>
     {% else %}
     <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
     {% endif %}
 
     {% for i in range(1, total_pages+1) %}
     {% if i == page %}
-    <li class="page-item active"><a class="page-link" href="{{ url_for('views.showHandsonTable', page=i) }}">{{ i }}</a></li>
+    <li class="page-item active"><a class="page-link" href="{{ url_for('views.showAssessmentTable', page=i) }}">{{ i }}</a></li>
     {% else %}
-    <li class="page-item"><a class="page-link" href="{{ url_for('views.showHandsonTable', page=i) }}">{{ i }}</a></li>
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showAssessmentTable', page=i) }}">{{ i }}</a></li>
     {% endif %}
     {% endfor %}
 
     {% if page < total_pages %}
-    <li class="page-item"><a class="page-link" href="{{ url_for('views.showHandsonTable', page=page+1) }}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="{{ url_for('views.showAssessmentTable', page=page+1) }}">Next</a></li>
     {% else %}
     <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
     {% endif %}

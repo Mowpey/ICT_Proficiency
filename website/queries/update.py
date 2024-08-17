@@ -45,13 +45,15 @@ def updateValues(applicant_id):
     new_applicant_form = request.files.get('edit_applicant_attachment') #checks if a new file is uploaded
 
 
-    if new_applicant_form and is_pdf(new_applicant_form):
-        # If a new PDF was uploaded, update the applicant_form field
-        new_pdf = update(DiagnosticResults).where(DiagnosticResults.applicant_id == applicant_id).values(
+    if new_applicant_form:
+       if is_pdf(new_applicant_form):
+            new_pdf = update(DiagnosticResults).where(DiagnosticResults.applicant_id == applicant_id).values(
             applicant_form=new_applicant_form.read()
         )
-        db.session.execute(new_pdf)
-        db.session.commit()
+            db.session.execute(new_pdf)
+       else:
+            flash("The file is not a valid PDF File. Only PDF files are accepted!", 'diagnostic_error')
+            return redirect(url_for('views.showDiagnosticTable'))
 
     db.session.execute(diagnostic_form_data)
     insert_history.add_diagnostic_edit_history(request.form['first_name'], request.form['last_name'])
@@ -89,34 +91,61 @@ def updateValues_handson(applicant_id):
 
 @update_bp.route('/view_attachment/<int:applicant_id>', methods = ['GET'])
 def view_attachment(applicant_id):
-    diagnostic_id= select(DiagnosticResults).where(DiagnosticResults.applicant_id == applicant_id)
-    result_stmt = db.session.execute(diagnostic_id).scalar_one_or_none()
+    diagnostic_query = select(DiagnosticResults).where(DiagnosticResults.applicant_id == applicant_id)
+    diagnostic_result = db.session.execute(diagnostic_query).scalar_one_or_none()
 
-    if result_stmt and result_stmt.applicant_form:
+    if diagnostic_result and diagnostic_result.applicant_form:
         return send_file(
-            io.BytesIO(result_stmt.applicant_form),
+            io.BytesIO(diagnostic_result.applicant_form),
             mimetype='application/pdf',
             as_attachment=False,
         )
+    user_assessment_query = select(UserAssessment).where(UserAssessment.applicant_id == applicant_id)
+    user_assessment_result = db.session.execute(user_assessment_query).scalar_one_or_none()
 
+    if user_assessment_result and user_assessment_result.applicant_form:
+        return send_file(
+            io.BytesIO(user_assessment_result.applicant_form),
+            mimetype='application/pdf',
+            as_attachment=False,
+        )
     return redirect(url_for('views.showDiagnosticTable'))
 
 
 @update_bp.route('/update_assessment/<int:applicant_id>',methods = ['POST'])
 def updateValues_assessment(applicant_id):
     assessment_form_data = update(UserAssessment).where(UserAssessment.applicant_id == applicant_id).values(
-        exam_venue=request.form.get('exam_venue'),
-        venue_address = request.form.get('venue_address','').strip() or None,
-        date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date(),
-        date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date(),
-        proctor=request.form.get('proctor'),
-        assessment_score=request.form.get('assessment_score'),
-        status=request.form.get('status'),
-        remarks=request.form.get('remarks')
+        first_name=request.form.get('first_name', '').strip() or None,
+        middle_name=request.form.get('middle_name', '').strip() or None,
+        last_name=request.form.get('last_name', '').strip() or None,
+        sex=request.form.get('sex', '').strip() or None,
+        province=request.form.get('province', '').strip() or None,
+        contact_number=request.form.get('contact_number', '').strip() or None,
+        email_address=request.form.get('email_address', '').strip() or None,
+        exam_venue=request.form.get('exam_venue', '').strip() or None,
+        venue_address=request.form.get('venue_address', '').strip() or None,
+        date_of_examination=datetime.strptime(request.form.get('date_exam', ''), '%B %d, %Y').date() if request.form.get('date_exam') else None,
+        date_of_notification=datetime.strptime(request.form.get('date_notified', ''), '%B %d, %Y').date() if request.form.get('date_notified') else None,
+        proctor=request.form.get('proctor', '').strip() or None,
+        status=request.form.get('status', '').strip() or None,
+        remarks=request.form.get('remarks', '').strip() or None,
+        assessment_score=request.form.get('assessment_score', '').strip() or None
     )
+    
+    new_applicant_form = request.files.get('applicant_attachment')
+    if new_applicant_form:
+        if is_pdf(new_applicant_form):
+            new_pdf = update(UserAssessment).where(UserAssessment.applicant_id == applicant_id).values(
+                applicant_form=new_applicant_form.read()
+            )
+            db.session.execute(new_pdf)
+        else:
+            flash("The file is not a valid PDF File. Only PDF files are accepted!", 'assessment_error')
+            return redirect(url_for('views.showAssessmentTable'))
 
     db.session.execute(assessment_form_data)
     insert_history.add_assessment_edit_history(applicant_id)
     db.session.commit()
     flash("Assessment Record has been updated successfully",'assessment_success')
     return redirect(url_for('views.showAssessmentTable'))
+    

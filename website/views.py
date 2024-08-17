@@ -104,13 +104,9 @@ def showHistory():
 def showAssessmentTable():
     page = request.args.get('page',1,type=int)
     per_page = 25
-    display_all = (
-        select(UserAssessment,*DiagnosticResults.__table__.columns)
-        .join(DiagnosticResults, UserAssessment.applicant_id == DiagnosticResults.applicant_id)
-        .order_by(desc(UserAssessment.applicant_id))
-    )
+    display_all = select(UserAssessment).order_by(desc(UserAssessment.applicant_id))
     total_count = db.session.execute(select(func.count(UserAssessment.applicant_id))).scalar() or 0
     total_pages = ceil(total_count / per_page)
     offset = (page - 1) * per_page
-    assessment_table_entries = db.session.execute(display_all.limit(per_page).offset(offset)).mappings().all()
+    assessment_table_entries = db.session.execute(display_all.limit(per_page).offset(offset)).scalars().all()
     return render_template("assessment_table.html", a_results=assessment_table_entries, active_page="table", page=page, total_pages=total_pages)

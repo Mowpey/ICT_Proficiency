@@ -32,20 +32,27 @@ class DiagnosticResults(db.Model):
     part_three_score = db.Column(db.Integer)
     total_score = db.Column(db.Integer)
     handson_results = db.relationship('HandsonResults',uselist=False,back_populates='diagnostic_results')
-    user_assessment = db.relationship('UserAssessment',uselist=False,back_populates='diagnostic_results')
+   
 
 class UserAssessment(db.Model):
-    id=db.Column(db.Integer, primary_key=True)
-    applicant_id = db.Column(db.Integer, db.ForeignKey('diagnostic_results.applicant_id'))
+    applicant_id = db.Column(db.Integer,primary_key=True)
+    first_name = db.Column(db.String(128))
+    middle_name = db.Column(db.String(128))
+    last_name = db.Column(db.String(128))
+    sex = db.Column(db.String(64))
+    province = db.Column(db.String(64))
     exam_venue = db.Column(db.String(64))
     venue_address = db.Column(db.String(128))
     date_of_examination = db.Column(db.Date)
     date_of_notification = db.Column(db.Date)
     proctor = db.Column(db.String(64))
+    status = db.Column(db.String(32))
+    applicant_form = db.Column(db.LargeBinary)
+    contact_number = db.Column(db.String(32))
+    email_address = db.Column(db.String(64))
     assessment_score = db.Column(db.Integer)
     remarks = db.Column(db.String(128))
-    status = db.Column(db.String(32))
-    diagnostic_results = db.relationship('DiagnosticResults',back_populates="user_assessment",uselist=False)
+    
 
 
 class HandsonResults(db.Model):

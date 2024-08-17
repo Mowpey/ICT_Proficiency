@@ -1,14 +1,13 @@
 <style>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type=number] {
-  -moz-appearance: textfield;
-}
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 </style>
-
 
 <!--Assessment Add Modal-->
 <button
@@ -40,12 +39,9 @@ input[type=number] {
   aria-hidden="true"
   aria-labelledby="assessmentAddModalLabel"
 >
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="assessmentAddModalLabel">
-          User Assessment Add Modal
-        </h1>
+      <div class="modal-header" style="background-color: rgb(26, 82, 238)">
         <button
           type="button"
           class="btn-close"
@@ -54,27 +50,150 @@ input[type=number] {
         ></button>
       </div>
       <div class="modal-body">
-        <form action="{{url_for('insert.insertAssessmentData')}}" method="POST">
+        <form
+          action="{{url_for('insert.insertAssessmentData')}}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="row row-col-auto">
-            <div class="col-12">
-              <h5 class="py-3">Matching Applicant ID</h5>
-              <div class="row applicant_id">
+            <div class="col-6 left-side">
+              <h5 class="py-3">Personal Information</h5>
+              <div class="row first_name">
                 <div class="mb-3">
-                  <label for="applicant_id" class="form-label"
-                    >Applicant ID</label
-                  >
+                  <label for="first_name" class="form-label">First Name</label>
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
-                    id="applicant_id"
-                    name="applicant_id"
+                    id="first_name"
+                    name="first_name"
                     aria-describedby="firstNameHelp"
                     autocomplete="off"
                     required
                   />
                 </div>
               </div>
+              <div class="row middle_name">
+                <div class="mb-3">
+                  <label for="middle_name" class="form-label"
+                    >Middle Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="middle_name"
+                    name="middle_name"
+                    aria-describedby="middleNameHelp"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row last_name">
+                <div class="mb-3">
+                  <label for="last_name" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="last_name"
+                    name="last_name"
+                    aria-describedby="lastNameHelp"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row sex py-2">
+                <div class="">
+                  <div class="input-group mb-3 sex">
+                    <label class="input-group-text" for="sex">Sex</label>
+                    <select
+                      class="form-select"
+                      id="sex"
+                      name="sex"
+                      required
+                      autocomplete="off"
+                    >
+                      <option selected></option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row province py-2">
+                <div class="">
+                  <div class="input-group mb-3 province">
+                    <label class="input-group-text" for="province"
+                      >Province</label
+                    >
+                    <select
+                      class="form-select"
+                      id="province"
+                      name="province"
+                      autocomplete="off"
+                      required
+                    >
+                      <option selected></option>
+                      <option value="isabela">Isabela</option>
+                      <option value="cagayan">Cagayan</option>
+                      <option value="batanes">Batanes</option>
+                      <option value="nueva vizcaya">Nueva Vizcaya</option>
+                      <option value="quirino">Quirino</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row contact_number">
+                <div class="mb-3">
+                  <label for="contact_number" class="form-label"
+                    >Contact Number</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="contact_number"
+                    name="contact_number"
+                    pattern="^(\+63|0)(9\d{9}|[2-8]\d{7})$"
+                    required
+                    aria-describedby="contactNumberHelp"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="row email_address">
+                <div class="mb-3">
+                  <label for="email_address" class="form-label"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email_address"
+                    name="email_address"
+                    aria-describedby="emailAddressHelp"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row py-2 applicant_attachment">
+                <div class="col">
+                  <h5 class="py-3">Applicant Attachment</h5>
+                  <div class="input-group mb-3">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="applicant_attachment"
+                      name="applicant_attachment"
+                      accept=".pdf"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 right-side">
               <h5 class="py-3">Examination Details</h5>
               <div class="row date_exam">
                 <div class="mb-3">
@@ -117,8 +236,8 @@ input[type=number] {
                     <input
                       type="text"
                       class="form-control"
-                      id="venue_address_assessment"
-                      name="venue_address_assessment"
+                      id="venue_address"
+                      name="venue_address"
                       aria-describedby="venueAddressHelp"
                       autocomplete="off"
                     />
@@ -129,7 +248,7 @@ input[type=number] {
                 <div class="">
                   <div class="input-group mb-3 exam_venue">
                     <label class="input-group-text" for="exam_venue"
-                      >Exam Venue</label
+                      >Exam Venue Province</label
                     >
                     <select
                       class="form-select"
@@ -180,20 +299,24 @@ input[type=number] {
                   </div>
                 </div>
               </div>
-
               <div class="row remarks py-2">
                 <div class="">
                   <div class="input-group mb-3 remarks">
-
                     <div class="form-floating">
-                      <textarea class="form-control" placeholder="Remarks" id="remarks" name="remarks" style="height: 10rem;"></textarea>
+                      <textarea
+                        class="form-control"
+                        placeholder="Remarks"
+                        id="remarks"
+                        name="remarks"
+                        style="height: 10rem"
+                      ></textarea>
                       <label for="floatingTextarea">Remarks</label>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <h5 class="py-3">Score Details</h5>
+              <h5 class="py-2">Score Details</h5>
               <div class="row assessment_score">
                 <div class="mb-3">
                   <label for="assessment_score" class="form-label"

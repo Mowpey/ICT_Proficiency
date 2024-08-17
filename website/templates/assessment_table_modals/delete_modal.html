@@ -2,7 +2,7 @@
 <button
   type="button"
   class="btn btn-danger"
-  data-bs-target="#assessment_delete_{{display.UserAssessment.applicant_id}}"
+  data-bs-target="#assessment_delete_{{display.applicant_id}}"
   data-bs-toggle="modal"
 >
   <svg
@@ -22,17 +22,14 @@
 <!-- Delete Modal -->
 <div
   class="modal fade"
-  id="assessment_delete_{{display.UserAssessment.applicant_id}}"
+  id="assessment_delete_{{display.applicant_id}}"
   tabindex="-1"
   aria-hidden="true"
   aria-labelledby="assessmentDeleteModalLabel"
 >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="assessmentDeleteModalLabel">
-          Assessment Delete Modal
-        </h1>
+      <div class="modal-header" style="background-color: rgb(236, 26, 26)">
         <button
           type="button"
           class="btn-close"
@@ -42,7 +39,7 @@
       </div>
       <div class="modal-body">
         <form
-          action="{{url_for('delete.deleteAssessmentRecord', applicant_id=display.UserAssessment.applicant_id)}}"
+          action="{{url_for('delete.deleteAssessmentRecord', applicant_id=display.applicant_id)}}"
           method="POST"
         >
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />

@@ -1,8 +1,8 @@
 <div
   class="modal fade"
-  id="showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+  id="showDetailsAssessment_{{display.applicant_id}}"
   tabindex="-1"
-  aria-labelledby="showDetailsAssessmentLabel_{{display.UserAssessment.applicant_id}}"
+  aria-labelledby="showDetailsAssessmentLabel_{{display.applicant_id}}"
   aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -10,7 +10,7 @@
       <div class="modal-header">
         <h1
           class="modal-title fs-5"
-          id="showDetailsAssessment_{{display.UserAssessment.applicant_id}}"
+          id="showDetailsAssessment_{{display.applicant_id}}"
         >
           Applicant Details
         </h1>
@@ -28,17 +28,15 @@
             <h5 class="py-2">Personal Information</h5>
             <p>
               <b class="me-2">Applicant ID:</b>
-              {{display.UserAssessment.applicant_id}}
+              {{display.applicant_id}}
             </p>
             <p>
-              <b class="me-2">Name:</b> {{display.first_name| capitalize}}
+              <b class="me-2">Name:</b> {{display.first_name| title}}
               {{display.middle_name| capitalize}} {{display.last_name|
               capitalize}}
             </p>
             <p><b class="me-2">Sex:</b> {{display.sex| capitalize}}</p>
-            <p>
-              <b class="me-2">Province:</b> {{display.province| capitalize}}
-            </p>
+            <p><b class="me-2">Province:</b> {{display.province| title}}</p>
             <p>
               <b class="me-2">Contact Number:</b> {{display.contact_number}}
             </p>
@@ -46,45 +44,49 @@
             <h5 class="py-2">Score Summary</h5>
             <p>
               <b class="me-2">Assessment Score:</b>
-              {{display.UserAssessment.assessment_score}}
+              {{display.assessment_score}}
             </p>
-
           </div>
           <!--Examination Details-->
           <div class="col-6 examination-details">
             <h5 class="py-2">Examination Details</h5>
             <p>
               <b class="me-2">Date of Examination:</b> {{
-              display.UserAssessment.date_of_examination.strftime('%B %d, %Y')
-              if display.UserAssessment.date_of_examination else 'N/A' }}
+              display.date_of_examination.strftime('%B %d, %Y') if
+              display.date_of_examination else 'N/A' }}
             </p>
             <p>
               <b class="me-2">Date of Notification:</b> {{
-              display.UserAssessment.date_of_notification.strftime('%B %d, %Y')
-              if display.UserAssessment.date_of_notification else 'N/A' }}
+              display.date_of_notification.strftime('%B %d, %Y') if
+              display.date_of_notification else 'N/A' }}
             </p>
             <p>
               <b class="me-2">Exam Venue:</b>
-              {% if display.UserAssessment.venue_address %} {{
-              display.UserAssessment.venue_address }}, {% endif %} {{
-              display.UserAssessment.exam_venue | default('') | capitalize }}
+              {% if display.venue_address %} {{ display.venue_address }}, {%
+              endif %} {{ display.exam_venue | default('') | title }}
             </p>
-            <p>
-              <b class="me-2">Proctor:</b> {{display.UserAssessment.proctor}}
-            </p>
-            <p><b class="me-2">Status:</b> {{display.UserAssessment.status}}</p>
-            <p><b class="me-2">Remarks:</b> {{display.UserAssessment.remarks}}</p>
+            <p><b class="me-2">Proctor:</b> {{display.proctor}}</p>
+            <p><b class="me-2">Status:</b> {{display.status}}</p>
+            <p><b class="me-2">Remarks:</b> {{display.remarks}}</p>
             <p>
               {% if display.applicant_form %}
+
               <a
-                href="{{ url_for('update.view_attachment', applicant_id=display.UserAssessment.applicant_id) }}"
+                href="{{ url_for('update.view_attachment', applicant_id=display.applicant_id) }}"
                 target="_blank"
                 class="btn btn-outline-primary"
                 >View Applicant Attachment</a
               >
               {% endif %}
             </p>
-            <p> <a href="{{ url_for('export.export_applicant', applicant_id=display.applicant_id) }}" class="btn btn-success">Export as .csv file</a>
+
+            <p>
+              <a
+                href="{{ url_for('export.export_applicant', applicant_id=display.applicant_id) }}"
+                class="btn btn-success"
+                >Export applicant</a
+              >
+            </p>
           </div>
         </div>
       </div>
