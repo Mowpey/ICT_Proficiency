@@ -30,6 +30,7 @@ def create_app():
     from .queries.delete import delete_bp
     from .queries.filter import filter_bp
     from .queries.search import search_bp
+    from .queries.export_diagnostic import export_bp 
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
@@ -40,6 +41,7 @@ def create_app():
     app.register_blueprint(delete_bp,url_prefix='/')
     app.register_blueprint(filter_bp,url_prefix='/')
     app.register_blueprint(search_bp,url_prefix='/')
+    app.register_blueprint(export_bp, url_prefix='/')
 
 
     from .models import Admin, DiagnosticResults, HandsonResults, HistoryTable

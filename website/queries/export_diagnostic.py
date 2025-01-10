@@ -4,7 +4,7 @@ from ..models import DiagnosticResults,HandsonResults,UserAssessment
 
 export_bp = Blueprint('export', __name__)
 
-@export_bp.route('/export-applicant/<string:applicant_id>')
+@export_bp.route('/export_applicant/<string:applicant_id>')
 def export_applicant(applicant_id):
     if applicant_id == 'diagnostic':
         applicants = DiagnosticResults.query.all()
